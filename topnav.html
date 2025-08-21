@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<base target="_parent">
+  <title>Top Navigation</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+    :root{ --link: rgba(255,255,255,.9); }
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{
+      margin:0;
+      background:transparent;
+      font-family:'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    nav.toplinks{
+      display:flex; justify-content:center; align-items:center; gap:28px;
+      height:48px; /* feste Höhe damit das Iframe exakt passt */
+      font-weight:700; letter-spacing:.04em;
+      line-height:1;
+    }
+    nav.toplinks a{
+      color:var(--link); text-decoration:none;
+      white-space:nowrap;
+    }
+    nav.toplinks a:hover, nav.toplinks a:focus{ text-decoration:underline; outline:none }
+    /* Kleine Bildschirme: minimal kleinere Schrift, damit es einzeilig bleibt */
+    @media (max-width: 520px){ nav.toplinks{ gap:16px; font-size:14px } }
+    @media (max-width: 420px){ nav.toplinks{ gap:12px; font-size:13px } }
+  </style>
+</head>
+<body>
+  <nav class="toplinks" role="navigation" aria-label="Hauptnavigation">
+    <a href="index.html">Startseite</a>
+    <a href="abirechner.html">Abi-Rechner</a>
+    <a href="steckbrief.html">Abibuch-Editor</a>
+    <a href="index.html#mottos">Motto-Ideen</a>
+    <a href="index.html#about">Über Uns</a>
+  </nav>
+</body>
+</html>

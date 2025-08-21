@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Abi-Rechner – DigitABI</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+    :root{
+      --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8; --ink:#151527;
+      --paper:#f6f6f8; --card:#ffffff; --border:#6c50ff; --accent:#2e1df7; --accent-weak:#eae7ff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:#111;
+      background:linear-gradient(100deg,var(--grad-left) 0%,var(--grad-mid) 50%,var(--grad-right) 100%);
+      min-height:100vh; display:flex; flex-direction:column;
+    }
+    .container{
+  max-width:min(1920px, 98vw);
+  margin:0 auto;
+  padding:32px 24px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+
+    /* TOP-LINK-LEISTE */
+    .toplinks{display:flex; justify-content:center; gap:28px; font-weight:700; letter-spacing:.04em; margin:8px 0}
+    .toplinks a{color:rgba(255,255,255,.9); text-decoration:none}
+    .toplinks a:hover{text-decoration:underline}
+
+    /* Card / Rahmen */
+    .frame{
+  background:var(--paper);
+  border:3px solid var(--border);
+  border-radius:10px;
+  padding:28px 24px;
+  max-width:min(1680px, 96vw);
+  margin:18px auto;
+  box-shadow:0 8px 30px rgba(17,16,50,.18);
+}
+
+
+    h1{margin:0 0 8px; text-align:center; font-size:clamp(24px,3.2vw,34px); font-weight:800; letter-spacing:.04em}
+    .tabs{display:flex; justify-content:center; gap:12px; margin:10px 0 18px}
+    .tab{padding:10px 14px; border-radius:12px; border:2px solid var(--accent); background:var(--accent-weak); font-weight:700; text-decoration:none; color:var(--accent)}
+    .tab.secondary{border-color:transparent; background:#ffffffc9; color:#222}
+    .tab.secondary:hover{outline:2px dashed #bbb}
+
+    /* Controls */
+    .row{margin:18px 0}
+    .options{display:flex; flex-wrap:wrap; gap:10px}
+    .opt{padding:10px 14px; border-radius:10px; border:2px solid #ddd; background:#fff; cursor:pointer; font-weight:600}
+    .opt.is-selected{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-weak)}
+    .choice{display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid #ddd; border-radius:10px; background:#fff}
+    .range-wrap{display:grid; gap:8px}
+
+    .actions{display:flex; justify-content:space-between; gap:12px; margin-top:16px}
+    .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 16px; border-radius:12px; font-weight:700; text-decoration:none; cursor:pointer; border:2px solid transparent}
+    .btn.prev{background:#fff; border-color:#cfd2ff; color:#1b1b2f}
+    .btn.next{background:var(--accent); color:#fff}
+    .btn.next.ghost{background:var(--accent-weak); color:var(--accent); border-color:var(--accent)}
+    .btn:disabled{opacity:.5; cursor:not-allowed}
+
+    .summary{background:#fff; border:1px solid #e3e3e3; border-radius:12px; padding:16px; line-height:1.9}
+    .summary b{font-weight:800}
+
+    /* Steps */
+    .step{display:none}
+    .step.active{display:block}
+
+    /* Footer */
+    .footerlinks{display:flex; gap:28px; justify-content:center; color:var(--ink); font-weight:600; letter-spacing:.06em; padding:26px 0 18px; flex-wrap:wrap}
+    .footerlinks a{color:var(--ink); text-decoration:none}
+    .footerlinks a:hover{text-decoration:underline}
+
+  /* === WIDTH OVERRIDE (ans Ende des <style>-Blocks setzen) === */
+:root{
+  --container-w: 1920px;  /* Seite gesamt */
+  --frame-w: 1680px;      /* weißer Kasten */
+}
+
+/* höherer Selektor + !important, damit nichts anderes drüberbügelt */
+body > .container{
+  max-width: min(var(--container-w), 98vw) !important;
+}
+
+body > .container > .frame{
+  max-width: min(var(--frame-w), 96vw) !important;
+}
+
+/* (Optional zum Testen – nach dem Reload sollte man den roten Rand sehen)
+body > .container > .frame{ outline: 2px dashed #f33; }
+*/
+
+  </style>
+</head>
+<body>
+
+ <!-- Top-Leiste als IFRAME einbinden -->
+<iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
+<style>
+  .topnav-embed{
+    width:100%; height:48px; border:0; display:block; overflow:hidden;
+    background:transparent;
+  }
+</style>
+
+
+
+
+  <div class="container" style="max-width: 1920px !important; width: 100% !important;">
+    <div class="frame" id="rechner" style="max-width: 1680px !important;">
+      <h1>DigitABI – Abibuch-Konfigurator</h1>
+      <div class="tabs">
+        <a class="tab">Abibuch-Konfigurator</a>
+        <a class="tab secondary" href="steckbrief.html">Steckbrief-Editor</a>
+      </div>
+
+      <!-- STEP 0 -->
+      <section class="step active" data-step="0">
+        <div class="row">
+          <p class="mb-4" style="font-size:18px; font-weight:700">Für welches Jahr?</p>
+          <div class="options" id="yearOptions">
+            <button class="opt" data-value="2024">2024</button>
+            <button class="opt is-selected" data-value="2025">2025</button>
+            <button class="opt" data-value="2026">2026</button>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn prev" disabled>Zurück</button>
+          <button class="btn next">Weiter</button>
+        </div>
+      </section>
+
+      <!-- STEP 1 -->
+      <section class="step" data-step="1">
+        <div class="row">
+          <p class="mb-4" style="font-size:18px; font-weight:700">Wie viele Personen sollen ein Abibuch bekommen?</p>
+          <div class="range-wrap">
+            <input id="personsRange" type="range" min="1" max="170" value="85">
+            <div style="text-align:center; font-size:18px; font-weight:700"><span id="personsOut">85</span> Personen</div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn prev">Zurück</button>
+          <button class="btn next">Weiter</button>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step" data-step="2">
+        <div class="row">
+          <p class="mb-4" style="font-size:18px; font-weight:700">Möchtest du eine digitale Version deines Abibuchs?</p>
+          <div class="options" id="digitalOptions">
+            <button class="opt" data-value="Ja">Ja</button>
+            <button class="opt" data-value="Nein">Nein</button>
+            <button class="opt" data-value="Nur digital">Nur digital</button>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn prev">Zurück</button>
+          <button class="btn next">Weiter</button>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step" data-step="3">
+        <div class="row">
+          <p class="mb-4" style="font-size:18px; font-weight:700">Wie viel Speicherplatz benötigst du für deine digitale Version?</p>
+          <div class="row">
+            <label class="choice"><input type="radio" name="storage" value="32GB"> 32&nbsp;GB</label>
+            <label class="choice"><input type="radio" name="storage" value="64GB" checked> 64&nbsp;GB</label>
+            <label class="choice"><input type="radio" name="storage" value="128GB"> 128&nbsp;GB</label>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn prev">Zurück</button>
+          <button class="btn next">Weiter</button>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="step" data-step="4">
+        <div class="row">
+          <p class="mb-4" style="font-size:18px; font-weight:700">Welche Inhalte möchtest du in deinem Abibuch?</p>
+          <div class="row" id="contentChecks" style="display:grid; gap:8px">
+            <label class="choice"><input type="checkbox" value="Lehrer-Steckbriefe"> Lehrer-Steckbriefe</label>
+            <label class="choice"><input type="checkbox" value="Schüler-Steckbriefe"> Schüler-Steckbriefe</label>
+            <label class="choice"><input type="checkbox" value="Fotos"> Fotos</label>
+            <label class="choice"><input type="checkbox" value="Schüler-Rankings"> Schüler-Rankings</label>
+            <label class="choice"><input type="checkbox" value="Lehrer-Rankings"> Lehrer-Rankings</label>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn prev">Zurück</button>
+          <button class="btn next">Weiter</button>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section class="step" data-step="5">
+        <div class="row">
+          <p class="mb-4" style="font-size:18px; font-weight:700">Welche Maße soll dein Abibuch haben?</p>
+          <div class="row" style="display:grid; gap:8px">
+            <label class="choice"><input type="radio" name="size" value="DIN A4" checked> DIN A4 (210×297&nbsp;mm)</label>
+            <label class="choice"><input type="radio" name="size" value="Buchformat"> Buchformat (170×210&nbsp;mm)</label>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn prev">Zurück</button>
+          <button class="btn next">Weiter</button>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section class="step" data-step="6">
+        <div class="row">
+          <p class="mb-4" style="font-size:18px; font-weight:700">Welche Art von Cover soll dein Abibuch haben?</p>
+          <div class="row" style="display:grid; gap:8px">
+            <label class="choice"><input type="radio" name="cover" value="Hard-Cover" checked> Hard-Cover</label>
+            <label class="choice"><input type="radio" name="cover" value="Soft-Cover"> Soft-Cover</label>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn prev">Zurück</button>
+          <button class="btn next">Weiter</button>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section class="step" data-step="7">
+        <div class="row">
+          <p class="mb-2" style="font-size:18px; font-weight:700">Zusammenfassung deiner Auswahl:</p>
+          <div class="summary" id="summaryBox">
+            <!-- wird per JS befüllt -->
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn prev">Zurück</button>
+          <button class="btn next ghost" id="priceBtn">Preis berechnen</button>
+        </div>
+      </section>
+    </div>
+
+    <footer class="footerlinks">
+      <a href="kontakt.html">Kontakt</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="rechtliche-hinweise.html">Rechtliche Hinweise</a>
+    </footer>
+  </div>
+
+  <script>
+    // --- State ---
+    const form = {
+      year: 2025,
+      persons: 85,
+      digital_option: null,  // "Ja" | "Nein" | "Nur digital"
+      storage: "64GB",
+      content: [],
+      size: "DIN A4",
+      cover: "Hard-Cover"
+    };
+    let step = 0; // 0..7
+
+    // --- Elements ---
+    const steps = [...document.querySelectorAll('.step')];
+    const personsRange = document.getElementById('personsRange');
+    const personsOut = document.getElementById('personsOut');
+    const yearOpts = document.getElementById('yearOptions');
+    const digitalOpts = document.getElementById('digitalOptions');
+    const contentChecks = document.getElementById('contentChecks');
+    const summaryBox = document.getElementById('summaryBox');
+
+    // --- Helpers ---
+    function showStep(n){
+      steps.forEach(s => s.classList.remove('active'));
+      const target = steps[n];
+      if (target) target.classList.add('active');
+      step = n;
+      if (step === 7) renderSummary();
+    }
+
+    function nextStep(){
+      // MM-ähnliche Logik wie in deinem alten Code
+      if (step === 2 && form.digital_option === "Nein") return showStep(4);
+      if (step === 2 && form.digital_option === "Nur digital") return showStep(3);
+      if (step === 4 && form.digital_option === "Nur digital") return showStep(7);
+      if (step === 6) return showStep(7);
+      return showStep(Math.min(step+1, 7));
+    }
+    function prevStep(){
+      if (step === 7 && form.digital_option === "Nur digital") return showStep(4);
+      if (step === 7 && form.digital_option !== "Nur digital") return showStep(6);
+      if (step === 4 && form.digital_option === "Nein") return showStep(2);
+      if (step === 3) return showStep(2);
+      return showStep(Math.max(step-1, 0));
+    }
+
+    function renderSummary(){
+      const items = [
+        ["Jahr", form.year],
+        ["Personen", form.persons],
+        ["Digital", form.digital_option ?? "—"],
+        ["Inhalte", (form.content.length ? form.content.join(', ') : "—")],
+        ["Speicherplatz", form.digital_option === "Nur digital" || form.digital_option === "Ja" ? form.storage : "—"],
+        ["Buchgröße", form.digital_option === "Nur digital" ? "—" : form.size],
+        ["Cover", form.digital_option === "Nur digital" ? "—" : form.cover],
+      ];
+      summaryBox.innerHTML = "<ul style='margin:0; padding-left:18px'>" +
+        items.map(([k,v]) => `<li><b>${k}:</b> ${v}</li>`).join("") +
+        "</ul>";
+    }
+
+    // --- Wire up generic buttons ---
+    document.querySelectorAll('.btn.next').forEach(btn => btn.addEventListener('click', nextStep));
+    document.querySelectorAll('.btn.prev').forEach(btn => btn.addEventListener('click', prevStep));
+
+    // Persons slider
+    personsRange.addEventListener('input', e => {
+      form.persons = parseInt(e.target.value, 10);
+      personsOut.textContent = form.persons;
+    });
+
+    // Year selection
+    yearOpts.addEventListener('click', (e) => {
+      if (e.target.closest('.opt')) {
+        yearOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
+        const b = e.target.closest('.opt'); b.classList.add('is-selected');
+        form.year = parseInt(b.dataset.value, 10);
+      }
+    });
+
+    // Digital options
+    digitalOpts.addEventListener('click', (e) => {
+      if (e.target.closest('.opt')) {
+        digitalOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
+        const b = e.target.closest('.opt'); b.classList.add('is-selected');
+        form.digital_option = b.dataset.value;
+      }
+    });
+
+    // Storage radios
+    document.querySelectorAll('input[name="storage"]').forEach(r =>
+      r.addEventListener('change', e => form.storage = e.target.value)
+    );
+
+    // Size radios
+    document.querySelectorAll('input[name="size"]').forEach(r =>
+      r.addEventListener('change', e => form.size = e.target.value)
+    );
+
+    // Cover radios
+    document.querySelectorAll('input[name="cover"]').forEach(r =>
+      r.addEventListener('change', e => form.cover = e.target.value)
+    );
+
+    // Content checkboxes
+    contentChecks.addEventListener('change', () => {
+      form.content = [...contentChecks.querySelectorAll('input[type="checkbox"]:checked')].map(c => c.value);
+    });
+
+    // Price button (Stub)
+    document.getElementById('priceBtn').addEventListener('click', () => {
+      alert('Preisberechnung folgt – Logik wird noch hinterlegt.');
+    });
+  </script>
+</body>
+</html>

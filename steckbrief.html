@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Steckbrief – Vorschau | DigitABI</title>
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+  :root{ --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8; --ink:#151527; --muted:rgba(0,0,0,.62); --vio:#BEB3FF; --vio-dark:#9e90ff; }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:#111;
+    background:linear-gradient(100deg,var(--grad-left) 0%,var(--grad-mid) 50%,var(--grad-right) 100%);
+    min-height:100vh; display:flex; flex-direction:column;
+  }
+  .container{max-width:1180px;margin:0 auto;padding:32px 24px;flex:1;display:flex;flex-direction:column}
+  .nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .nav .left,.nav .right{display:flex;gap:18px;align-items:center}
+  .brand{font-weight:800; letter-spacing:.02em;color:#fff}
+  .smallcaps{text-transform:uppercase; letter-spacing:.08em; font-weight:600}
+  .nav a{color:rgba(255,255,255,.88);text-decoration:none; font-weight:600}
+  .nav a:hover{text-decoration:underline}
+  .frame{
+    background:#f6f6f8; border:3px solid #6c50ff; border-radius:8px;
+    padding:28px 24px; max-width:860px; margin:16px auto; position:relative;
+    box-shadow:0 8px 30px rgba(17,16,50,.18);
+  }
+  .frame h2{
+    text-align:center; margin:0; line-height:1.35; color:#1f1f2f;
+  }
+  .frame h2 .line2{font-weight:800}
+  .sheet{
+    margin-top:18px; background:#f6f6f8; border:1px solid #b6a8ff; border-radius:10px; padding:24px 22px;
+  }
+  .photos{display:grid; grid-template-columns: 140px 1fr 140px; gap:24px; align-items:start; margin-top:6px}
+  .ph{
+    height:160px; border-radius:10px; background:var(--vio);
+    display:flex; align-items:center; justify-content:center; font-weight:700; color:#3b2f77;
+  }
+  .name{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding-top:10px;
+  }
+  .name .big{font-size:20px; font-weight:700; letter-spacing:.02em; color:#111; text-align:center}
+  .name .date{font-size:12.5px; color:#333}
+  .facts{margin-top:18px; display:grid; grid-template-columns:1fr; gap:10px}
+  .row{display:grid; grid-template-columns: 240px 1fr; gap:10px; align-items:baseline}
+  .label{color:#333; font-weight:600}
+  .value{color:#111}
+  .muted{color:var(--muted); font-weight:600}
+  .spacer{height:10px}
+  .next{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:10px 16px; font-weight:700; border-radius:12px;
+    border:2px solid #2e1df7; background:#eae7ff; text-decoration:none; color:#2e1df7;
+    position:absolute; right:18px; bottom:14px;
+  }
+  .next:hover{background:#dcd6ff}
+  footer.footerlinks{display:flex; gap:16px; justify-content:center; margin-top:22px}
+  footer.footerlinks a{color:#fff; text-decoration:none; font-weight:600}
+  footer.footerlinks a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+
+<!-- Top-Leiste als IFRAME einbinden -->
+<iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
+<style>
+  .topnav-embed{
+    width:100%; height:48px; border:0; display:block; overflow:hidden;
+    background:transparent;
+  }
+</style>
+
+
+  <div class="container">
+   
+    <div class="frame">
+      <h2 class="smallcaps">Vorschau unseres Abibuch-Editors<br><span class="line2">– so könnte dein Abibuch aussehen:</span></h2>
+      <div class="sheet">
+        <div class="photos">
+          <div class="ph">AKTUELLES FOTO</div>
+          <div class="name">
+            <div class="big">Mulan<br>Mustermann</div>
+            <div class="date">31.02.2008</div>
+          </div>
+          <div class="ph">KINDERBILD</div>
+        </div>
+
+        <div class="facts">
+          <div class="row"><div class="label">Leistungskurse:</div><div class="value"><b>Bio, Sport</b></div></div>
+          <div class="row"><div class="label">Lieblingsfach:</div><div class="value"><b>Bio, Sport</b></div></div>
+          <div class="row"><div class="label">Hassfach:</div><div class="value"><b>alle anderen</b></div></div>
+          <div class="row"><div class="label">Lieblingslehrer:</div><div class="value"><b>Frau Himmelmann</b></div></div>
+          <div class="row"><div class="label">Hasslehrer:</div><div class="value"><b>Herr Bock</b></div></div>
+          <div class="row"><div class="label">Meine Sportart:</div><div class="value"><b>Pausenhofschlägerei</b></div></div>
+          <div class="row"><div class="label">Lieblingsbeschäftigung im Unterricht:</div><div class="value"><b>Nase popeln</b></div></div>
+          <div class="row"><div class="label">Motivationslevel in der Schule:</div><div class="value"><b>unterirdisch, -2/10</b></div></div>
+          <div class="row"><div class="label">3 Dinge, ohne die ich die Schule nicht überlebt hätte:</div><div class="value"><b>Zigarettenpause, Handy, Freunde</b></div></div>
+          <div class="row"><div class="label">Als Lehrer würde ich...</div><div class="value"><b>den Beruf wechseln</b></div></div>
+          <div class="row"><div class="label">Fünft-Klässlern würde ich raten...</div><div class="value"><b>lieber einen Hauptschulabschluss zu machen</b></div></div>
+          <div class="row"><div class="label">Bestes Schulerlebnis:</div><div class="value"><b>eine Woche Hitzefrei in der zehnten Klasse</b></div></div>
+
+          <div class="spacer"></div>
+          <div class="row"><div class="label">Die ersten 3 Worte die mir einfallen, wenn ich ... höre:</div><div></div></div>
+          <div class="row"><div class="label muted">Schule:</div><div class="value">boah ne ey</div></div>
+          <div class="row"><div class="label muted">Freunde:</div><div class="value">Schabernack letzte Reihe</div></div>
+          <div class="row"><div class="label muted">Alkohol:</div><div class="value">gib die Flasche!</div></div>
+        </div>
+
+        <a class="next smallcaps" href="steckbrief-seite-2.html">→ Seite 2</a>
+      </div>
+    </div>
+
+    <footer class="footerlinks smallcaps">
+      <a href="kontakt.html">Kontakt</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="rechtliche-hinweise.html">Rechtliche Hinweise</a>
+    </footer>
+  </div>
+</body>
+</html>
