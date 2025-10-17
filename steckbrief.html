@@ -31,10 +31,31 @@
 
   .sheet{ margin-top:18px; background:#f6f6f8; border:1px solid #b6a8ff; border-radius:10px; padding:24px 22px; }
   .photos{display:grid; grid-template-columns: 140px 1fr 140px; gap:24px; align-items:start; margin-top:6px}
+
+  /* Foto-Platzhalter / Upload-Zonen */
   .ph{
-    height:160px; border-radius:10px; background:var(--vio);
+    position:relative;
+    height:160px; border-radius:10px;
+    background:var(--vio);
     display:flex; align-items:center; justify-content:center; font-weight:700; color:#3b2f77;
+    overflow:hidden;
   }
+  .ph[data-has-img="true"]{
+    background-size:cover;
+    background-position:center;
+    color:transparent; /* Text ausblenden, wenn Bild vorhanden */
+  }
+  .ph input[type="file"]{ display:none; }
+  .ph .overlay{
+    position:absolute; left:8px; bottom:8px;
+    display:flex; gap:6px;
+  }
+  .tinybtn{
+    font:inherit; font-weight:700; padding:6px 8px; border-radius:10px; cursor:pointer;
+    border:2px solid #cfd2ff; background:#fff; color:#1b1b2f; font-size:12px;
+  }
+  .tinybtn.primary{ border-color:#2e1df7; background:#eae7ff; color:#2e1df7 }
+
   .name{ display:flex; flex-direction:column; align-items:center; justify-content:center; padding-top:10px; }
   .name .big{font-size:20px; font-weight:700; letter-spacing:.02em; color:#111; text-align:center}
   .name .date{font-size:12.5px; color:#333}
@@ -98,12 +119,30 @@
 
       <div class="sheet">
         <div class="photos">
-          <div class="ph">AKTUELLES FOTO</div>
+          <!-- AKTUELLES FOTO -->
+          <label class="ph" id="photo-current" data-has-img="false" title="Klicken zum Bild hochladen">
+            <input type="file" id="file-current" accept="image/*">
+            <span>AKTUELLES FOTO</span>
+            <div class="overlay">
+              <button type="button" class="tinybtn primary" data-action="select" data-target="current">Bild wählen</button>
+              <button type="button" class="tinybtn" data-action="clear" data-target="current">Bild löschen</button>
+            </div>
+          </label>
+
           <div class="name">
             <div class="big">Mulan<br>Mustermann</div>
             <div class="date">31.02.2008</div>
           </div>
-          <div class="ph">KINDERBILD</div>
+
+          <!-- KINDERBILD -->
+          <label class="ph" id="photo-child" data-has-img="false" title="Klicken zum Bild hochladen">
+            <input type="file" id="file-child" accept="image/*">
+            <span>KINDERBILD</span>
+            <div class="overlay">
+              <button type="button" class="tinybtn primary" data-action="select" data-target="child">Bild wählen</button>
+              <button type="button" class="tinybtn" data-action="clear" data-target="child">Bild löschen</button>
+            </div>
+          </label>
         </div>
 
         <!-- kleine Editorleiste -->
@@ -157,7 +196,7 @@
       { id:"dreier-worte-alkohol", label:"Alkohol:", value:"gib die Flasche!", class:"muted" }
     ];
 
-    /* ===== Persistenz ===== */
+    /* ===== Persistenz für Felder ===== */
     const CUSTOM_KEY   = "digitabiCustomFieldsV1";
     const DELETED_KEY  = "digitabiDeletedBaseV1";
 
@@ -170,7 +209,39 @@
     let customFields = loadCustom();      // [{label, value}]
     let deletedBase  = loadDeleted();     // Set(['hassfach', ...])
 
-    /* ===== Render ===== */
+    /* ===== Persistenz & Logik für Bilder ===== */
+    const IMG_KEY_CURRENT = "digitabiPhotoCurrentV1";
+    const IMG_KEY_CHILD   = "digitabiPhotoChildV1";
+
+    function setPhoto(el, dataUrl){
+      if (!el) return;
+      if (dataUrl){
+        el.style.backgroundImage = `url('${dataUrl}')`;
+        el.setAttribute("data-has-img", "true");
+      }else{
+        el.style.backgroundImage = "none";
+        el.setAttribute("data-has-img", "false");
+      }
+    }
+
+    function loadImages(){
+      setPhoto(document.getElementById('photo-current'), localStorage.getItem(IMG_KEY_CURRENT));
+      setPhoto(document.getElementById('photo-child'),   localStorage.getItem(IMG_KEY_CHILD));
+    }
+
+    function handleFile(inputEl, key, targetEl){
+      const file = inputEl.files && inputEl.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataUrl = reader.result;
+        localStorage.setItem(key, dataUrl);
+        setPhoto(targetEl, dataUrl);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    /* ===== Render der Faktenliste ===== */
     const factsEl = document.getElementById("facts");
 
     function rowBaseHTML(f){
@@ -212,6 +283,7 @@
     }
 
     renderFacts();
+    loadImages();
 
     /* ===== UI: hinzufügen / löschen / reset ===== */
     const toggleBtn = document.getElementById("toggleCustom");
@@ -271,6 +343,44 @@
         saveDeleted(deletedBase);
         renderFacts();
         return;
+      }
+    });
+
+    /* ===== Foto-Upload Events ===== */
+    const currentLabel = document.getElementById('photo-current');
+    const childLabel   = document.getElementById('photo-child');
+    const inputCurrent = document.getElementById('file-current');
+    const inputChild   = document.getElementById('file-child');
+
+    // Klick auf die Fläche öffnet Filepicker (außer Klick auf Buttons)
+    currentLabel.addEventListener('click', (e)=>{
+      if (e.target.closest('.tinybtn')) return;
+      inputCurrent.click();
+    });
+    childLabel.addEventListener('click', (e)=>{
+      if (e.target.closest('.tinybtn')) return;
+      inputChild.click();
+    });
+
+    inputCurrent.addEventListener('change', ()=> handleFile(inputCurrent, IMG_KEY_CURRENT, currentLabel));
+    inputChild.addEventListener('change',   ()=> handleFile(inputChild,   IMG_KEY_CHILD,   childLabel));
+
+    // Buttons in der Overlay-Leiste
+    document.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.tinybtn'); if(!btn) return;
+      const action = btn.dataset.action;
+      const target = btn.dataset.target; // "current" | "child"
+      const isCurrent = target === 'current';
+      const key  = isCurrent ? IMG_KEY_CURRENT : IMG_KEY_CHILD;
+      const node = isCurrent ? currentLabel : childLabel;
+      const inp  = isCurrent ? inputCurrent : inputChild;
+
+      if (action === 'select'){
+        inp.click();
+      }
+      if (action === 'clear'){
+        localStorage.removeItem(key);
+        setPhoto(node, null);
       }
     });
   </script>
