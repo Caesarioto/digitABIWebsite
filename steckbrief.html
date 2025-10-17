@@ -20,35 +20,53 @@
   .smallcaps{text-transform:uppercase; letter-spacing:.08em; font-weight:600}
   .nav a{color:rgba(255,255,255,.88);text-decoration:none; font-weight:600}
   .nav a:hover{text-decoration:underline}
+
   .frame{
     background:#f6f6f8; border:3px solid #6c50ff; border-radius:8px;
     padding:28px 24px; max-width:860px; margin:16px auto; position:relative;
     box-shadow:0 8px 30px rgba(17,16,50,.18);
   }
-  .frame h2{
-    text-align:center; margin:0; line-height:1.35; color:#1f1f2f;
-  }
+  .frame h2{ text-align:center; margin:0; line-height:1.35; color:#1f1f2f; }
   .frame h2 .line2{font-weight:800}
-  .sheet{
-    margin-top:18px; background:#f6f6f8; border:1px solid #b6a8ff; border-radius:10px; padding:24px 22px;
-  }
+
+  .sheet{ margin-top:18px; background:#f6f6f8; border:1px solid #b6a8ff; border-radius:10px; padding:24px 22px; }
   .photos{display:grid; grid-template-columns: 140px 1fr 140px; gap:24px; align-items:start; margin-top:6px}
   .ph{
     height:160px; border-radius:10px; background:var(--vio);
     display:flex; align-items:center; justify-content:center; font-weight:700; color:#3b2f77;
   }
-  .name{
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    padding-top:10px;
-  }
+  .name{ display:flex; flex-direction:column; align-items:center; justify-content:center; padding-top:10px; }
   .name .big{font-size:20px; font-weight:700; letter-spacing:.02em; color:#111; text-align:center}
   .name .date{font-size:12.5px; color:#333}
+
   .facts{margin-top:18px; display:grid; grid-template-columns:1fr; gap:10px}
   .row{display:grid; grid-template-columns: 240px 1fr; gap:10px; align-items:baseline}
   .label{color:#333; font-weight:600}
   .value{color:#111}
   .muted{color:var(--muted); font-weight:600}
   .spacer{height:10px}
+
+  /* Neuer: kleine, dezente Editorzeile – ändert das Layout nicht */
+  .custombar{
+    display:flex; gap:8px; align-items:center; justify-content:flex-end;
+    margin-top:8px; margin-bottom:4px;
+  }
+  .microbtn{
+    font:inherit; font-weight:700; padding:6px 10px; border-radius:10px; cursor:pointer;
+    border:2px solid #cfd2ff; background:#fff; color:#1b1b2f;
+  }
+  .microbtn.primary{ border-color:#2e1df7; background:#eae7ff; color:#2e1df7 }
+  .customform{ display:none; gap:8px; grid-template-columns:240px 1fr auto; align-items:center; margin:8px 0 2px }
+  .customform input{
+    width:100%; padding:8px 10px; border:1px solid #ddd; border-radius:10px; font-family:inherit;
+  }
+  .row.custom .label{ position:relative; padding-right:22px; }
+  .row.custom .remove{
+    position:absolute; right:0; top:2px; border:0; background:transparent; color:#777; cursor:pointer; font-weight:800;
+  }
+  .row.custom .remove:hover{ color:#c00 }
+  .show{ display:grid !important; }
+
   .next{
     display:inline-flex; align-items:center; justify-content:center;
     padding:10px 16px; font-weight:700; border-radius:12px;
@@ -56,6 +74,7 @@
     position:absolute; right:18px; bottom:14px;
   }
   .next:hover{background:#dcd6ff}
+
   footer.footerlinks{display:flex; gap:16px; justify-content:center; margin-top:22px}
   footer.footerlinks a{color:#fff; text-decoration:none; font-weight:600}
   footer.footerlinks a:hover{text-decoration:underline}
@@ -72,11 +91,10 @@
   }
 </style>
 
-
   <div class="container">
-   
     <div class="frame">
       <h2 class="smallcaps">Vorschau unseres Abibuch-Editors<br><span class="line2">– so könnte dein Abibuch aussehen:</span></h2>
+
       <div class="sheet">
         <div class="photos">
           <div class="ph">AKTUELLES FOTO</div>
@@ -87,25 +105,22 @@
           <div class="ph">KINDERBILD</div>
         </div>
 
-        <div class="facts">
-          <div class="row"><div class="label">Leistungskurse:</div><div class="value">Bio, Sport</div></div>
-          <div class="row"><div class="label">Lieblingsfach:</div><div class="value">Bio, Sport</div></div>
-          <div class="row"><div class="label">Hassfach:</div><div class="value">alle anderen</div></div>
-          <div class="row"><div class="label">Lieblingslehrer:</div><div class="value">Frau Himmelmann</div></div>
-          <div class="row"><div class="label">Hasslehrer:</div><div class="value">Herr Bock</div></div>
-          <div class="row"><div class="label">Meine Sportart:</div><div class="value">Pausenhofschlägerei</div></div>
-          <div class="row"><div class="label">Lieblingsbeschäftigung im Unterricht:</div><div class="value">Nase popeln</div></div>
-          <div class="row"><div class="label">Motivationslevel in der Schule:</div><div class="value">unterirdisch, -2/10</div></div>
-          <div class="row"><div class="label">3 Dinge, ohne die ich die Schule nicht überlebt hätte:</div><div class="value">Zigarettenpause, Handy, Freunde</div></div>
-          <div class="row"><div class="label">Als Lehrer würde ich...</div><div class="value">den Beruf wechseln</div></div>
-          <div class="row"><div class="label">Fünft-Klässlern würde ich raten...</div><div class="value">lieber einen Hauptschulabschluss zu machen</div></div>
-          <div class="row"><div class="label">Bestes Schulerlebnis:</div><div class="value">eine Woche Hitzefrei in der zehnten Klasse</div></div>
+        <!-- kleine Editorleiste -->
+        <div class="custombar">
+          <button class="microbtn primary" id="toggleCustom">+ Eigenes Feld</button>
+          <button class="microbtn" id="clearCustom">Benutzerfelder löschen</button>
+        </div>
 
-          <div class="spacer"></div>
-          <div class="row"><div class="label">Die ersten 3 Worte die mir einfallen, wenn ich ... höre:</div><div></div></div>
-          <div class="row"><div class="label muted">Schule:</div><div class="value">boah ne ey</div></div>
-          <div class="row"><div class="label muted">Freunde:</div><div class="value">Schabernack letzte Reihe</div></div>
-          <div class="row"><div class="label muted">Alkohol:</div><div class="value">gib die Flasche!</div></div>
+        <!-- Eingabeformular für neue Felder (eingeklappt) -->
+        <div class="customform" id="customForm">
+          <input id="cfLabel" type="text" placeholder="Feldtitel (z. B. Lieblingsessen)">
+          <input id="cfValue" type="text" placeholder="Inhalt (z. B. Pizza)">
+          <button class="microbtn primary" id="cfAdd">Hinzufügen</button>
+        </div>
+
+        <!-- Faktenliste (Standard + Benutzerfelder) -->
+        <div class="facts" id="facts">
+          <!-- wird per JS aufgebaut -->
         </div>
 
         <a class="next smallcaps" href="steckbrief-seite-2.html">→ Seite 2</a>
@@ -120,5 +135,129 @@
       <a href="rechtliche-hinweise.html">Rechtliche Hinweise</a>
     </footer>
   </div>
+
+  <script>
+    // === Standardfelder (fest, wie in deiner Vorlage) ===
+    const BASE_FIELDS = [
+      ["Leistungskurse:", "Bio, Sport"],
+      ["Lieblingsfach:", "Bio, Sport"],
+      ["Hassfach:", "alle anderen"],
+      ["Lieblingslehrer:", "Frau Himmelmann"],
+      ["Hasslehrer:", "Herr Bock"],
+      ["Meine Sportart:", "Pausenhofschlägerei"],
+      ["Lieblingsbeschäftigung im Unterricht:", "Nase popeln"],
+      ["Motivationslevel in der Schule:", "unterirdisch, -2/10"],
+      ["3 Dinge, ohne die ich die Schule nicht überlebt hätte:", "Zigarettenpause, Handy, Freunde"],
+      ["Als Lehrer würde ich...", "den Beruf wechseln"],
+      ["Fünft-Klässlern würde ich raten...", "lieber einen Hauptschulabschluss zu machen"],
+      ["Bestes Schulerlebnis:", "eine Woche Hitzefrei in der zehnten Klasse"],
+
+      // Block „Die ersten 3 Worte …“
+      ["Die ersten 3 Worte die mir einfallen, wenn ich ... höre:", ""],
+      ["Schule:", "boah ne ey", "muted"],
+      ["Freunde:", "Schabernack letzte Reihe", "muted"],
+      ["Alkohol:", "gib die Flasche!", "muted"],
+    ];
+
+    // === Benutzerfelder (persistiert nur diese, Standard bleibt unberührt) ===
+    const STORAGE_KEY = "digitabiCustomFieldsV1";
+
+    function loadCustom() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+      catch { return []; }
+    }
+    function saveCustom(list) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    let customFields = loadCustom(); // [{label, value}]
+
+    // === Rendern der Faktenliste ===
+    const factsEl = document.getElementById("facts");
+
+    function rowHTML(label, value, extraClass = "") {
+      const cls = extraClass ? `row ${extraClass}` : "row";
+      return `
+        <div class="${cls}">
+          <div class="label">${label}</div>
+          <div class="value">${value}</div>
+        </div>
+      `;
+    }
+
+    function renderFacts() {
+      let html = "";
+
+      // Standardfelder
+      for (const [label, value, optClass] of BASE_FIELDS) {
+        html += rowHTML(label, value, optClass);
+        // „Die ersten 3 Worte …“ hat im Original danach eine Leerzeile:
+        if (label.startsWith("Die ersten 3 Worte")) {
+          html += `<div class="spacer"></div>`;
+        }
+      }
+
+      // Benutzerfelder – mit Entfernen-Button, gleiche Optik
+      for (let i = 0; i < customFields.length; i++) {
+        const f = customFields[i];
+        html += `
+          <div class="row custom">
+            <div class="label">${f.label}<button class="remove" title="Feld entfernen" data-i="${i}">×</button></div>
+            <div class="value">${f.value}</div>
+          </div>
+        `;
+      }
+
+      factsEl.innerHTML = html;
+    }
+
+    renderFacts();
+
+    // === UI: Feld hinzufügen / löschen ===
+    const toggleBtn = document.getElementById("toggleCustom");
+    const clearBtn  = document.getElementById("clearCustom");
+    const formBox   = document.getElementById("customForm");
+    const addBtn    = document.getElementById("cfAdd");
+    const inLabel   = document.getElementById("cfLabel");
+    const inValue   = document.getElementById("cfValue");
+
+    toggleBtn.addEventListener("click", () => {
+      formBox.classList.toggle("show");
+      if (formBox.classList.contains("show")) {
+        inLabel.focus();
+      }
+    });
+
+    addBtn.addEventListener("click", () => {
+      const label = inLabel.value.trim();
+      const value = inValue.value.trim();
+      if (!label || !value) {
+        alert("Bitte Feldtitel und Inhalt eingeben.");
+        return;
+      }
+      customFields.push({ label, value });
+      saveCustom(customFields);
+      inLabel.value = ""; inValue.value = "";
+      renderFacts();
+    });
+
+    clearBtn.addEventListener("click", () => {
+      if (!customFields.length) return;
+      if (!confirm("Alle eigenen Felder wirklich löschen?")) return;
+      customFields = [];
+      saveCustom(customFields);
+      renderFacts();
+    });
+
+    // Entfernen einzelner Benutzerfelder (Event-Delegation)
+    factsEl.addEventListener("click", (e) => {
+      const btn = e.target.closest(".remove");
+      if (!btn) return;
+      const i = parseInt(btn.dataset.i, 10);
+      customFields.splice(i, 1);
+      saveCustom(customFields);
+      renderFacts();
+    });
+  </script>
 </body>
 </html>
