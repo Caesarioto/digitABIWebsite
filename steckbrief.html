@@ -41,12 +41,12 @@
 
   .facts{margin-top:18px; display:grid; grid-template-columns:1fr; gap:10px}
   .row{display:grid; grid-template-columns: 240px 1fr; gap:10px; align-items:baseline}
-  .label{color:#333; font-weight:600}
+  .label{color:#333; font-weight:600; position:relative; padding-right:22px}
   .value{color:#111}
   .muted{color:var(--muted); font-weight:600}
   .spacer{height:10px}
 
-  /* Neuer: kleine, dezente Editorzeile – ändert das Layout nicht */
+  /* kleine, dezente Editorleiste */
   .custombar{
     display:flex; gap:8px; align-items:center; justify-content:flex-end;
     margin-top:8px; margin-bottom:4px;
@@ -60,11 +60,12 @@
   .customform input{
     width:100%; padding:8px 10px; border:1px solid #ddd; border-radius:10px; font-family:inherit;
   }
-  .row.custom .label{ position:relative; padding-right:22px; }
-  .row.custom .remove{
+
+  /* Entfernen-Button im Label (für Basis & Custom identisch) */
+  .remove{
     position:absolute; right:0; top:2px; border:0; background:transparent; color:#777; cursor:pointer; font-weight:800;
   }
-  .row.custom .remove:hover{ color:#c00 }
+  .remove:hover{ color:#c00 }
   .show{ display:grid !important; }
 
   .next{
@@ -109,6 +110,7 @@
         <div class="custombar">
           <button class="microbtn primary" id="toggleCustom">+ Eigenes Feld</button>
           <button class="microbtn" id="clearCustom">Benutzerfelder löschen</button>
+          <button class="microbtn" id="resetBase">Standardfelder zurücksetzen</button>
         </div>
 
         <!-- Eingabeformular für neue Felder (eingeklappt) -->
@@ -119,9 +121,7 @@
         </div>
 
         <!-- Faktenliste (Standard + Benutzerfelder) -->
-        <div class="facts" id="facts">
-          <!-- wird per JS aufgebaut -->
-        </div>
+        <div class="facts" id="facts"><!-- per JS --></div>
 
         <a class="next smallcaps" href="steckbrief-seite-2.html">→ Seite 2</a>
       </div>
@@ -137,75 +137,75 @@
   </div>
 
   <script>
-    // === Standardfelder (fest, wie in deiner Vorlage) ===
+    /* ===== Basisfelder mit stabilen IDs ===== */
     const BASE_FIELDS = [
-      ["Leistungskurse:", "Bio, Sport"],
-      ["Lieblingsfach:", "Bio, Sport"],
-      ["Hassfach:", "alle anderen"],
-      ["Lieblingslehrer:", "Frau Himmelmann"],
-      ["Hasslehrer:", "Herr Bock"],
-      ["Meine Sportart:", "Pausenhofschlägerei"],
-      ["Lieblingsbeschäftigung im Unterricht:", "Nase popeln"],
-      ["Motivationslevel in der Schule:", "unterirdisch, -2/10"],
-      ["3 Dinge, ohne die ich die Schule nicht überlebt hätte:", "Zigarettenpause, Handy, Freunde"],
-      ["Als Lehrer würde ich...", "den Beruf wechseln"],
-      ["Fünft-Klässlern würde ich raten...", "lieber einen Hauptschulabschluss zu machen"],
-      ["Bestes Schulerlebnis:", "eine Woche Hitzefrei in der zehnten Klasse"],
-
-      // Block „Die ersten 3 Worte …“
-      ["Die ersten 3 Worte die mir einfallen, wenn ich ... höre:", ""],
-      ["Schule:", "boah ne ey", "muted"],
-      ["Freunde:", "Schabernack letzte Reihe", "muted"],
-      ["Alkohol:", "gib die Flasche!", "muted"],
+      { id:"leistungskurse", label:"Leistungskurse:", value:"Bio, Sport" },
+      { id:"lieblingsfach", label:"Lieblingsfach:", value:"Bio, Sport" },
+      { id:"hassfach", label:"Hassfach:", value:"alle anderen" },
+      { id:"lieblingslehrer", label:"Lieblingslehrer:", value:"Frau Himmelmann" },
+      { id:"hasslehrer", label:"Hasslehrer:", value:"Herr Bock" },
+      { id:"sportart", label:"Meine Sportart:", value:"Pausenhofschlägerei" },
+      { id:"beschaeftigung", label:"Lieblingsbeschäftigung im Unterricht:", value:"Nase popeln" },
+      { id:"motivationslevel", label:"Motivationslevel in der Schule:", value:"unterirdisch, -2/10" },
+      { id:"drei-dinge", label:"3 Dinge, ohne die ich die Schule nicht überlebt hätte:", value:"Zigarettenpause, Handy, Freunde" },
+      { id:"als-lehrer", label:"Als Lehrer würde ich...", value:"den Beruf wechseln" },
+      { id:"rat-fuenft", label:"Fünft-Klässlern würde ich raten...", value:"lieber einen Hauptschulabschluss zu machen" },
+      { id:"bestes-erlebnis", label:"Bestes Schulerlebnis:", value:"eine Woche Hitzefrei in der zehnten Klasse" },
+      { id:"dreier-worte-head", label:"Die ersten 3 Worte die mir einfallen, wenn ich ... höre:", value:"" },
+      { id:"dreier-worte-schule", label:"Schule:", value:"boah ne ey", class:"muted" },
+      { id:"dreier-worte-freunde", label:"Freunde:", value:"Schabernack letzte Reihe", class:"muted" },
+      { id:"dreier-worte-alkohol", label:"Alkohol:", value:"gib die Flasche!", class:"muted" }
     ];
 
-    // === Benutzerfelder (persistiert nur diese, Standard bleibt unberührt) ===
-    const STORAGE_KEY = "digitabiCustomFieldsV1";
+    /* ===== Persistenz ===== */
+    const CUSTOM_KEY   = "digitabiCustomFieldsV1";
+    const DELETED_KEY  = "digitabiDeletedBaseV1";
 
-    function loadCustom() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-      catch { return []; }
-    }
-    function saveCustom(list) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-    }
+    function loadCustom(){ try { return JSON.parse(localStorage.getItem(CUSTOM_KEY)) || []; } catch { return []; } }
+    function saveCustom(list){ localStorage.setItem(CUSTOM_KEY, JSON.stringify(list)); }
 
-    let customFields = loadCustom(); // [{label, value}]
+    function loadDeleted(){ try { return new Set(JSON.parse(localStorage.getItem(DELETED_KEY)) || []); } catch { return new Set(); } }
+    function saveDeleted(set){ localStorage.setItem(DELETED_KEY, JSON.stringify([...set])); }
 
-    // === Rendern der Faktenliste ===
+    let customFields = loadCustom();      // [{label, value}]
+    let deletedBase  = loadDeleted();     // Set(['hassfach', ...])
+
+    /* ===== Render ===== */
     const factsEl = document.getElementById("facts");
 
-    function rowHTML(label, value, extraClass = "") {
-      const cls = extraClass ? `row ${extraClass}` : "row";
+    function rowBaseHTML(f){
+      const optClass = f.class ? ` ${f.class}` : "";
       return `
-        <div class="${cls}">
-          <div class="label">${label}</div>
-          <div class="value">${value}</div>
+        <div class="row${optClass}">
+          <div class="label">${f.label}<button class="remove" title="Feld entfernen" data-type="base" data-id="${f.id}">×</button></div>
+          <div class="value">${f.value}</div>
+        </div>
+      `;
+    }
+    function rowCustomHTML(f, i){
+      return `
+        <div class="row">
+          <div class="label">${f.label}<button class="remove" title="Feld entfernen" data-type="custom" data-i="${i}">×</button></div>
+          <div class="value">${f.value}</div>
         </div>
       `;
     }
 
-    function renderFacts() {
+    function renderFacts(){
       let html = "";
 
-      // Standardfelder
-      for (const [label, value, optClass] of BASE_FIELDS) {
-        html += rowHTML(label, value, optClass);
-        // „Die ersten 3 Worte …“ hat im Original danach eine Leerzeile:
-        if (label.startsWith("Die ersten 3 Worte")) {
+      // Basisfelder, ausgelassene (gelöschte) überspringen
+      for (const f of BASE_FIELDS){
+        if (deletedBase.has(f.id)) continue;
+        html += rowBaseHTML(f);
+        if (f.id === "dreier-worte-head"){
           html += `<div class="spacer"></div>`;
         }
       }
 
-      // Benutzerfelder – mit Entfernen-Button, gleiche Optik
-      for (let i = 0; i < customFields.length; i++) {
-        const f = customFields[i];
-        html += `
-          <div class="row custom">
-            <div class="label">${f.label}<button class="remove" title="Feld entfernen" data-i="${i}">×</button></div>
-            <div class="value">${f.value}</div>
-          </div>
-        `;
+      // Custom-Felder
+      for (let i=0; i<customFields.length; i++){
+        html += rowCustomHTML(customFields[i], i);
       }
 
       factsEl.innerHTML = html;
@@ -213,9 +213,10 @@
 
     renderFacts();
 
-    // === UI: Feld hinzufügen / löschen ===
+    /* ===== UI: hinzufügen / löschen / reset ===== */
     const toggleBtn = document.getElementById("toggleCustom");
     const clearBtn  = document.getElementById("clearCustom");
+    const resetBtn  = document.getElementById("resetBase");
     const formBox   = document.getElementById("customForm");
     const addBtn    = document.getElementById("cfAdd");
     const inLabel   = document.getElementById("cfLabel");
@@ -223,18 +224,13 @@
 
     toggleBtn.addEventListener("click", () => {
       formBox.classList.toggle("show");
-      if (formBox.classList.contains("show")) {
-        inLabel.focus();
-      }
+      if (formBox.classList.contains("show")) inLabel.focus();
     });
 
     addBtn.addEventListener("click", () => {
       const label = inLabel.value.trim();
       const value = inValue.value.trim();
-      if (!label || !value) {
-        alert("Bitte Feldtitel und Inhalt eingeben.");
-        return;
-      }
+      if (!label || !value){ alert("Bitte Feldtitel und Inhalt eingeben."); return; }
       customFields.push({ label, value });
       saveCustom(customFields);
       inLabel.value = ""; inValue.value = "";
@@ -249,14 +245,33 @@
       renderFacts();
     });
 
-    // Entfernen einzelner Benutzerfelder (Event-Delegation)
-    factsEl.addEventListener("click", (e) => {
-      const btn = e.target.closest(".remove");
-      if (!btn) return;
-      const i = parseInt(btn.dataset.i, 10);
-      customFields.splice(i, 1);
-      saveCustom(customFields);
+    resetBtn.addEventListener("click", () => {
+      if (!deletedBase.size) return;
+      if (!confirm("Alle Standardfelder wiederherstellen?")) return;
+      deletedBase = new Set();
+      saveDeleted(deletedBase);
       renderFacts();
+    });
+
+    // Delegation für alle ×-Buttons (Basis & Custom)
+    factsEl.addEventListener("click", (e)=>{
+      const btn = e.target.closest(".remove"); if (!btn) return;
+      const type = btn.dataset.type;
+
+      if (type === "custom"){
+        const i = parseInt(btn.dataset.i, 10);
+        customFields.splice(i, 1);
+        saveCustom(customFields);
+        renderFacts();
+        return;
+      }
+      if (type === "base"){
+        const id = btn.dataset.id;
+        deletedBase.add(id);
+        saveDeleted(deletedBase);
+        renderFacts();
+        return;
+      }
     });
   </script>
 </body>
