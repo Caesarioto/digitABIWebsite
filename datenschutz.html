@@ -2,28 +2,49 @@
 <html lang="de">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Datenschutz – DigitABI</title>
+  <title>Datenschutzerklärung – DigitABI</title>
   <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
-  :root{ --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8; --ink:#151527; }
-  *{box-sizing:border-box} html,body{height:100%}
-  body{ margin:0; font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:#111;
-        background:linear-gradient(100deg,var(--grad-left) 0%,var(--grad-mid) 50%,var(--grad-right) 100%);
-        min-height:100vh; display:flex; flex-direction:column; }
-  .container{max-width:1180px;margin:0 auto;padding:32px 24px;flex:1;display:flex;flex-direction:column}
-  .nav{display:flex;align-items:center;justify-content:space-between;gap:24px;color:rgba(255,255,255,.88);font-weight:600;letter-spacing:.06em}
-  .nav a{color:rgba(255,255,255,.88);text-decoration:none;margin-right:18px}
-  .nav .right a{margin-right:0}
-  .footerlinks{display:flex;gap:28px;justify-content:center;color:var(--ink);font-weight:600;letter-spacing:.06em;padding:26px 0 18px;flex-wrap:wrap}
-  .footerlinks a{color:var(--ink);text-decoration:none} .footerlinks a:hover{text-decoration:underline}
-  .center{text-align:center}
-  h1{margin:0 0 14px;font-size:clamp(28px,3.8vw,40px);font-weight:800;letter-spacing:.06em;text-decoration:underline;text-underline-offset:6px;color:#111}
-  .wrap{max-width:75ch;margin:0 auto 26px;line-height:1.8;color:#111}
+  :root{
+    --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8;
+    --ink:#151527; --paper:#f6f6f8; --border:#6c50ff;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:#111;
+    background:linear-gradient(100deg,var(--grad-left) 0%,var(--grad-mid) 50%,var(--grad-right) 100%);
+    min-height:100vh; display:flex; flex-direction:column;
+  }
+  .container{
+    max-width:min(1180px,94vw); margin:0 auto; padding:32px 24px;
+    flex:1; display:flex; flex-direction:column;
+  }
+
+  .frame{
+    background:var(--paper); border:3px solid var(--border);
+    border-radius:10px; padding:28px 26px; box-shadow:0 8px 30px rgba(17,16,50,.18);
+  }
+
+  h1{font-size:clamp(28px,4vw,40px); text-align:center; font-weight:800; margin:0 0 20px}
+  h2{font-size:clamp(18px,2.6vw,22px); font-weight:700; margin:20px 0 10px}
+  p, li{line-height:1.8; color:#222}
+  ul{margin:0; padding-left:22px}
+  .emoji{font-size:1.2em}
+  .section{margin-bottom:22px}
+
+  .footerlinks{
+    display:flex; gap:28px; justify-content:center;
+    color:var(--ink); font-weight:600; letter-spacing:.06em;
+    padding:26px 0 18px; flex-wrap:wrap
+  }
+  .footerlinks a{color:var(--ink); text-decoration:none}
+  .footerlinks a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
 
-  <!-- Top-Leiste als IFRAME einbinden -->
+<!-- Top-Leiste als IFRAME -->
 <iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
 <style>
   .topnav-embed{
@@ -32,25 +53,148 @@
   }
 </style>
 
+<div class="container">
+  <div class="frame">
+    <h1 class="emoji">🛡️ Datenschutzerklärung</h1>
 
-  <div class="container">
+    <div class="section">
+      <h2>1. Verantwortlicher</h2>
+      <p>
+        <b>Marco Ciocca</b><br>
+        [Adresse]<br>
+        E-Mail: <a href="mailto:meindigitalesabibuch@gmail.com">meindigitalesabibuch@gmail.com</a>
+      </p>
+    </div>
 
-        <main class="center" style="padding:20px 0">
-      <h1>Datenschutz</h1>
-      <div class="wrap">
-        (Hier euren Datenschutzhinweis einfügen.)
-      </div>
-    </main>
+    <div class="section">
+      <h2>2. Allgemeines zur Datenverarbeitung</h2>
+      <p>
+        Der Schutz personenbezogener Daten hat für uns höchste Priorität.
+        Wir verarbeiten personenbezogene Daten ausschließlich im Rahmen der geltenden Datenschutzgesetze (DSGVO und BDSG).
+        Personenbezogene Daten sind alle Informationen, die sich auf eine identifizierte oder identifizierbare Person beziehen – beispielsweise Name, E-Mail-Adresse oder hochgeladene Inhalte im (digitalen) Abibuch.
+      </p>
+    </div>
 
-    <footer class="footerlinks">
-      <a href="kontakt.html">Kontakt</a>
-      <a href="impressum.html">Impressum</a>
-      <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
-      <a href="datenschutz.html">Datenschutz</a>
-      <a href="rechtliche-hinweise.html">rechtliche Hinweise</a>
-    </footer>
+    <div class="section">
+      <h2>3. Speicherung von Zugriffsdaten in Server-Logfiles</h2>
+      <p>
+        Beim Aufruf unserer Website werden durch den Webserver automatisch Informationen erhoben und in sogenannten Server-Logfiles gespeichert. Dazu gehören:
+      </p>
+      <ul>
+        <li>Name der abgerufenen Datei</li>
+        <li>IP-Adresse</li>
+        <li>Datum und Uhrzeit des Abrufs</li>
+        <li>übertragene Datenmenge</li>
+        <li>Browsertyp und -version</li>
+        <li>anfragender Provider</li>
+      </ul>
+      <p>
+        Diese Daten dienen ausschließlich dem Zweck, einen störungsfreien Betrieb der Website zu gewährleisten sowie unser Angebot zu optimieren.
+        Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse).
+        Die Logfiles werden nach spätestens sieben Tagen automatisch gelöscht.
+        Eine Widerspruchsmöglichkeit besteht nicht, da die Erfassung technisch erforderlich ist.
+      </p>
+    </div>
 
+    <div class="section">
+      <h2>4. Hosting</h2>
+      <p>
+        Unsere Website wird von einem externen Dienstleister innerhalb der Europäischen Union gehostet.
+        Im Rahmen der Auftragsverarbeitung verarbeitet dieser Anbieter alle im Zusammenhang mit der Nutzung unserer Website anfallenden Daten (z. B. Server-Logs, E-Mails, hochgeladene Dateien).
+        Dies dient der Wahrung unserer berechtigten Interessen an einem sicheren und zuverlässigen Betrieb unserer Online-Angebote gemäß Art. 6 Abs. 1 lit. f DSGVO.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>5. Verwendung von Cookies</h2>
+      <p>
+        Um den Besuch unserer Website attraktiv zu gestalten und die Nutzung bestimmter Funktionen zu ermöglichen, verwenden wir Cookies.
+        Cookies sind kleine Textdateien, die auf Ihrem Endgerät gespeichert werden.
+        Einige werden nach dem Schließen des Browsers automatisch gelöscht (Sitzungs-Cookies), andere verbleiben dauerhaft (persistente Cookies).
+        Sie können in Ihrem Browser jederzeit einstellen, ob Sie Cookies zulassen oder ablehnen möchten.
+        Bei der Deaktivierung von Cookies kann die Funktionalität unserer Website eingeschränkt sein.
+        Rechtsgrundlage für den Einsatz von Cookies ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Optimierung unseres Angebots).
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>6. Datenerhebung bei Kontaktaufnahme</h2>
+      <p>
+        Wenn Sie uns per E-Mail kontaktieren, werden die von Ihnen übermittelten Daten (z. B. Name, E-Mail-Adresse, Nachricht) ausschließlich zur Bearbeitung Ihres Anliegens gespeichert.
+        Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Kommunikation) und, sofern die Anfrage auf einen Vertragsabschluss abzielt, Art. 6 Abs. 1 lit. b DSGVO.
+        Die Daten werden gelöscht, sobald der Zweck der Speicherung entfällt oder Sie der Verarbeitung widersprechen.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>7. Datenerhebung bei Registrierung und Nutzung der Plattform</h2>
+      <p>
+        Für die Nutzung des digitalen Abibuchs ist eine Registrierung erforderlich.
+        Dabei erheben wir personenbezogene Daten wie:
+      </p>
+      <ul>
+        <li>Name, E-Mail-Adresse, Passwort</li>
+        <li>Inhalte, die Sie selbst hochladen (Texte, Fotos, Videos, Sprachnachrichten)</li>
+      </ul>
+      <p>
+        Diese Daten werden ausschließlich zur Bereitstellung und Verwaltung Ihres Benutzerkontos sowie der digitalen Abibücher verwendet.
+        Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).
+        Nach Abschluss des Projekts oder Löschung des Benutzerkontos werden die Daten gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>8. Datensicherheit</h2>
+      <p>
+        Wir verwenden eine dem aktuellen Stand der Technik entsprechende SSL-Verschlüsselung (HTTPS), um Ihre Daten bei der Übertragung zu schützen.
+        Unsere Server und Systeme werden regelmäßig überprüft und nach strengen Sicherheitsstandards betrieben.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>9. Dauer der Speicherung</h2>
+      <p>
+        Die Dauer der Speicherung richtet sich nach gesetzlichen Aufbewahrungsfristen.
+        Nach deren Ablauf werden die Daten gelöscht, sofern sie nicht mehr zur Vertragserfüllung oder aus berechtigtem Interesse erforderlich sind.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>10. Ihre Rechte</h2>
+      <ul>
+        <li>gemäß Art. 15 DSGVO Auskunft über Ihre gespeicherten Daten zu verlangen,</li>
+        <li>gemäß Art. 16 DSGVO die Berichtigung unrichtiger Daten zu verlangen,</li>
+        <li>gemäß Art. 17 DSGVO die Löschung Ihrer Daten zu verlangen,</li>
+        <li>gemäß Art. 18 DSGVO die Einschränkung der Verarbeitung zu verlangen,</li>
+        <li>gemäß Art. 20 DSGVO die Übertragung Ihrer Daten zu fordern,</li>
+        <li>gemäß Art. 21 DSGVO Widerspruch gegen bestimmte Verarbeitungen einzulegen,</li>
+        <li>und gemäß Art. 77 DSGVO Beschwerde bei einer Datenschutzaufsichtsbehörde einzureichen.</li>
+      </ul>
+      <p>
+        Für Auskünfte, Löschung oder Widerruf kontaktieren Sie uns bitte unter:<br>
+        <b><a href="mailto:meindigitalesabibuch@gmail.com">meindigitalesabibuch@gmail.com</a></b>
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>11. Unser Datenschutzversprechen</h2>
+      <p>
+        Wir respektieren Ihre Privatsphäre.<br><br>
+        Alle Inhalte sind nur für berechtigte Personen (z. B. Mitglieder eines Abschlussjahrgangs) zugänglich.
+        Nach Projektende werden gespeicherte Inhalte automatisch oder auf Wunsch vollständig gelöscht.
+      </p>
+    </div>
   </div>
+
+  <footer class="footerlinks smallcaps">
+    <a href="kontakt.html">Kontakt</a>
+    <a href="impressum.html">Impressum</a>
+    <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
+    <a href="datenschutz.html">Datenschutz</a>
+    <a href="rechtliche-hinweise.html">rechtliche Hinweise</a>
+  </footer>
+</div>
 </body>
 </html>
+
 
