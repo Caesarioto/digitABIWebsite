@@ -72,9 +72,27 @@
     .step.active{display:block}
 
     /* Footer */
-    .footerlinks{display:flex; gap:28px; justify-content:center; color:var(--ink); font-weight:600; letter-spacing:.06em; padding:26px 0 18px; flex-wrap:wrap}
-    .footerlinks a{color:#fff !important; text-decoration:none} color
-    .footerlinks a:hover{text-decoration:underline}
+   .footerlinks{
+    display:flex;
+    gap:28px;
+    justify-content:center;
+    color:#fff !important;              /* Text im Footer /
+    font-weight:600;
+    letter-spacing:.06em;
+    padding:26px 0 18px;
+    flex-wrap:wrap;
+  }
+  .footerlinks a,
+  .footerlinks a:link,
+  .footerlinks a:visited,
+  .footerlinks a:active{
+    color:#fff !important;              / Links weiß, auch visited /
+    text-decoration:none;
+  }
+  .footerlinks a:hover{
+    text-decoration:underline;
+    color:#eae7ff !important;           / optional leichtes Hover-Weiß */
+  }
 
   /* === WIDTH OVERRIDE (ans Ende des <style>-Blocks setzen) === */
 :root{
@@ -391,6 +409,7 @@ body > .container > .frame{ outline: 2px dashed #f33; }
   </script>
 </body>
 </html>
+
 
 
 
