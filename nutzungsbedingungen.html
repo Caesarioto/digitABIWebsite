@@ -14,9 +14,27 @@
   .nav{display:flex;align-items:center;justify-content:space-between;gap:24px;color:rgba(255,255,255,.88);font-weight:600;letter-spacing:.06em}
   .nav a{color:rgba(255,255,255,.88);text-decoration:none;margin-right:18px}
   .nav .right a{margin-right:0}
-  .footerlinks{display:flex;gap:28px;justify-content:center;color:var(--ink);font-weight:600;letter-spacing:.06em;padding:26px 0 18px;flex-wrap:wrap}
-  .footerlinks a{color:var(--ink);text-decoration:none} .footerlinks a:hover{text-decoration:underline}
-  .center{text-align:center}
+    .footerlinks{
+    display:flex;
+    gap:28px;
+    justify-content:center;
+    color:#fff !important;              /* Text im Footer */
+    font-weight:600;
+    letter-spacing:.06em;
+    padding:26px 0 18px;
+    flex-wrap:wrap;
+  }
+  .footerlinks a,
+  .footerlinks a:link,
+  .footerlinks a:visited,
+  .footerlinks a:active{
+    color:#fff !important;              /* Links weiß, auch visited */
+    text-decoration:none;
+  }
+  .footerlinks a:hover{
+    text-decoration:underline;
+    color:#eae7ff !important;           /* optional leichtes Hover-Weiß */
+  }
   h1{margin:0 0 14px;font-size:clamp(28px,3.8vw,40px);font-weight:800;letter-spacing:.06em;text-decoration:underline;text-underline-offset:6px;color:#111}
   .wrap{max-width:75ch;margin:0 auto 26px;line-height:1.8;color:#111}
   </style>
