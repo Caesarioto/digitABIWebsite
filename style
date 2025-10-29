@@ -1,0 +1,228 @@
+/* ===========================================================
+   DigitABI – Zentrales Stylesheet
+   Einheitliches Layout für alle Seiten
+   =========================================================== */
+
+/* --- Grundlegendes Design-System --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
+:root {
+  /* Farbverlauf & Akzentfarben */
+  --grad-left: #FA565D;
+  --grad-mid: #C45CAD;
+  --grad-right: #9052F8;
+
+  --ink: #151527;
+  --paper: #f6f6f8;
+  --card: #ffffff;
+  --border: #6c50ff;
+  --accent: #2e1df7;
+  --accent-weak: #eae7ff;
+  --muted: rgba(255, 255, 255, 0.9);
+}
+
+/* --- Basis-Layout --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(100deg, var(--grad-left) 0%, var(--grad-mid) 50%, var(--grad-right) 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Container-Struktur --- */
+.container {
+  max-width: min(1920px, 98vw);
+  margin: 0 auto;
+  padding: 32px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.frame {
+  background: var(--paper);
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  padding: 28px 24px;
+  max-width: min(1680px, 96vw);
+  margin: 18px auto;
+  box-shadow: 0 8px 30px rgba(17, 16, 50, 0.18);
+}
+
+/* --- Überschriften & Text --- */
+h1, h2, h3 {
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+h1 {
+  font-size: clamp(24px, 3.2vw, 36px);
+  margin-bottom: 12px;
+}
+
+h2 {
+  font-size: clamp(20px, 2.5vw, 28px);
+  margin-top: 22px;
+}
+
+p {
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.2s ease;
+}
+
+.btn.prev {
+  background: #fff;
+  border-color: #cfd2ff;
+  color: #1b1b2f;
+}
+
+.btn.next {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn.next:hover {
+  background: #4735ff;
+}
+
+.btn.next.ghost {
+  background: var(--accent-weak);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* --- Auswahlfelder / Optionen --- */
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center; /* zentriert Buttons */
+}
+
+.opt {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.15s ease;
+}
+
+.opt:hover {
+  border-color: var(--accent);
+}
+
+.opt.is-selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-weak);
+}
+
+/* --- Footer --- */
+footer.footerlinks {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 26px 0 18px;
+  margin-top: auto; /* sorgt für Footer am unteren Bildschirmrand */
+  color: var(--ink);
+}
+
+footer.footerlinks a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+footer.footerlinks a:hover {
+  text-decoration: underline;
+}
+
+/* --- Navigation (Topnav eingebunden per iframe) --- */
+.topnav-embed {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  display: block;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* --- Karten & Inhalte (z. B. Steckbrief-Editor, Datenschutz) --- */
+.section {
+  max-width: 900px;
+  margin: 0 auto 24px;
+  text-align: left;
+}
+
+.section p, .section li {
+  color: var(--muted);
+}
+
+ul {
+  margin: 0 0 16px 22px;
+}
+
+/* --- Bild-Upload im Steckbrief --- */
+.photo-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.photo-preview {
+  width: 140px;
+  height: 160px;
+  background: var(--accent-weak);
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.photo-buttons {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+/* --- Sonstiges --- */
+.smallcaps {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
