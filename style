@@ -152,26 +152,27 @@ p {
 }
 
 /* --- Footer --- */
-footer.footerlinks {
-  display: flex;
-  justify-content: center;
-  gap: 28px;
-  flex-wrap: wrap;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  padding: 26px 0 18px;
-  margin-top: auto; /* sorgt für Footer am unteren Bildschirmrand */
-  color: var(--ink);
-}
-
-footer.footerlinks a {
-  color: var(--ink);
-  text-decoration: none;
-}
-
-footer.footerlinks a:hover {
-  text-decoration: underline;
-}
+.footerlinks{
+    display:flex;
+    gap:28px;
+    justify-content:center;
+    color:#fff !important;              /* Text im Footer /
+    font-weight:600;
+    letter-spacing:.06em;
+    padding:26px 0 18px;
+    flex-wrap:wrap;
+  }
+  .footerlinks a,
+  .footerlinks a:link,
+  .footerlinks a:visited,
+  .footerlinks a:active{
+    color:#fff !important;              / Links weiß, auch visited /
+    text-decoration:none;
+  }
+  .footerlinks a:hover{
+    text-decoration:underline;
+    color:#eae7ff !important;           / optional leichtes Hover-Weiß */
+  }
 
 /* --- Navigation (Topnav eingebunden per iframe) --- */
 .topnav-embed {
