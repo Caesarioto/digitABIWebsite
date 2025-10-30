@@ -31,9 +31,27 @@ body{
 .nav{display:flex;align-items:center;justify-content:space-between;gap:24px;color:var(--muted);font-weight:600;letter-spacing:.06em}
 .nav a{color:var(--muted);text-decoration:none;margin-right:18px}
 .nav .right a{margin-right:0}
-.footerlinks{display:flex;gap:28px;justify-content:center;color:#151527;font-weight:600;letter-spacing:.06em;padding:26px 0 18px;flex-wrap:wrap}
-.footerlinks a{color:#151527;text-decoration:none}
-.footerlinks a:hover{text-decoration:underline}
+.footerlinks{
+    display:flex;
+    gap:28px;
+    justify-content:center;
+    color:#fff !important;              /* Text im Footer /
+    font-weight:600;
+    letter-spacing:.06em;
+    padding:26px 0 18px;
+    flex-wrap:wrap;
+  }
+  .footerlinks a,
+  .footerlinks a:link,
+  .footerlinks a:visited,
+  .footerlinks a:active{
+    color:#fff !important;              / Links weiß, auch visited /
+    text-decoration:none;
+  }
+  .footerlinks a:hover{
+    text-decoration:underline;
+    color:#eae7ff !important;           / optional leichtes Hover-Weiß */
+  }
 .center{text-align:center}
 .smallcaps{letter-spacing:.18em}
 .hr{width:36px;height:4px;background:#fff;border-radius:999px;margin:6px auto 18px;opacity:.9}
