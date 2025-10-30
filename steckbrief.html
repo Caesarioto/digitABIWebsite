@@ -67,6 +67,9 @@
   .muted{color:var(--muted); font-weight:600}
   .spacer{height:10px}
 
+  /* Neue Klasse für full-width Foto in der Liste */
+  .photo-row { grid-column: 1 / -1; margin: 16px 0; display: flex; align-items: center; } /* Full-width, mit Abstand für Trennung */
+
   /* kleine, dezente Editorleiste */
   .custombar{
     display:flex; gap:8px; align-items:center; justify-content:flex-end;
@@ -84,7 +87,7 @@
 
   /* Entfernen-Button im Label (für Basis & Custom identisch) */
   .remove{
-    position:absolute; right:0; top:2px; border:0; background:transparent; color:#777; cursor:pointer; font-weight:800;
+    position:relative; margin-left: 10px; border:0; background:transparent; color:#777; cursor:pointer; font-weight:800; top:0;
   }
   .remove:hover{ color:#c00 }
   .show{ display:grid !important; }
@@ -160,9 +163,7 @@
         </div>
 
         <!-- Faktenliste (Standard + Benutzerfelder) -->
-        <div class="facts" id="facts"><!-- per JS --></div>
-
-        <a class="next smallcaps" href="steckbrief-seite-2.html">→ Seite 2</a>
+        <div class="facts" id="facts"><!-- per JS --></div>        
       </div>
     </div>
 
@@ -178,29 +179,32 @@
   <script>
     /* ===== Basisfelder mit stabilen IDs ===== */
     const BASE_FIELDS = [
-      { id:"leistungskurse", label:"Leistungskurse:", value:"Bio, Sport" },
-      { id:"lieblingsfach", label:"Lieblingsfach:", value:"Bio, Sport" },
-      { id:"hassfach", label:"Hassfach:", value:"alle anderen" },
-      { id:"lieblingslehrer", label:"Lieblingslehrer:", value:"Frau Himmelmann" },
-      { id:"hasslehrer", label:"Hasslehrer:", value:"Herr Bock" },
-      { id:"sportart", label:"Meine Sportart:", value:"Pausenhofschlägerei" },
-      { id:"beschaeftigung", label:"Lieblingsbeschäftigung im Unterricht:", value:"Nase popeln" },
-      { id:"motivationslevel", label:"Motivationslevel in der Schule:", value:"unterirdisch, -2/10" },
-      { id:"drei-dinge", label:"3 Dinge, ohne die ich die Schule nicht überlebt hätte:", value:"Zigarettenpause, Handy, Freunde" },
-      { id:"als-lehrer", label:"Als Lehrer würde ich...", value:"den Beruf wechseln" },
-      { id:"rat-fuenft", label:"Fünft-Klässlern würde ich raten...", value:"lieber einen Hauptschulabschluss zu machen" },
-      { id:"bestes-erlebnis", label:"Bestes Schulerlebnis:", value:"eine Woche Hitzefrei in der zehnten Klasse" },
-      { id:"dreier-worte-head", label:"Die ersten 3 Worte die mir einfallen, wenn ich ... höre:", value:"" },
-      { id:"dreier-worte-schule", label:"Schule:", value:"boah ne ey" },
-      { id:"dreier-worte-freunde", label:"Freunde:", value:"Schabernack letzte Reihe" },
-      { id:"dreier-worte-alkohol", label:"Alkohol:", value:"gib die Flasche!" },
-      { id:"mein-vorbild", label:"Mein Vorbild:", value:"Mia Khalifa" },
-      { id:"plan-nach-abi", label:"Plan nach dem Abi:", value:"erst mal chillen" },
-      { id:"mein-traumberuf", label:"Mein Traumberuf:", value:"OnlyFans-Model" },
-      { id:"in-zehn-jahren", label:"Da sehe ich mich in 10 Jahren:", value:"entspannt am Strand" },
-      { id:"lotto-gewinn", label:"Wenn ich im Lotto gewinne, würde ich:", value:"ein Haus auf Hawaii kaufen" },
-      { id:"autobiografie", label:"Titel meiner Autobiografie:", value:"es kann nur besser werden!" },
-      { id:"abschluss", label:"Das möchte ich abschließend noch sagen:", value:"vielen Dank für die schöne Zeit und auf nimmer Wiedersehen" },
+      { id: "leistungskurse", label: "Leistungskurse:", value: "Bio, Sport" },
+      { id: "lieblingsfach", label: "Lieblingsfach:", value: "Bio, Sport" },
+      { id: "hassfach", label: "Hassfach:", value: "alle anderen" },
+      { id: "lieblingslehrer", label: "Lieblingslehrer:", value: "Frau Himmelmann" },
+      { id: "hasslehrer", label: "Hasslehrer:", value: "Herr Bock" },
+      { id: "sportart", label: "Meine Sportart:", value: "Pausenhofschlägerei" },
+      { id: "beschaeftigung", label: "Lieblingsbeschäftigung im Unterricht:", value: "Nase popeln" },
+      { id: "motivationslevel", label: "Motivationslevel in der Schule:", value: "unterirdisch, -2/10" },
+      { id: "drei-dinge", label: "3 Dinge, ohne die ich die Schule nicht überlebt hätte:", value: "Zigarettenpause, Handy, Freunde" },
+      { id: "als-lehrer", label: "Als Lehrer würde ich...", value: "den Beruf wechseln" },
+      { id: "rat-fuenft", label: "Fünft-Klässlern würde ich raten...", value: "lieber einen Hauptschulabschluss zu machen" },
+      { id: "bestes-erlebnis", label: "Bestes Schulerlebnis:", value: "eine Woche Hitzefrei in der zehnten Klasse" },
+      { id: "dreier-worte-head", label: "Die ersten 3 Worte die mir einfallen, wenn ich ... höre:", value: "" },
+      { id: "dreier-worte-schule", label: "Schule:", value: "boah ne ey" },
+      { id: "dreier-worte-freunde", label: "Freunde:", value: "Schabernack letzte Reihe" },
+      { id: "dreier-worte-alkohol", label: "Alkohol:", value: "gib die Flasche!" },
+      // NEU: Foto-Uploads (separate Objekte)
+      { type: "photo", id: "fantasie-photo", labelText: "SO SIEHT DIE SCHULE IN MEINER FANTASIE AUS" },
+      { type: "photo", id: "meme-photo", labelText: "DIESES MEME BESCHREIBT MEINE SCHULZEIT" },
+      { id: "mein-vorbild", label: "Mein Vorbild:", value: "Mia Khalifa" },
+      { id: "plan-nach-abi", label: "Plan nach dem Abi:", value: "erst mal chillen" },
+      { id: "mein-traumberuf", label: "Mein Traumberuf:", value: "OnlyFans-Model" },
+      { id: "in-zehn-jahren", label: "Da sehe ich mich in 10 Jahren:", value: "entspannt am Strand" },
+      { id: "lotto-gewinn", label: "Wenn ich im Lotto gewinne, würde ich:", value: "ein Haus auf Hawaii kaufen" },
+      { id: "autobiografie", label: "Titel meiner Autobiografie:", value: "es kann nur besser werden!" },
+      { id: "abschluss", label: "Das möchte ich abschließend noch sagen:", value: "vielen Dank für die schöne Zeit und auf nimmer Wiedersehen" }
     ];
 
     /* ===== Persistenz für Felder ===== */
@@ -218,7 +222,12 @@
 
     /* ===== Persistenz & Logik für Bilder ===== */
     const IMG_KEY_CURRENT = "digitabiPhotoCurrentV1";
-    const IMG_KEY_CHILD   = "digitabiPhotoChildV1";
+    const IMG_KEY_CHILD = "digitabiPhotoChildV1";
+
+    // Dynamische Keys für extra Fotos basierend auf ID
+    function getImgKey(id) {
+      return `digitabiPhoto_${id}V1`;
+    }
 
     function setPhoto(el, dataUrl){
       if (!el) return;
@@ -233,7 +242,13 @@
 
     function loadImages(){
       setPhoto(document.getElementById('photo-current'), localStorage.getItem(IMG_KEY_CURRENT));
-      setPhoto(document.getElementById('photo-child'),   localStorage.getItem(IMG_KEY_CHILD));
+      setPhoto(document.getElementById('photo-child'), localStorage.getItem(IMG_KEY_CHILD));
+      // Dynamisch für extra Fotos laden (nach renderFacts, da IDs dynamisch)
+      BASE_FIELDS.forEach(f => {
+        if (f.type === "photo") {
+          setPhoto(document.getElementById(`photo-${f.id}`), localStorage.getItem(getImgKey(f.id)));
+        }
+      });
     }
 
     function handleFile(inputEl, key, targetEl){
@@ -260,6 +275,27 @@
         </div>
       `;
     }
+
+    // Fix: Dynamisches HTML für jedes Photo separat
+    function rowPhotoHTML(f) {
+      const photoId = `photo-${f.id}`;
+      const fileId = `file-${f.id}`;
+      const target = f.id; // Für data-target
+      return `
+        <div class="photo-row">
+          <label class="ph" id="${photoId}" data-has-img="false" title="Klicken zum Bild hochladen">
+            <input type="file" id="${fileId}" accept="image/*">
+            <span>${f.labelText}</span>
+            <div class="overlay">
+              <button type="button" class="tinybtn primary" data-action="select" data-target="${target}">Bild wählen</button>
+              <button type="button" class="tinybtn" data-action="clear" data-target="${target}">Bild löschen</button>
+            </div>
+          </label>
+          <button class="remove" title="Foto-Feld entfernen" data-type="base" data-id="${f.id}">×</button>
+        </div>
+      `;
+    }
+
     function rowCustomHTML(f, i){
       return `
         <div class="row">
@@ -275,7 +311,13 @@
       // Basisfelder, ausgelassene (gelöschte) überspringen
       for (const f of BASE_FIELDS){
         if (deletedBase.has(f.id)) continue;
-        html += rowBaseHTML(f);
+
+        if (f.type === "photo") {
+          html += rowPhotoHTML(f);
+        } else {
+          html += rowBaseHTML(f);
+        }
+
         if (f.id === "dreier-worte-head"){
           html += `<div class="spacer"></div>`;
         }
@@ -359,7 +401,15 @@
     const inputCurrent = document.getElementById('file-current');
     const inputChild   = document.getElementById('file-child');
 
-    // Klick auf die Fläche öffnet Filepicker (außer Klick auf Buttons)
+    // Klick auf die Fläche öffnet Filepicker (außer Klick auf Buttons) - Delegation für dynamische extras
+    factsEl.addEventListener('click', (e) => {
+      const label = e.target.closest('.ph');
+      if (label && !e.target.closest('.tinybtn')) {
+        const input = label.querySelector('input[type="file"]');
+        if (input) input.click();
+      }
+    });
+
     currentLabel.addEventListener('click', (e)=>{
       if (e.target.closest('.tinybtn')) return;
       inputCurrent.click();
@@ -370,17 +420,38 @@
     });
 
     inputCurrent.addEventListener('change', ()=> handleFile(inputCurrent, IMG_KEY_CURRENT, currentLabel));
-    inputChild.addEventListener('change',   ()=> handleFile(inputChild,   IMG_KEY_CHILD,   childLabel));
+    inputChild.addEventListener('change', ()=> handleFile(inputChild, IMG_KEY_CHILD, childLabel));
 
-    // Buttons in der Overlay-Leiste
+    // Dynamische Change-Listener für extra Fotos (nach render)
+    BASE_FIELDS.forEach(f => {
+      if (f.type === "photo") {
+        const input = document.getElementById(`file-${f.id}`);
+        const label = document.getElementById(`photo-${f.id}`);
+        if (input) {
+          input.addEventListener('change', () => handleFile(input, getImgKey(f.id), label));
+        }
+      }
+    });
+
+    // Buttons in der Overlay-Leiste (Delegation auf document)
     document.addEventListener('click', (e)=>{
       const btn = e.target.closest('.tinybtn'); if(!btn) return;
       const action = btn.dataset.action;
-      const target = btn.dataset.target; // "current" | "child"
-      const isCurrent = target === 'current';
-      const key  = isCurrent ? IMG_KEY_CURRENT : IMG_KEY_CHILD;
-      const node = isCurrent ? currentLabel : childLabel;
-      const inp  = isCurrent ? inputCurrent : inputChild;
+      const target = btn.dataset.target; // z.B. "current", "child", "fantasie-photo", "meme-photo"
+      let key, node, inp;
+
+      if (target === 'current') {
+        key = IMG_KEY_CURRENT; node = currentLabel; inp = inputCurrent;
+      } else if (target === 'child') {
+        key = IMG_KEY_CHILD; node = childLabel; inp = inputChild;
+      } else {
+        // Dynamisch für extras
+        key = getImgKey(target); 
+        node = document.getElementById(`photo-${target}`);
+        inp = document.getElementById(`file-${target}`);
+      }
+
+      if (!node || !inp) return;
 
       if (action === 'select'){
         inp.click();
