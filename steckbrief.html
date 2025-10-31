@@ -38,7 +38,7 @@
     height:160px; border-radius:10px;
     background:var(--vio);
     display:flex; align-items:center; justify-content:center; font-weight:700; color:#3b2f77;
-    overflow:hidden;
+    overflow:hidden; width:100%;
   }
   .ph[data-has-img="true"]{
     background-size:cover;
@@ -61,18 +61,19 @@
   .name .date{font-size:12.5px; color:#333}
 
   .facts{margin-top:18px; display:grid; grid-template-columns:1fr; gap:10px}
-  .row{display:grid; grid-template-columns: 240px 1fr; gap:10px; align-items:baseline}
-  .label{color:#333; font-weight:600; position:relative; padding-right:22px}
-  .value{color:#111}
+  .row{display:flex; gap:10px; align-items:baseline}
+  .label{color:#333; font-weight:600; flex:0 0 240px; } /* Feste Breite für Label */
+  .value{color:#111; flex:1}
   .muted{color:var(--muted); font-weight:600}
   .spacer{height:10px}
 
   /* Neue Klasse für full-width Foto in der Liste */
-  .photo-row { grid-column: 1 / -1; margin: 16px 0; display: flex; align-items: center; } /* Full-width, mit Abstand für Trennung */
+  .photos-extra { grid-column: 1 / -1; margin: 16px 0; display: flex; gap:20px; } /* Wrapper für nebeneinander */
+  .photo-row { flex:1; display: flex; align-items: center; gap:10px; margin:0; } /* Jede photo gleich breit */
 
   /* kleine, dezente Editorleiste */
   .custombar{
-    display:flex; gap:8px; align-items:center; justify-content:flex-end;
+    display:flex; gap:8px; align-items:center; justify-content:flex-start; /* Links ausgerichtet */
     margin-top:8px; margin-bottom:4px;
   }
   .microbtn{
@@ -87,7 +88,8 @@
 
   /* Entfernen-Button im Label (für Basis & Custom identisch) */
   .remove{
-    position:relative; margin-left: 10px; border:0; background:transparent; color:#777; cursor:pointer; font-weight:800; top:0;
+    border:0; background:transparent; color:#777; cursor:pointer; font-weight:800; font-size:18px;
+    padding:0; margin:0; position:static; flex:none;
   }
   .remove:hover{ color:#c00 }
   .show{ display:grid !important; }
@@ -148,22 +150,19 @@
           </label>
         </div>
 
+        <!-- Faktenliste (Standard + Benutzerfelder) -->
+        <div class="facts" id="facts"><!-- per JS --></div>        
+
         <!-- kleine Editorleiste -->
         <div class="custombar">
           <button class="microbtn primary" id="toggleCustom">+ Eigenes Feld</button>
-          <button class="microbtn" id="clearCustom">Benutzerfelder löschen</button>
-          <button class="microbtn" id="resetBase">Standardfelder zurücksetzen</button>
+          <!-- Eingabeformular für neue Felder (eingeklappt) -->
+          <div class="customform" id="customForm">
+            <input id="cfLabel" type="text" placeholder="Feldtitel (z. B. Lieblingsessen)">
+            <input id="cfValue" type="text" placeholder="Inhalt (z. B. Pizza)">
+            <button class="microbtn primary" id="cfAdd">Hinzufügen</button>
+          </div>
         </div>
-
-        <!-- Eingabeformular für neue Felder (eingeklappt) -->
-        <div class="customform" id="customForm">
-          <input id="cfLabel" type="text" placeholder="Feldtitel (z. B. Lieblingsessen)">
-          <input id="cfValue" type="text" placeholder="Inhalt (z. B. Pizza)">
-          <button class="microbtn primary" id="cfAdd">Hinzufügen</button>
-        </div>
-
-        <!-- Faktenliste (Standard + Benutzerfelder) -->
-        <div class="facts" id="facts"><!-- per JS --></div>        
       </div>
     </div>
 
@@ -270,7 +269,8 @@
       const optClass = f.class ? ` ${f.class}` : "";
       return `
         <div class="row${optClass}">
-          <div class="label">${f.label}<button class="remove" title="Feld entfernen" data-type="base" data-id="${f.id}">×</button></div>
+          <button class="remove" title="Feld entfernen" data-type="base" data-id="${f.id}">×</button>
+          <div class="label">${f.label}</div>
           <div class="value">${f.value}</div>
         </div>
       `;
@@ -283,6 +283,7 @@
       const target = f.id; // Für data-target
       return `
         <div class="photo-row">
+          <button class="remove" title="Foto-Feld entfernen" data-type="base" data-id="${f.id}">×</button>
           <label class="ph" id="${photoId}" data-has-img="false" title="Klicken zum Bild hochladen">
             <input type="file" id="${fileId}" accept="image/*">
             <span>${f.labelText}</span>
@@ -291,7 +292,6 @@
               <button type="button" class="tinybtn" data-action="clear" data-target="${target}">Bild löschen</button>
             </div>
           </label>
-          <button class="remove" title="Foto-Feld entfernen" data-type="base" data-id="${f.id}">×</button>
         </div>
       `;
     }
@@ -299,7 +299,8 @@
     function rowCustomHTML(f, i){
       return `
         <div class="row">
-          <div class="label">${f.label}<button class="remove" title="Feld entfernen" data-type="custom" data-i="${i}">×</button></div>
+          <button class="remove" title="Feld entfernen" data-type="custom" data-i="${i}">×</button>
+          <div class="label">${f.label}</div>
           <div class="value">${f.value}</div>
         </div>
       `;
@@ -307,20 +308,32 @@
 
     function renderFacts(){
       let html = "";
+      let inPhotos = false;
 
       // Basisfelder, ausgelassene (gelöschte) überspringen
       for (const f of BASE_FIELDS){
         if (deletedBase.has(f.id)) continue;
 
         if (f.type === "photo") {
+          if (!inPhotos) {
+            html += '<div class="photos-extra">';
+            inPhotos = true;
+          }
           html += rowPhotoHTML(f);
         } else {
+          if (inPhotos) {
+            html += '</div>';
+            inPhotos = false;
+          }
           html += rowBaseHTML(f);
         }
 
         if (f.id === "dreier-worte-head"){
           html += `<div class="spacer"></div>`;
         }
+      }
+      if (inPhotos) {
+        html += '</div>';
       }
 
       // Custom-Felder
@@ -336,16 +349,15 @@
 
     /* ===== UI: hinzufügen / löschen / reset ===== */
     const toggleBtn = document.getElementById("toggleCustom");
-    const clearBtn  = document.getElementById("clearCustom");
-    const resetBtn  = document.getElementById("resetBase");
     const formBox   = document.getElementById("customForm");
     const addBtn    = document.getElementById("cfAdd");
     const inLabel   = document.getElementById("cfLabel");
     const inValue   = document.getElementById("cfValue");
 
     toggleBtn.addEventListener("click", () => {
-      formBox.classList.toggle("show");
-      if (formBox.classList.contains("show")) inLabel.focus();
+      toggleBtn.style.display = 'none';
+      formBox.classList.add("show");
+      inLabel.focus();
     });
 
     addBtn.addEventListener("click", () => {
@@ -355,22 +367,8 @@
       customFields.push({ label, value });
       saveCustom(customFields);
       inLabel.value = ""; inValue.value = "";
-      renderFacts();
-    });
-
-    clearBtn.addEventListener("click", () => {
-      if (!customFields.length) return;
-      if (!confirm("Alle eigenen Felder wirklich löschen?")) return;
-      customFields = [];
-      saveCustom(customFields);
-      renderFacts();
-    });
-
-    resetBtn.addEventListener("click", () => {
-      if (!deletedBase.size) return;
-      if (!confirm("Alle Standardfelder wiederherstellen?")) return;
-      deletedBase = new Set();
-      saveDeleted(deletedBase);
+      formBox.classList.remove("show");
+      toggleBtn.style.display = 'block';
       renderFacts();
     });
 
