@@ -29,11 +29,8 @@
   }
   .frame h2{ text-align:center; margin:0; line-height:1.35; color:#1f1f2f; }
   .frame h2 .line2{font-weight:800}
-
   .sheet{ margin-top:18px; background:#f6f6f8; border:1px solid #b6a8ff; border-radius:10px; padding:24px 22px; }
   .photos{display:grid; grid-template-columns: 140px 1fr 140px; gap:24px; align-items:start; margin-top:6px}
-
-  /* Foto-Platzhalter / Upload-Zonen */
   .ph{
     position:relative;
     height:160px; border-radius:10px;
@@ -44,7 +41,7 @@
   .ph[data-has-img="true"]{
     background-size:cover;
     background-position:center;
-    color:transparent; /* Text ausblenden, wenn Bild vorhanden */
+    color:transparent;
   }
   .ph input[type="file"]{ display:none; }
   .ph .overlay{
@@ -56,25 +53,19 @@
     border:2px solid #cfd2ff; background:#fff; color:#1b1b2f; font-size:12px;
   }
   .tinybtn.primary{ border-color:#2e1df7; background:#eae7ff; color:#2e1df7 }
-
   .name{ display:flex; flex-direction:column; align-items:center; justify-content:center; padding-top:10px; }
   .name .big{font-size:20px; font-weight:700; letter-spacing:.02em; color:#111; text-align:center}
   .name .date{font-size:12.5px; color:#333}
-
   .facts{margin-top:18px; display:grid; grid-template-columns:1fr; gap:10px}
   .row{display:flex; gap:10px; align-items:baseline}
-  .label{color:#333; font-weight:600; flex:0 0 240px; } /* Feste Breite für Label */
+  .label{color:#333; font-weight:600; flex:0 0 240px; }
   .value{color:#111; flex:1}
   .muted{color:var(--muted); font-weight:600}
   .spacer{height:10px}
-
-  /* Neue Klasse für full-width Foto in der Liste */
-  .photos-extra { grid-column: 1 / -1; margin: 16px 0; display: flex; gap:20px; } /* Wrapper für nebeneinander */
-  .photo-row { flex:1; display: flex; align-items: center; gap:10px; margin:0; } /* Jede photo gleich breit */
-
-  /* kleine, dezente Editorleiste */
+  .photos-extra { grid-column: 1 / -1; margin: 16px 0; display: flex; gap:20px; }
+  .photo-row { flex:1; display: flex; align-items: center; gap:10px; margin:0; }
   .custombar{
-    display:flex; gap:8px; align-items:center; justify-content:flex-start; /* Links ausgerichtet */
+    display:flex; gap:8px; align-items:center; justify-content:flex-start;
     margin-top:8px; margin-bottom:4px;
   }
   .microbtn{
@@ -86,15 +77,12 @@
   .customform input{
     width:100%; padding:8px 10px; border:1px solid #ddd; border-radius:10px; font-family:inherit;
   }
-
-  /* Entfernen-Button im Label (für Basis & Custom identisch) */
   .remove{
     border:0; background:transparent; color:#777; cursor:pointer; font-weight:800; font-size:18px;
     padding:0; margin:0; position:static; flex:none;
   }
   .remove:hover{ color:#c00 }
   .show{ display:grid !important; }
-
   .next{
     display:inline-flex; align-items:center; justify-content:center;
     padding:10px 16px; font-weight:700; border-radius:12px;
@@ -102,15 +90,12 @@
     position:absolute; right:18px; bottom:14px;
   }
   .next:hover{background:#dcd6ff}
-
   footer.footerlinks{display:flex; gap:16px; justify-content:center; margin-top:22px}
   footer.footerlinks a{color:#fff; text-decoration:none; font-weight:600}
   footer.footerlinks a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
-
-<!-- Top-Leiste als IFRAME einbinden -->
 <iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
 <style>
   .topnav-embed{
@@ -118,11 +103,9 @@
     background:transparent;
   }
 </style>
-
   <div class="container">
     <div class="frame">
       <h2 class="smallcaps">Vorschau unseres Abibuch-Editors<br><span class="line2">–<br>so könnte dein Abibuch aussehen:</span></h2>
-
       <div class="sheet">
         <div class="photos">
           <!-- AKTUELLES FOTO -->
@@ -134,12 +117,10 @@
               <button type="button" class="tinybtn" data-action="clear" data-target="current">Bild löschen</button>
             </div>
           </label>
-
           <div class="name">
             <div class="big">Mulan<br>Mustermann</div>
             <div class="date">31.02.2008</div>
           </div>
-
           <!-- KINDERBILD -->
           <label class="ph" id="photo-child" data-has-img="false" title="Klicken zum Bild hochladen">
             <input type="file" id="file-child" accept="image/*">
@@ -151,33 +132,33 @@
           </label>
         </div>
 
-        <!-- Faktenliste (Standard + Benutzerfelder) -->
-        <div class="facts" id="facts"><!-- per JS --></div>        
-        <h3 class="section"></br>Mitschüler Kommentare</h3>
+        <!-- Faktenliste -->
+        <div class="facts" id="facts"><!-- per JS --></div>
 
-      <div class="comment">
-        <div class="row"><div class="label">Beschreibe die Person in einem Wort:</div><div class="value">witzig, nett, überdreht, faul, bildhübsch, verpeilt, frech</div></div>
-      </div>
-      <div class="comment">
-        <div class="row"><div class="label">Da sehe ich die Person in 10 Jahren:</div><div class="value">glücklich, am Strand mit Villa, reich, mit dem heißesten Partner</div></div>
-      </div>
-      <div class="comment">
-        <div class="row"><div class="label">Das will ich dir noch mit auf den Weg geben:</div><div class="value">viel Glück bei allem was du machst, ohne dich wäre die Schule nur halb so witzig gewesen, danke</div></div>
-      </div>
-        
-        <!-- kleine Editorleiste -->
+        <!-- Editorleiste für FAKTEN -->
         <div class="custombar">
           <button class="microbtn primary" id="toggleCustom">+ Eigenes Feld</button>
-          <!-- Eingabeformular für neue Felder (eingeklappt) -->
           <div class="customform" id="customForm">
             <input id="cfLabel" type="text" placeholder="Feldtitel (z. B. Lieblingsessen)">
             <input id="cfValue" type="text" placeholder="Inhalt (z. B. Pizza)">
             <button class="microbtn primary" id="cfAdd">Hinzufügen</button>
           </div>
         </div>
+
+        <h3 class="section"><br>Mitschüler Kommentare</h3>
+        <div class="comments" id="comments"><!-- per JS --></div>
+
+        <!-- Editorleiste für KOMMENTARE -->
+        <div class="custombar" id="custombar-comments">
+          <button class="microbtn primary" id="toggleCustomComments">+ Eigenes Feld</button>
+          <div class="customform" id="customFormComments">
+            <input id="cfLabelComments" type="text" placeholder="Feldtitel (z. B. Lieblingsessen)">
+            <input id="cfValueComments" type="text" placeholder="Inhalt (z. B. Pizza)">
+            <button class="microbtn primary" id="cfAddComments">Hinzufügen</button>
+          </div>
+        </div>
       </div>
     </div>
-
     <footer class="footerlinks">
       <a href="kontakt.html">Kontakt</a>
       <a href="impressum.html">Impressum</a>
@@ -188,7 +169,6 @@
   </div>
 
   <script>
-    /* ===== Basisfelder mit stabilen IDs ===== */
     const BASE_FIELDS = [
       { id: "leistungskurse", label: "Leistungskurse:", value: "Bio, Sport" },
       { id: "lieblingsfach", label: "Lieblingsfach:", value: "Bio, Sport" },
@@ -206,7 +186,6 @@
       { id: "dreier-worte-schule", label: "Schule:", value: "boah ne ey" },
       { id: "dreier-worte-freunde", label: "Freunde:", value: "Schabernack letzte Reihe" },
       { id: "dreier-worte-alkohol", label: "Alkohol:", value: "gib die Flasche!" },
-      // NEU: Foto-Uploads (separate Objekte)
       { type: "photo", id: "fantasie-photo", labelText: "SO SIEHT DIE SCHULE IN MEINER FANTASIE AUS" },
       { type: "photo", id: "meme-photo", labelText: "DIESES MEME BESCHREIBT MEINE SCHULZEIT" },
       { id: "mein-vorbild", label: "Mein Vorbild:", value: "Mia Khalifa" },
@@ -218,27 +197,34 @@
       { id: "abschluss", label: "Das möchte ich abschließend noch sagen:", value: "vielen Dank für die schöne Zeit und auf nimmer Wiedersehen" }
     ];
 
-    /* ===== Persistenz für Felder ===== */
-    const CUSTOM_KEY   = "digitabiCustomFieldsV1";
-    const DELETED_KEY  = "digitabiDeletedBaseV1";
+    const COMMENT_FIELDS = [
+      { id: "comment1", label: "Beschreibe die Person in einem Wort:", value: "witzig, nett, überdreht, faul, bildhübsch, verpeilt, frech" },
+      { id: "comment2", label: "Da sehe ich die Person in 10 Jahren:", value: "glücklich, am Strand mit Villa, reich, mit dem heißesten Partner" },
+      { id: "comment3", label: "Das will ich dir noch mit auf den Weg geben:", value: "viel Glück bei allem was du machst, ohne dich wäre die Schule nur halb so witzig gewesen, danke" }
+    ];
+
+    const CUSTOM_KEY = "digitabiCustomFieldsV1";
+    const CUSTOM_COMMENTS_KEY = "digitabiCustomCommentsV1";
+    const DELETED_KEY = "digitabiDeletedBaseV1";
+    const DELETED_COMMENTS_KEY = "digitabiDeletedCommentsV1";
 
     function loadCustom(){ try { return JSON.parse(localStorage.getItem(CUSTOM_KEY)) || []; } catch { return []; } }
     function saveCustom(list){ localStorage.setItem(CUSTOM_KEY, JSON.stringify(list)); }
-
+    function loadCustomComments(){ try { return JSON.parse(localStorage.getItem(CUSTOM_COMMENTS_KEY)) || []; } catch { return []; } }
+    function saveCustomComments(list){ localStorage.setItem(CUSTOM_COMMENTS_KEY, JSON.stringify(list)); }
     function loadDeleted(){ try { return new Set(JSON.parse(localStorage.getItem(DELETED_KEY)) || []); } catch { return new Set(); } }
     function saveDeleted(set){ localStorage.setItem(DELETED_KEY, JSON.stringify([...set])); }
+    function loadDeletedComments(){ try { return new Set(JSON.parse(localStorage.getItem(DELETED_COMMENTS_KEY)) || []); } catch { return new Set(); } }
+    function saveDeletedComments(set){ localStorage.setItem(DELETED_COMMENTS_KEY, JSON.stringify([...set])); }
 
-    let customFields = loadCustom();      // [{label, value}]
-    let deletedBase  = loadDeleted();     // Set(['hassfach', ...])
+    let customFields = loadCustom();
+    let customComments = loadCustomComments();
+    let deletedBase = loadDeleted();
+    let deletedComments = loadDeletedComments();
 
-    /* ===== Persistenz & Logik für Bilder ===== */
     const IMG_KEY_CURRENT = "digitabiPhotoCurrentV1";
     const IMG_KEY_CHILD = "digitabiPhotoChildV1";
-
-    // Dynamische Keys für extra Fotos basierend auf ID
-    function getImgKey(id) {
-      return `digitabiPhoto_${id}V1`;
-    }
+    function getImgKey(id) { return `digitabiPhoto_${id}V1`; }
 
     function setPhoto(el, dataUrl){
       if (!el) return;
@@ -254,7 +240,6 @@
     function loadImages(){
       setPhoto(document.getElementById('photo-current'), localStorage.getItem(IMG_KEY_CURRENT));
       setPhoto(document.getElementById('photo-child'), localStorage.getItem(IMG_KEY_CHILD));
-      // Dynamisch für extra Fotos laden (nach renderFacts, da IDs dynamisch)
       BASE_FIELDS.forEach(f => {
         if (f.type === "photo") {
           setPhoto(document.getElementById(`photo-${f.id}`), localStorage.getItem(getImgKey(f.id)));
@@ -263,7 +248,7 @@
     }
 
     function handleFile(inputEl, key, targetEl){
-      const file = inputEl.files && inputEl.files[0];
+      const file = inputEl.files?.[0];
       if(!file) return;
       const reader = new FileReader();
       reader.onload = () => {
@@ -274,97 +259,80 @@
       reader.readAsDataURL(file);
     }
 
-    /* ===== Render der Faktenliste ===== */
     const factsEl = document.getElementById("facts");
+    const commentsEl = document.getElementById("comments");
 
     function rowBaseHTML(f){
-      const optClass = f.class ? ` ${f.class}` : "";
-      return `
-        <div class="row${optClass}">
-          <button class="remove" title="Feld entfernen" data-type="base" data-id="${f.id}">×</button>
-          <div class="label">${f.label}</div>
-          <div class="value">${f.value}</div>
-        </div>
-      `;
+      return `<div class="row"><button class="remove" data-type="base" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
     }
 
-    // Fix: Dynamisches HTML für jedes Photo separat
     function rowPhotoHTML(f) {
       const photoId = `photo-${f.id}`;
       const fileId = `file-${f.id}`;
-      const target = f.id; // Für data-target
       return `
         <div class="photo-row">
-          <button class="remove" title="Foto-Feld entfernen" data-type="base" data-id="${f.id}">×</button>
-          <label class="ph" id="${photoId}" data-has-img="false" title="Klicken zum Bild hochladen">
+          <button class="remove" data-type="base" data-id="${f.id}">x</button>
+          <label class="ph" id="${photoId}" data-has-img="false">
             <input type="file" id="${fileId}" accept="image/*">
             <span>${f.labelText}</span>
             <div class="overlay">
-              <button type="button" class="tinybtn primary" data-action="select" data-target="${target}">Bild wählen</button>
-              <button type="button" class="tinybtn" data-action="clear" data-target="${target}">Bild löschen</button>
+              <button type="button" class="tinybtn primary" data-action="select" data-target="${f.id}">Bild wählen</button>
+              <button type="button" class="tinybtn" data-action="clear" data-target="${f.id}">Bild löschen</button>
             </div>
           </label>
-        </div>
-      `;
+        </div>`;
     }
 
     function rowCustomHTML(f, i){
-      return `
-        <div class="row">
-          <button class="remove" title="Feld entfernen" data-type="custom" data-i="${i}">×</button>
-          <div class="label">${f.label}</div>
-          <div class="value">${f.value}</div>
-        </div>
-      `;
+      return `<div class="row"><button class="remove" data-type="custom" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
     }
 
     function renderFacts(){
-      let html = "";
-      let inPhotos = false;
-
-      // Basisfelder, ausgelassene (gelöschte) überspringen
+      let html = "", inPhotos = false;
       for (const f of BASE_FIELDS){
         if (deletedBase.has(f.id)) continue;
-
         if (f.type === "photo") {
-          if (!inPhotos) {
-            html += '<div class="photos-extra">';
-            inPhotos = true;
-          }
+          if (!inPhotos) { html += '<div class="photos-extra">'; inPhotos = true; }
           html += rowPhotoHTML(f);
         } else {
-          if (inPhotos) {
-            html += '</div>';
-            inPhotos = false;
-          }
+          if (inPhotos) { html += '</div>'; inPhotos = false; }
           html += rowBaseHTML(f);
         }
-
-        if (f.id === "dreier-worte-head"){
-          html += `<div class="spacer"></div>`;
-        }
+        if (f.id === "dreier-worte-head") html += `<div class="spacer"></div>`;
       }
-      if (inPhotos) {
-        html += '</div>';
-      }
-
-      // Custom-Felder
-      for (let i=0; i<customFields.length; i++){
-        html += rowCustomHTML(customFields[i], i);
-      }
-
+      if (inPhotos) html += '</div>';
+      customFields.forEach((f,i) => html += rowCustomHTML(f,i));
       factsEl.innerHTML = html;
     }
 
+    function rowCommentHTML(f){
+      return `<div class="comment"><div class="row"><button class="remove" data-type="comment" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
+    }
+
+    function rowCustomCommentHTML(f, i){
+      return `<div class="comment"><div class="row"><button class="remove" data-type="custom-comment" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
+    }
+
+    function renderComments(){
+      let html = "";
+      for (const f of COMMENT_FIELDS){
+        if (deletedComments.has(f.id)) continue;
+        html += rowCommentHTML(f);
+      }
+      customComments.forEach((f,i) => html += rowCustomCommentHTML(f,i));
+      commentsEl.innerHTML = html;
+    }
+
     renderFacts();
+    renderComments();
     loadImages();
 
-    /* ===== UI: hinzufügen / löschen / reset ===== */
+    // FAKTEN: + Eigenes Feld
     const toggleBtn = document.getElementById("toggleCustom");
-    const formBox   = document.getElementById("customForm");
-    const addBtn    = document.getElementById("cfAdd");
-    const inLabel   = document.getElementById("cfLabel");
-    const inValue   = document.getElementById("cfValue");
+    const formBox = document.getElementById("customForm");
+    const addBtn = document.getElementById("cfAdd");
+    const inLabel = document.getElementById("cfLabel");
+    const inValue = document.getElementById("cfValue");
 
     toggleBtn.addEventListener("click", () => {
       toggleBtn.style.display = 'none';
@@ -384,92 +352,97 @@
       renderFacts();
     });
 
-    // Delegation für alle ×-Buttons (Basis & Custom)
-    factsEl.addEventListener("click", (e)=>{
+    // KOMMENTARE: + Eigenes Feld
+    const toggleBtnComments = document.getElementById("toggleCustomComments");
+    const formBoxComments = document.getElementById("customFormComments");
+    const addBtnComments = document.getElementById("cfAddComments");
+    const inLabelComments = document.getElementById("cfLabelComments");
+    const inValueComments = document.getElementById("cfValueComments");
+
+    toggleBtnComments.addEventListener("click", () => {
+      toggleBtnComments.style.display = 'none';
+      formBoxComments.classList.add("show");
+      inLabelComments.focus();
+    });
+
+    addBtnComments.addEventListener("click", () => {
+      const label = inLabelComments.value.trim();
+      const value = inValueComments.value.trim();
+      if (!label || !value){ alert("Bitte Feldtitel und Inhalt eingeben."); return; }
+      customComments.push({ label, value });
+      saveCustomComments(customComments);
+      inLabelComments.value = ""; inValueComments.value = "";
+      formBoxComments.classList.remove("show");
+      toggleBtnComments.style.display = 'block';
+      renderComments();
+    });
+
+    // Entfernen
+    document.addEventListener("click", (e) => {
       const btn = e.target.closest(".remove"); if (!btn) return;
       const type = btn.dataset.type;
-
       if (type === "custom"){
         const i = parseInt(btn.dataset.i, 10);
         customFields.splice(i, 1);
         saveCustom(customFields);
         renderFacts();
-        return;
       }
       if (type === "base"){
-        const id = btn.dataset.id;
-        deletedBase.add(id);
+        deletedBase.add(btn.dataset.id);
         saveDeleted(deletedBase);
         renderFacts();
-        return;
+      }
+      if (type === "comment"){
+        deletedComments.add(btn.dataset.id);
+        saveDeletedComments(deletedComments);
+        renderComments();
+      }
+      if (type === "custom-comment"){
+        const i = parseInt(btn.dataset.i, 10);
+        customComments.splice(i, 1);
+        saveCustomComments(customComments);
+        renderComments();
       }
     });
 
-    /* ===== Foto-Upload Events ===== */
+    // Foto-Upload
     const currentLabel = document.getElementById('photo-current');
-    const childLabel   = document.getElementById('photo-child');
+    const childLabel = document.getElementById('photo-child');
     const inputCurrent = document.getElementById('file-current');
-    const inputChild   = document.getElementById('file-child');
+    const inputChild = document.getElementById('file-child');
 
-    // Klick auf die Fläche öffnet Filepicker (außer Klick auf Buttons) - Delegation für dynamische extras
     factsEl.addEventListener('click', (e) => {
       const label = e.target.closest('.ph');
       if (label && !e.target.closest('.tinybtn')) {
-        const input = label.querySelector('input[type="file"]');
-        if (input) input.click();
+        label.querySelector('input[type="file"]').click();
       }
     });
 
-    currentLabel.addEventListener('click', (e)=>{
-      if (e.target.closest('.tinybtn')) return;
-      inputCurrent.click();
-    });
-    childLabel.addEventListener('click', (e)=>{
-      if (e.target.closest('.tinybtn')) return;
-      inputChild.click();
-    });
+    currentLabel.addEventListener('click', (e) => { if (!e.target.closest('.tinybtn')) inputCurrent.click(); });
+    childLabel.addEventListener('click', (e) => { if (!e.target.closest('.tinybtn')) inputChild.click(); });
 
-    inputCurrent.addEventListener('change', ()=> handleFile(inputCurrent, IMG_KEY_CURRENT, currentLabel));
-    inputChild.addEventListener('change', ()=> handleFile(inputChild, IMG_KEY_CHILD, childLabel));
+    inputCurrent.addEventListener('change', () => handleFile(inputCurrent, IMG_KEY_CURRENT, currentLabel));
+    inputChild.addEventListener('change', () => handleFile(inputChild, IMG_KEY_CHILD, childLabel));
 
-    // Dynamische Change-Listener für extra Fotos (nach render)
     BASE_FIELDS.forEach(f => {
       if (f.type === "photo") {
         const input = document.getElementById(`file-${f.id}`);
         const label = document.getElementById(`photo-${f.id}`);
-        if (input) {
-          input.addEventListener('change', () => handleFile(input, getImgKey(f.id), label));
-        }
+        if (input) input.addEventListener('change', () => handleFile(input, getImgKey(f.id), label));
       }
     });
 
-    // Buttons in der Overlay-Leiste (Delegation auf document)
-    document.addEventListener('click', (e)=>{
-      const btn = e.target.closest('.tinybtn'); if(!btn) return;
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.tinybtn'); if (!btn) return;
       const action = btn.dataset.action;
-      const target = btn.dataset.target; // z.B. "current", "child", "fantasie-photo", "meme-photo"
+      const target = btn.dataset.target;
       let key, node, inp;
-
-      if (target === 'current') {
-        key = IMG_KEY_CURRENT; node = currentLabel; inp = inputCurrent;
-      } else if (target === 'child') {
-        key = IMG_KEY_CHILD; node = childLabel; inp = inputChild;
-      } else {
-        // Dynamisch für extras
-        key = getImgKey(target); 
-        node = document.getElementById(`photo-${target}`);
-        inp = document.getElementById(`file-${target}`);
-      }
-
+      if (target === 'current') { key = IMG_KEY_CURRENT; node = currentLabel; inp = inputCurrent; }
+      else if (target === 'child') { key = IMG_KEY_CHILD; node = childLabel; inp = inputChild; }
+      else { key = getImgKey(target); node = document.getElementById(`photo-${target}`); inp = document.getElementById(`file-${target}`); }
       if (!node || !inp) return;
-
-      if (action === 'select'){
-        inp.click();
-      }
-      if (action === 'clear'){
-        localStorage.removeItem(key);
-        setPhoto(node, null);
-      }
+      if (action === 'select') inp.click();
+      if (action === 'clear') { localStorage.removeItem(key); setPhoto(node, null); }
     });
   </script>
 </body>
