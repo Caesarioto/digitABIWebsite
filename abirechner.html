@@ -149,16 +149,12 @@ body > .container > .frame{ outline: 2px dashed #f33; }
 
   <div class="container" style="max-width: 1920px !important; width: 100% !important;">
     <div class="frame" id="rechner" style="max-width: 1680px !important;">
-      <h1>DigitABI – Abibuch-Konfigurator</h1>
-      <div class="tabs">
-        <a class="tab">Abibuch-Konfigurator</a>
-        <a class="tab secondary" href="steckbrief.html">Steckbrief-Editor</a>
-      </div>
-
+      <h1>Mein Abibuch-Konfigurator</h1>
+     
       <!-- STEP 0 -->
       <section class="step active" data-step="0">
         <div class="row">
-          <p class="mb-4" style="font-size:18px; font-weight:700">Für welches Jahr?</p>
+          <p class="mb-4" style="font-size:18px; font-weight:700">Für welches Jahr ist dein Abibuch?</p>
           <div class="options" id="yearOptions">
             <button class="opt" data-value="2025">2025</button>
             <button class="opt is-selected" data-value="2026">2026</button>
@@ -241,7 +237,7 @@ body > .container > .frame{ outline: 2px dashed #f33; }
       <!-- STEP 5 -->
       <section class="step" data-step="5">
         <div class="row">
-          <p class="mb-4" style="font-size:18px; font-weight:700">Welche Maße soll dein Abibuch haben?</p>
+          <p class="mb-4" style="font-size:18px; font-weight:700">Welches Format soll dein Abibuch haben?</p>
           <div class="row" style="display:grid; gap:8px">
             <label class="choice"><input type="radio" name="size" value="DIN A4" checked> DIN A4 (210×297&nbsp;mm)</label>
             <label class="choice"><input type="radio" name="size" value="Buchformat"> Buchformat (170×210&nbsp;mm)</label>
@@ -297,7 +293,7 @@ body > .container > .frame{ outline: 2px dashed #f33; }
     const form = {
       year: 2025,
       persons: 85,
-      digital_option: null,  // "Ja" | "Nein" | "Nur digital"
+      digital_option: "Ja",  // "Ja" | "Nein" | "Nur digital"
       storage: "64GB",
       content: [],
       size: "DIN A4",
@@ -409,6 +405,7 @@ body > .container > .frame{ outline: 2px dashed #f33; }
   </script>
 </body>
 </html>
+
 
 
 
