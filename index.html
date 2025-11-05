@@ -50,13 +50,12 @@
       margin-right: 18px;
     }
     .nav .right a { margin-right: 0 }
-
     /* Footer – korrigierte Kommentare & sichere Farben */
     .footerlinks {
       display: flex;
       gap: 28px;
       justify-content: center;
-      color: #fff !important;             /* Text im Footer */
+      color: #fff !important; /* Text im Footer */
       font-weight: 600;
       letter-spacing: .06em;
       padding: 26px 0 18px;
@@ -66,14 +65,13 @@
     .footerlinks a:link,
     .footerlinks a:visited,
     .footerlinks a:active {
-      color: #fff !important;             /* Links weiß, auch visited */
+      color: #fff !important; /* Links weiß, auch visited */
       text-decoration: none;
     }
     .footerlinks a:hover {
       text-decoration: underline;
-      color: #eae7ff !important;          /* optional leichtes Hover-Weiß */
+      color: #eae7ff !important; /* optional leichtes Hover-Weiß */
     }
-
     .center { text-align: center }
     .smallcaps { letter-spacing: .18em }
     .hr {
@@ -84,7 +82,6 @@
       margin: 6px auto 18px;
       opacity: .9;
     }
-
     /* hero */
     .hero {
       display: grid;
@@ -131,7 +128,6 @@
       background: transparent url('assets/hero-placeholder.png') center/contain no-repeat;
       border-radius: 12px;
     }
-
     /* legal pages */
     .legal h1 {
       margin: 0 0 14px;
@@ -166,33 +162,47 @@
       margin-top: 10px;
       color: #0d0d1c;
     }
-
     /* content lists */
     .bullets {
       margin: 36px 0;
       color: var(--muted);
+      display: flex;
+      justify-content: center;
     }
     .bullets ul {
       list-style: none;
       padding: 0;
-      margin: 0;
+      margin: 0 auto;
       display: grid;
       gap: 10px;
       max-width: 58ch;
+      text-align: center;
     }
     .bullets li::before {
       content: '•';
       margin-right: 10px;
     }
-
+    .bullets li {
+      text-align: center;
+    }
     /* responsive */
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr }
     }
+    /* Zentrierung der hero-Elemente */
+    .hero .copy {
+      text-align: center;
+      margin: 0 auto;
+    }
+    .hero .sub {
+      margin: 0 auto;
+    }
+    .hero .cta {
+      margin: 0 auto;
+    }
   </style>
 </head>
 <body>
-
   <!-- Top-Leiste als IFRAME einbinden -->
   <iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
   <style>
@@ -205,9 +215,7 @@
       background: transparent;
     }
   </style>
-
   <div class="container">
-
     <!-- Hero -->
     <section class="hero">
       <div class="illus" aria-hidden="true"></div>
@@ -220,11 +228,9 @@
         <a class="cta" href="abirechner.html">ZUM KOSTENLOSEN ABI-RECHNER</a>
       </div>
     </section>
-
     <section class="center">
       <p class="smallcaps" style="color:var(--muted)">Eure Erinnerungen, digital und gedruckt – mit unserer Plattform für moderne Abibücher</p>
     </section>
-
     <section class="bullets">
       <ul class="smallcaps">
         <li>Gemeinsames Bearbeiten im Team</li>
@@ -233,7 +239,6 @@
         <li>Auch als digitale Version mit Videos, Sprachnachrichten u.v.m.</li>
       </ul>
     </section>
-
     <section class="bullets">
       <ul>
         <li>DSGVO-konform</li>
@@ -242,7 +247,6 @@
         <li>Keine versteckten Kosten</li>
       </ul>
     </section>
-
     <!-- Footer -->
     <footer class="footerlinks smallcaps">
       <a href="./kontakt.html">Kontakt</a>
@@ -251,7 +255,6 @@
       <a href="./datenschutz.html">Datenschutz</a>
       <a href="./rechtliche-hinweise.html">rechtliche Hinweise</a>
     </footer>
-
   </div>
 </body>
 </html>
