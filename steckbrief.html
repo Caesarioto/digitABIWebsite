@@ -168,7 +168,7 @@
       color: #333;
     }
     .facts {
-      margin-top: 32px; /* Mehr Abstand zu Fotos */
+      margin-top: 32px; /* mehr Abstand zu den Bildern */
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px;
@@ -196,7 +196,7 @@
     }
     .photos-extra {
       grid-column: 1 / -1;
-      margin: 32px 0; /* Mehr Abstand zwischen Bild/Text-Blöcken */
+      margin: 32px 0; /* mehr Abstand zwischen Bildblöcken */
       display: flex;
       gap: 20px;
     }
@@ -207,25 +207,14 @@
       gap: 10px;
       margin: 0;
     }
-    .text-field {
-      width: 100%;
-      height: 160px;
-      border-radius: 10px;
-      background: var(--vio);
-      border: none;
-      padding: 10px;
-      font-family: inherit;
+    .photo-heading {
       font-weight: 700;
-      color: #3b2f77;
-      resize: none;
-      overflow: auto;
-    }
-    .text-field:focus {
-      outline: 2px solid #2e1df7;
-    }
-    .text-field::placeholder {
-      color: #3b2f77;
-      opacity: 1;
+      color: #333;
+      margin: 0 0 8px 0;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .custombar {
       display: flex;
@@ -414,8 +403,10 @@
       { id: "dreier-worte-schule", label: "Schule:", value: "boah ne ey" },
       { id: "dreier-worte-freunde", label: "Freunde:", value: "Schabernack letzte Reihe" },
       { id: "dreier-worte-alkohol", label: "Alkohol:", value: "gib die Flasche!" },
-      { type: "text", id: "fantasie-text", labelText: "so sieht die Schule in meiner Fantasie aus:" },
-      { type: "text", id: "meme-text", labelText: "dieses Meme beschreibt meine Schulzeit:" },
+      { type: "heading", id: "fantasie-heading", text: "so sieht die Schule in meiner Fantasie aus:" },
+      { type: "photo", id: "fantasie-photo", labelText: "SO SIEHT DIE SCHULE IN MEINER FANTASIE AUS" },
+      { type: "heading", id: "meme-heading", text: "dieses Meme beschreibt meine Schulzeit:" },
+      { type: "photo", id: "meme-photo", labelText: "DIESES MEME BESCHREIBT MEINE SCHULZEIT" },
       { id: "mein-vorbild", label: "Mein Vorbild:", value: "Mia Khalifa" },
       { id: "plan-nach-abi", label: "Plan nach dem Abi:", value: "erst mal chillen" },
       { id: "mein-traumberuf", label: "Mein Traumberuf:", value: "OnlyFans-Model" },
@@ -453,7 +444,6 @@
     const IMG_KEY_CURRENT = "digitabiPhotoCurrentV1";
     const IMG_KEY_CHILD = "digitabiPhotoChildV1";
     function getImgKey(id) { return `digitabiPhoto_${id}V1`; }
-    function getTextKey(id) { return `digitabiText_${id}V1`; }
 
     function setPhoto(el, dataUrl) {
       if (!el) return;
@@ -472,16 +462,6 @@
       BASE_FIELDS.forEach(f => {
         if (f.type === "photo") {
           setPhoto(document.getElementById(`photo-${f.id}`), localStorage.getItem(getImgKey(f.id)));
-        } else if (f.type === "text") {
-          const textarea = document.getElementById(`text-${f.id}`);
-          if (textarea) {
-            const savedText = localStorage.getItem(getTextKey(f.id));
-            if (savedText) {
-              textarea.value = savedText;
-              textarea.style.background = '#fff';
-              textarea.style.color = '#111';
-            }
-          }
         }
       });
     }
@@ -521,12 +501,11 @@
         </div>`;
     }
 
-    function rowTextHTML(f) {
-      const textId = `text-${f.id}`;
+    function rowHeadingHTML(f) {
       return `
         <div class="photo-row">
           <button class="remove" data-type="base" data-id="${f.id}">x</button>
-          <textarea class="text-field" id="${textId}" placeholder="${f.labelText}"></textarea>
+          <div class="photo-heading">${f.text}</div>
         </div>`;
     }
 
@@ -538,12 +517,12 @@
       let html = "", inPhotos = false;
       for (const f of BASE_FIELDS) {
         if (deletedBase.has(f.id)) continue;
-        if (f.type === "photo" || f.type === "text") {
+        if (f.type === "photo" || f.type === "heading") {
           if (!inPhotos) { html += '<div class="photos-extra">'; inPhotos = true; }
           if (f.type === "photo") {
             html += rowPhotoHTML(f);
-          } else if (f.type === "text") {
-            html += rowTextHTML(f);
+          } else if (f.type === "heading") {
+            html += rowHeadingHTML(f);
           }
         } else {
           if (inPhotos) { html += '</div>'; inPhotos = false; }
@@ -695,38 +674,6 @@
       if (action === 'select') inp.click();
       if (action === 'clear') { localStorage.removeItem(key); setPhoto(node, null); }
     });
-
-    // Text fields handling
-    function attachTextListeners() {
-      BASE_FIELDS.forEach(f => {
-        if (f.type === "text") {
-          const textarea = document.getElementById(`text-${f.id}`);
-          if (textarea) {
-            textarea.addEventListener('input', (e) => {
-              const value = e.target.value;
-              localStorage.setItem(getTextKey(f.id), value);
-              if (value.trim()) {
-                textarea.style.background = '#fff';
-                textarea.style.color = '#111';
-              } else {
-                textarea.style.background = 'var(--vio)';
-                textarea.style.color = '#3b2f77';
-              }
-            });
-          }
-        }
-      });
-    }
-
-    // Call after rendering
-    const originalRenderFacts = renderFacts;
-    renderFacts = function() {
-      originalRenderFacts();
-      loadImages();
-      attachTextListeners();
-    };
-
-    renderFacts(); // Initial call
   </script>
 </body>
 </html>
