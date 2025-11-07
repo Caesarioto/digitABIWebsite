@@ -1,108 +1,120 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Steckbrief – Vorschau | DigitABI</title>
   <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
-  :root{ --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8; --ink:#151527; --muted:rgba(0,0,0,.62); --vio:#BEB3FF; --vio-dark:#9e90ff; }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:#111;
-    background:linear-gradient(100deg,var(--grad-left) 0%,var(--grad-mid) 50%,var(--grad-right) 100%);
-    min-height:100vh; display:flex; flex-direction:column;
-  }
-  .container{max-width:1180px;margin:0 auto;padding:32px 24px;flex:1;display:flex;flex-direction:column}
-  .nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-  .nav .left,.nav .right{display:flex;gap:18px;align-items:center}
-  .brand{font-weight:800; letter-spacing:.02em;color:#fff}
-  .smallcaps{text-transform:uppercase; letter-spacing:.08em; font-weight:600}
-  .nav a{color:rgba(255,255,255,.88);text-decoration:none; font-weight:600}
-  .nav a:hover{text-decoration:underline}
-  h3.section{margin:22px 0 8px; text-align:center; text-decoration:underline; font-weight:700}
-  .comment{margin-top:14px}
-  .frame{
-    background:#f6f6f8; border:3px solid #6c50ff; border-radius:8px;
-    padding:28px 24px; max-width:860px; margin:16px auto; position:relative;
-    box-shadow:0 8px 30px rgba(17,16,50,.18);
-  }
-  .frame h2{ text-align:center; margin:0; line-height:1.35; color:#1f1f2f; }
-  .frame h2 .line2{font-weight:800}
-  .sheet{ margin-top:18px; background:#f6f6f8; border:1px solid #b6a8ff; border-radius:10px; padding:24px 22px; }
-  .photos{display:grid; grid-template-columns: 240px 1fr 240px; gap:24px; align-items:start; margin-top:6px}
-  .ph{
-    position:relative;
-    height:160px; border-radius:10px;
-    background:var(--vio);
-    display:flex; align-items:center; justify-content:center; font-weight:700; color:#3b2f77;
-    overflow:hidden; width:100%;
-  }
-  .ph[data-has-img="true"]{
-    background-size:cover;
-    background-position:center;
-    color:transparent;
-  }
-  .ph input[type="file"]{ display:none; }
-  .ph .overlay{
-    position:absolute; left:8px; bottom:8px;
-    display:flex; gap:6px;
-  }
-  .tinybtn{
-    font:inherit; font-weight:700; padding:6px 8px; border-radius:10px; cursor:pointer;
-    border:2px solid #cfd2ff; background:#fff; color:#1b1b2f; font-size:12px;
-  }
-  .tinybtn.primary{ border-color:#2e1df7; background:#eae7ff; color:#2e1df7 }
-  .name{ display:flex; flex-direction:column; align-items:center; justify-content:center; padding-top:10px; }
-  .name .big{font-size:20px; font-weight:700; letter-spacing:.02em; color:#111; text-align:center}
-  .name .date{font-size:12.5px; color:#333}
-  .facts{margin-top:18px; display:grid; grid-template-columns:1fr; gap:10px}
-  .row{display:flex; gap:10px; align-items:baseline}
-  .label{color:#333; font-weight:600; flex:0 0 240px; }
-  .value{color:#111; flex:1}
-  .muted{color:var(--muted); font-weight:600}
-  .spacer{height:10px}
-  .photos-extra { grid-column: 1 / -1; margin: 16px 0; display: flex; gap:20px; }
-  .photo-row { flex:1; display: flex; align-items: center; gap:10px; margin:0; }
-  .custombar{
-    display:flex; gap:8px; align-items:center; justify-content:flex-start;
-    margin-top:8px; margin-bottom:4px;
-  }
-  .microbtn{
-    font:inherit; font-weight:700; padding:6px 10px; border-radius:10px; cursor:pointer;
-    border:2px solid #cfd2ff; background:#fff; color:#1b1b2f;
-  }
-  .microbtn.primary{ border-color:#2e1df7; background:#eae7ff; color:#2e1df7 }
-  .customform{ display:none; gap:8px; grid-template-columns:240px 1fr auto; align-items:center; margin:8px 0 2px }
-  .customform input{
-    width:100%; padding:8px 10px; border:1px solid #ddd; border-radius:10px; font-family:inherit;
-  }
-  .remove{
-    border:0; background:transparent; color:#777; cursor:pointer; font-weight:800; font-size:18px;
-    padding:0; margin:0; position:static; flex:none;
-  }
-  .remove:hover{ color:#c00 }
-  .show{ display:grid !important; }
-  .next{
-    display:inline-flex; align-items:center; justify-content:center;
-    padding:10px 16px; font-weight:700; border-radius:12px;
-    border:2px solid #2e1df7; background:#eae7ff; text-decoration:none; color:#2e1df7;
-    position:absolute; right:18px; bottom:14px;
-  }
-  .next:hover{background:#dcd6ff}
-  footer.footerlinks{display:flex; gap:16px; justify-content:center; margin-top:22px}
-  footer.footerlinks a{color:#fff; text-decoration:none; font-weight:600}
-  footer.footerlinks a:hover{text-decoration:underline}
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+    :root{ --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8; --ink:#151527; --muted:rgba(0,0,0,.62); --vio:#BEB3FF; --vio-dark:#9e90ff; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:#111;
+      background:linear-gradient(100deg,var(--grad-left) 0%,var(--grad-mid) 50%,var(--grad-right) 100%);
+      min-height:100vh; display:flex; flex-direction:column;
+    }
+    .container{max-width:1180px;margin:0 auto;padding:32px 24px;flex:1;display:flex;flex-direction:column}
+    .nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .nav .left,.nav .right{display:flex;gap:18px;align-items:center}
+    .brand{font-weight:800; letter-spacing:.02em;color:#fff}
+    .smallcaps{text-transform:uppercase; letter-spacing:.08em; font-weight:600}
+    .nav a{color:rgba(255,255,255,.88);text-decoration:none; font-weight:600}
+    .nav a:hover{text-decoration:underline}
+    h3.section{margin:22px 0 8px; text-align:center; text-decoration:underline; font-weight:700}
+    .comment{margin-top:14px}
+    .frame{
+      background:#f6f6f8; border:3px solid #6c50ff; border-radius:8px;
+      padding:28px 24px; max-width:860px; margin:16px auto; position:relative;
+      box-shadow:0 8px 30px rgba(17,16,50,.18);
+    }
+    .frame h2{ text-align:center; margin:0; line-height:1.35; color:#1f1f2f; }
+    .frame h2 .line2{font-weight:800}
+    .sheet{ margin-top:18px; background:#f6f6f8; border:1px solid #b6a8ff; border-radius:10px; padding:24px 22px; }
+    .photos{display:grid; grid-template-columns: 240px 1fr 240px; gap:24px; align-items:start; margin-top:6px}
+    .ph{
+      position:relative;
+      height:160px; border-radius:10px;
+      background:var(--vio);
+      display:flex; align-items:center; justify-content:center; font-weight:700; color:#3b2f77;
+      overflow:hidden; width:100%;
+    }
+    .ph[data-has-img="true"]{
+      background-size:cover;
+      background-position:center;
+      color:transparent;
+    }
+    .ph input[type="file"]{ display:none; }
+    .ph .overlay{
+      position:absolute; left:8px; bottom:8px;
+      display:flex; gap:6px;
+    }
+    .tinybtn{
+      font:inherit; font-weight:700; padding:6px 8px; border-radius:10px; cursor:pointer;
+      border:2px solid #cfd2ff; background:#fff; color:#1b1b2f; font-size:12px;
+    }
+    .tinybtn.primary{ border-color:#2e1df7; background:#eae7ff; color:#2e1df7 }
+
+    /* NUR HIER GEÄNDERT: Name zentriert auf Höhe der Bilder */
+    .name{ 
+      display:flex; 
+      flex-direction:column; 
+      align-items:center; 
+      justify-content:center; 
+      height:160px; 
+      padding-top:0; 
+    }
+
+    .name .big{font-size:20px; font-weight:700; letter-spacing:.02em; color:#111; text-align:center}
+    .name .date{font-size:12.5px; color:#333}
+    .facts{margin-top:18px; display:grid; grid-template-columns:1fr; gap:10px}
+    .row{display:flex; gap:10px; align-items:baseline}
+    .label{color:#333; font-weight:600; flex:0 0 240px; }
+    .value{color:#111; flex:1}
+    .muted{color:var(--muted); font-weight:600}
+    .spacer{height:10px}
+    .photos-extra { grid-column: 1 / -1; margin: 16px 0; display: flex; gap:20px; }
+    .photo-row { flex:1; display: flex; align-items: center; gap:10px; margin:0; }
+    .custombar{
+      display:flex; gap:8px; align-items:center; justify-content:flex-start;
+      margin-top:8px; margin-bottom:4px;
+    }
+    .microbtn{
+      font:inherit; font-weight:700; padding:6px 10px; border-radius:10px; cursor:pointer;
+      border:2px solid #cfd2ff; background:#fff; color:#1b1b2f;
+    }
+    .microbtn.primary{ border-color:#2e1df7; background:#eae7ff; color:#2e1df7 }
+    .customform{ display:none; gap:8px; grid-template-columns:240px 1fr auto; align-items:center; margin:8px 0 2px }
+    .customform input{
+      width:100%; padding:8px 10px; border:1px solid #ddd; border-radius:10px; font-family:inherit;
+    }
+    .remove{
+      border:0; background:transparent; color:#777; cursor:pointer; font-weight:800; font-size:18px;
+      padding:0; margin:0; position:static; flex:none;
+    }
+    .remove:hover{ color:#c00 }
+    .show{ display:grid !important; }
+    .next{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 16px; font-weight:700; border-radius:12px;
+      border:2px solid #2e1df7; background:#eae7ff; text-decoration:none; color:#2e1df7;
+      position:absolute; right:18px; bottom:14px;
+    }
+    .next:hover{background:#dcd6ff}
+    footer.footerlinks{display:flex; gap:16px; justify-content:center; margin-top:22px}
+    footer.footerlinks a{color:#fff; text-decoration:none; font-weight:600}
+    footer.footerlinks a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
-<iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
-<style>
-  .topnav-embed{
-    width:100%; height:48px; border:0; display:block; overflow:hidden;
-    background:transparent;
-  }
-</style>
+  <iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
+  <style>
+    .topnav-embed{
+      width:100%; height:48px; border:0; display:block; overflow:hidden;
+      background:transparent;
+    }
+  </style>
+
   <div class="container">
     <div class="frame">
       <h2 class="smallcaps">Vorschau unseres Abibuch-Editors<br><span class="line2">–<br>so könnte dein Abibuch aussehen:</span></h2>
@@ -116,10 +128,13 @@
               <button type="button" class="tinybtn primary" data-action="select" data-target="current">Bild wählen</button>
             </div>
           </label>
+
+          <!-- NAME ZENTRIERT AUF BILDHÖHE -->
           <div class="name">
             <div class="big">Mulan<br>Mustermann</div>
             <div class="date">31.02.2008</div>
           </div>
+
           <!-- KINDERBILD -->
           <label class="ph" id="photo-child" data-has-img="false" title="Klicken zum Bild hochladen">
             <input type="file" id="file-child" accept="image/*">
@@ -157,6 +172,7 @@
         </div>
       </div>
     </div>
+
     <footer class="footerlinks">
       <a href="kontakt.html">Kontakt</a>
       <a href="impressum.html">Impressum</a>
@@ -194,18 +210,15 @@
       { id: "autobiografie", label: "Titel meiner Autobiografie:", value: "es kann nur besser werden!" },
       { id: "abschluss", label: "Das möchte ich abschließend noch sagen:", value: "vielen Dank für die schöne Zeit und auf nimmer Wiedersehen" }
     ];
-
     const COMMENT_FIELDS = [
       { id: "comment1", label: "Beschreibe die Person in einem Wort:", value: "witzig, nett, überdreht, faul, bildhübsch, verpeilt, frech" },
       { id: "comment2", label: "Da sehe ich die Person in 10 Jahren:", value: "glücklich, am Strand mit Villa, reich, mit dem heißesten Partner" },
       { id: "comment3", label: "Das will ich dir noch mit auf den Weg geben:", value: "viel Glück bei allem was du machst, ohne dich wäre die Schule nur halb so witzig gewesen, danke" }
     ];
-
     const CUSTOM_KEY = "digitabiCustomFieldsV1";
     const CUSTOM_COMMENTS_KEY = "digitabiCustomCommentsV1";
     const DELETED_KEY = "digitabiDeletedBaseV1";
     const DELETED_COMMENTS_KEY = "digitabiDeletedCommentsV1";
-
     function loadCustom(){ try { return JSON.parse(localStorage.getItem(CUSTOM_KEY)) || []; } catch { return []; } }
     function saveCustom(list){ localStorage.setItem(CUSTOM_KEY, JSON.stringify(list)); }
     function loadCustomComments(){ try { return JSON.parse(localStorage.getItem(CUSTOM_COMMENTS_KEY)) || []; } catch { return []; } }
@@ -214,16 +227,13 @@
     function saveDeleted(set){ localStorage.setItem(DELETED_KEY, JSON.stringify([...set])); }
     function loadDeletedComments(){ try { return new Set(JSON.parse(localStorage.getItem(DELETED_COMMENTS_KEY)) || []); } catch { return new Set(); } }
     function saveDeletedComments(set){ localStorage.setItem(DELETED_COMMENTS_KEY, JSON.stringify([...set])); }
-
     let customFields = loadCustom();
     let customComments = loadCustomComments();
     let deletedBase = loadDeleted();
     let deletedComments = loadDeletedComments();
-
     const IMG_KEY_CURRENT = "digitabiPhotoCurrentV1";
     const IMG_KEY_CHILD = "digitabiPhotoChildV1";
     function getImgKey(id) { return `digitabiPhoto_${id}V1`; }
-
     function setPhoto(el, dataUrl){
       if (!el) return;
       if (dataUrl){
@@ -234,7 +244,6 @@
         el.setAttribute("data-has-img", "false");
       }
     }
-
     function loadImages(){
       setPhoto(document.getElementById('photo-current'), localStorage.getItem(IMG_KEY_CURRENT));
       setPhoto(document.getElementById('photo-child'), localStorage.getItem(IMG_KEY_CHILD));
@@ -244,7 +253,6 @@
         }
       });
     }
-
     function handleFile(inputEl, key, targetEl){
       const file = inputEl.files?.[0];
       if(!file) return;
@@ -256,14 +264,11 @@
       };
       reader.readAsDataURL(file);
     }
-
     const factsEl = document.getElementById("facts");
     const commentsEl = document.getElementById("comments");
-
     function rowBaseHTML(f){
       return `<div class="row"><button class="remove" data-type="base" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
     }
-
     function rowPhotoHTML(f) {
       const photoId = `photo-${f.id}`;
       const fileId = `file-${f.id}`;
@@ -273,17 +278,15 @@
           <label class="ph" id="${photoId}" data-has-img="false">
             <input type="file" id="${fileId}" accept="image/*">
             <span>${f.labelText}</span>
-            <div class="overlay">
+            <div the="overlay">
               <button type="button" class="tinybtn primary" data-action="select" data-target="${f.id}">Bild wählen</button>
             </div>
           </label>
         </div>`;
     }
-
     function rowCustomHTML(f, i){
       return `<div class="row"><button class="remove" data-type="custom" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
     }
-
     function renderFacts(){
       let html = "", inPhotos = false;
       for (const f of BASE_FIELDS){
@@ -301,15 +304,12 @@
       customFields.forEach((f,i) => html += rowCustomHTML(f,i));
       factsEl.innerHTML = html;
     }
-
     function rowCommentHTML(f){
       return `<div class="comment"><div class="row"><button class="remove" data-type="comment" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
     }
-
     function rowCustomCommentHTML(f, i){
       return `<div class="comment"><div class="row"><button class="remove" data-type="custom-comment" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
     }
-
     function renderComments(){
       let html = "";
       for (const f of COMMENT_FIELDS){
@@ -319,7 +319,6 @@
       customComments.forEach((f,i) => html += rowCustomCommentHTML(f,i));
       commentsEl.innerHTML = html;
     }
-
     renderFacts();
     renderComments();
     loadImages();
@@ -330,13 +329,11 @@
     const addBtn = document.getElementById("cfAdd");
     const inLabel = document.getElementById("cfLabel");
     const inValue = document.getElementById("cfValue");
-
     toggleBtn.addEventListener("click", () => {
       toggleBtn.style.display = 'none';
       formBox.classList.add("show");
       inLabel.focus();
     });
-
     addBtn.addEventListener("click", () => {
       const label = inLabel.value.trim();
       const value = inValue.value.trim();
@@ -355,13 +352,11 @@
     const addBtnComments = document.getElementById("cfAddComments");
     const inLabelComments = document.getElementById("cfLabelComments");
     const inValueComments = document.getElementById("cfValueComments");
-
     toggleBtnComments.addEventListener("click", () => {
       toggleBtnComments.style.display = 'none';
       formBoxComments.classList.add("show");
       inLabelComments.focus();
     });
-
     addBtnComments.addEventListener("click", () => {
       const label = inLabelComments.value.trim();
       const value = inValueComments.value.trim();
@@ -407,20 +402,16 @@
     const childLabel = document.getElementById('photo-child');
     const inputCurrent = document.getElementById('file-current');
     const inputChild = document.getElementById('file-child');
-
     factsEl.addEventListener('click', (e) => {
       const label = e.target.closest('.ph');
       if (label && !e.target.closest('.tinybtn')) {
         label.querySelector('input[type="file"]').click();
       }
     });
-
     currentLabel.addEventListener('click', (e) => { if (!e.target.closest('.tinybtn')) inputCurrent.click(); });
     childLabel.addEventListener('click', (e) => { if (!e.target.closest('.tinybtn')) inputChild.click(); });
-
     inputCurrent.addEventListener('change', () => handleFile(inputCurrent, IMG_KEY_CURRENT, currentLabel));
     inputChild.addEventListener('change', () => handleFile(inputChild, IMG_KEY_CHILD, childLabel));
-
     BASE_FIELDS.forEach(f => {
       if (f.type === "photo") {
         const input = document.getElementById(`file-${f.id}`);
@@ -428,7 +419,6 @@
         if (input) input.addEventListener('change', () => handleFile(input, getImgKey(f.id), label));
       }
     });
-
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('.tinybtn'); if (!btn) return;
       const action = btn.dataset.action;
