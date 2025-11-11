@@ -289,122 +289,142 @@ body > .container > .frame{ outline: 2px dashed #f33; }
   </div>
 
   <script>
-    // --- State ---
-    const form = {
-      year: 2025,
-      persons: 85,
-      digital_option: "Ja",  // "Ja" | "Nein" | "Nur digital"
-      storage: "64GB",
-      content: [],
-      size: "DIN A4",
-      cover: "Hard-Cover"
-    };
-    let step = 0; // 0..7
+  // --- State ---
+  const form = {
+    year: 2025,
+    persons: 85,
+    digital_option: "Ja",
+    storage: "64GB",
+    content: [],
+    size: "DIN A4",
+    cover: "Hard-Cover"
+  };
+  let step = 0;
 
-    // --- Elements ---
-    const steps = [...document.querySelectorAll('.step')];
-    const personsRange = document.getElementById('personsRange');
-    const personsOut = document.getElementById('personsOut');
-    const yearOpts = document.getElementById('yearOptions');
-    const digitalOpts = document.getElementById('digitalOptions');
-    const contentChecks = document.getElementById('contentChecks');
-    const summaryBox = document.getElementById('summaryBox');
+  // --- Elements ---
+  const steps = [...document.querySelectorAll('.step')];
+  const personsRange = document.getElementById('personsRange');
+  const personsOut = document.getElementById('personsOut');
+  const yearOpts = document.getElementById('yearOptions');
+  const digitalOpts = document.getElementById('digitalOptions');
+  const contentChecks = document.getElementById('contentChecks');
+  const summaryBox = document.getElementById('summaryBox');
 
-    // --- Helpers ---
-    function showStep(n){
-      steps.forEach(s => s.classList.remove('active'));
-      const target = steps[n];
-      if (target) target.classList.add('active');
-      step = n;
-      if (step === 7) renderSummary();
+  // --- NEU: Weiter-Button in Step 4 ---
+  const step4NextBtn = steps[4].querySelector('.btn.next');
+
+  // --- Helpers ---
+  function showStep(n){
+    steps.forEach(s => s.classList.remove('active'));
+    const target = steps[n];
+    if (target) target.classList.add('active');
+    step = n;
+    if (step === 7) renderSummary();
+
+    // --- NEU: Prüfe Inhalte bei Step 4 ---
+    if (step === 4) {
+      updateContentNextButton();
     }
+  }
 
-    function nextStep(){
-      // MM-ähnliche Logik wie in deinem alten Code
-      if (step === 2 && form.digital_option === "Nein") return showStep(4);
-      if (step === 2 && form.digital_option === "Nur digital") return showStep(3);
-      if (step === 4 && form.digital_option === "Nur digital") return showStep(7);
-      if (step === 6) return showStep(7);
-      return showStep(Math.min(step+1, 7));
+  function nextStep(){
+    if (step === 2 && form.digital_option === "Nein") return showStep(4);
+    if (step === 2 && form.digital_option === "Nur digital") return showStep(3);
+    if (step === 4 && form.digital_option === "Nur digital") return showStep(7);
+    if (step === 6) return showStep(7);
+    return showStep(Math.min(step+1, 7));
+  }
+
+  function prevStep(){
+    if (step === 7 && form.digital_option === "Nur digital") return showStep(4);
+    if (step === 7 && form.digital_option !== "Nur digital") return showStep(6);
+    if (step === 4 && form.digital_option === "Nein") return showStep(2);
+    if (step === 3) return showStep(2);
+    return showStep(Math.max(step-1, 0));
+  }
+
+  function renderSummary(){
+    const items = [
+      ["Jahr", form.year],
+      ["Personen", form.persons],
+      ["Digital", form.digital_option ?? "—"],
+      ["Inhalte", (form.content.length ? form.content.join(', ') : "—")],
+      ["Speicherplatz", form.digital_option === "Nur digital" || form.digital_option === "Ja" ? form.storage : "—"],
+      ["Buchgröße", form.digital_option === "Nur digital" ? "—" : form.size],
+      ["Cover", form.digital_option === "Nur digital" ? "—" : form.cover],
+    ];
+    summaryBox.innerHTML = "<ul style='margin:0; padding-left:18px'>" +
+      items.map(([k,v]) => `<li><b>${k}:</b> ${v}</li>`).join("") +
+      "</ul>";
+  }
+
+  // --- NEU: Button aktivieren/deaktivieren ---
+  function updateContentNextButton() {
+    if (step4NextBtn) {
+      step4NextBtn.disabled = form.content.length === 0;
     }
-    function prevStep(){
-      if (step === 7 && form.digital_option === "Nur digital") return showStep(4);
-      if (step === 7 && form.digital_option !== "Nur digital") return showStep(6);
-      if (step === 4 && form.digital_option === "Nein") return showStep(2);
-      if (step === 3) return showStep(2);
-      return showStep(Math.max(step-1, 0));
+  }
+
+  // --- Wire up generic buttons ---
+  document.querySelectorAll('.btn.next').forEach(btn => btn.addEventListener('click', nextStep));
+  document.querySelectorAll('.btn.prev').forEach(btn => btn.addEventListener('click', prevStep));
+
+  // Persons slider
+  personsRange.addEventListener('input', e => {
+    form.persons = parseInt(e.target.value, 10);
+    personsOut.textContent = form.persons;
+  });
+
+  // Year selection
+  yearOpts.addEventListener('click', (e) => {
+    if (e.target.closest('.opt')) {
+      yearOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
+      const b = e.target.closest('.opt'); b.classList.add('is-selected');
+      form.year = parseInt(b.dataset.value, 10);
     }
+  });
 
-    function renderSummary(){
-      const items = [
-        ["Jahr", form.year],
-        ["Personen", form.persons],
-        ["Digital", form.digital_option ?? "—"],
-        ["Inhalte", (form.content.length ? form.content.join(', ') : "—")],
-        ["Speicherplatz", form.digital_option === "Nur digital" || form.digital_option === "Ja" ? form.storage : "—"],
-        ["Buchgröße", form.digital_option === "Nur digital" ? "—" : form.size],
-        ["Cover", form.digital_option === "Nur digital" ? "—" : form.cover],
-      ];
-      summaryBox.innerHTML = "<ul style='margin:0; padding-left:18px'>" +
-        items.map(([k,v]) => `<li><b>${k}:</b> ${v}</li>`).join("") +
-        "</ul>";
+  // Digital options
+  digitalOpts.addEventListener('click', (e) => {
+    if (e.target.closest('.opt')) {
+      digitalOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
+      const b = e.target.closest('.opt'); b.classList.add('is-selected');
+      form.digital_option = b.dataset.value;
     }
+  });
 
-    // --- Wire up generic buttons ---
-    document.querySelectorAll('.btn.next').forEach(btn => btn.addEventListener('click', nextStep));
-    document.querySelectorAll('.btn.prev').forEach(btn => btn.addEventListener('click', prevStep));
+  // Storage radios
+  document.querySelectorAll('input[name="storage"]').forEach(r =>
+    r.addEventListener('change', e => form.storage = e.target.value)
+  );
 
-    // Persons slider
-    personsRange.addEventListener('input', e => {
-      form.persons = parseInt(e.target.value, 10);
-      personsOut.textContent = form.persons;
-    });
+  // Size radios
+  document.querySelectorAll('input[name="size"]').forEach(r =>
+    r.addEventListener('change', e => form.size = e.target.value)
+  );
 
-    // Year selection
-    yearOpts.addEventListener('click', (e) => {
-      if (e.target.closest('.opt')) {
-        yearOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
-        const b = e.target.closest('.opt'); b.classList.add('is-selected');
-        form.year = parseInt(b.dataset.value, 10);
-      }
-    });
+  // Cover radios
+  document.querySelectorAll('input[name="cover"]').forEach(r =>
+    r.addEventListener('change', e => form.cover = e.target.value)
+  );
 
-    // Digital options
-    digitalOpts.addEventListener('click', (e) => {
-      if (e.target.closest('.opt')) {
-        digitalOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
-        const b = e.target.closest('.opt'); b.classList.add('is-selected');
-        form.digital_option = b.dataset.value;
-      }
-    });
+  // Content checkboxes
+  contentChecks.addEventListener('change', () => {
+    form.content = [...contentChecks.querySelectorAll('input[type="checkbox"]:checked')].map(c => c.value);
+    updateContentNextButton(); // ← NEU: Button updaten
+  });
 
-    // Storage radios
-    document.querySelectorAll('input[name="storage"]').forEach(r =>
-      r.addEventListener('change', e => form.storage = e.target.value)
-    );
+  // Price button
+  document.getElementById('priceBtn').addEventListener('click', () => {
+    alert('Preisberechnung folgt – Logik wird noch hinterlegt.');
+  });
 
-    // Size radios
-    document.querySelectorAll('input[name="size"]').forEach(r =>
-      r.addEventListener('change', e => form.size = e.target.value)
-    );
-
-    // Cover radios
-    document.querySelectorAll('input[name="cover"]').forEach(r =>
-      r.addEventListener('change', e => form.cover = e.target.value)
-    );
-
-    // Content checkboxes
-    contentChecks.addEventListener('change', () => {
-      form.content = [...contentChecks.querySelectorAll('input[type="checkbox"]:checked')].map(c => c.value);
-    });
-
-    // Price button (Stub)
-    document.getElementById('priceBtn').addEventListener('click', () => {
-      alert('Preisberechnung folgt – Logik wird noch hinterlegt.');
-    });
-  </script>
+  // --- INIT: Button initial deaktivieren, falls leer ---
+  updateContentNextButton();
+</script>
 </body>
 </html>
+
 
 
 
