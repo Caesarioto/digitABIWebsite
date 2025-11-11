@@ -24,13 +24,10 @@
   display:flex;
   flex-direction:column;
 }
-
-
     /* TOP-LINK-LEISTE */
     .toplinks{display:flex; justify-content:center; gap:28px; font-weight:700; letter-spacing:.04em; margin:8px 0}
     .toplinks a{color:rgba(255,255,255,.9); text-decoration:none}
     .toplinks a:hover{text-decoration:underline}
-
     /* Card / Rahmen */
     .frame{
   background:var(--paper);
@@ -41,42 +38,35 @@
   margin:18px auto;
   box-shadow:0 8px 30px rgba(17,16,50,.18);
 }
-
-
     h1{margin:0 0 8px; text-align:center; font-size:clamp(24px,3.2vw,34px); font-weight:800; letter-spacing:.04em}
     .tabs{display:flex; justify-content:center; gap:12px; margin:10px 0 18px}
     .tab{padding:10px 14px; border-radius:12px; border:2px solid var(--accent); background:var(--accent-weak); font-weight:700; text-decoration:none; color:var(--accent)}
     .tab.secondary{border-color:transparent; background:#ffffffc9; color:#222}
     .tab.secondary:hover{outline:2px dashed #bbb}
-
     /* Controls */
     .row{margin:18px 0}
-    .options{display:flex; flex-wrap:wrap; gap:10px}
-    .opt{padding:10px 14px; border-radius:10px; border:2px solid #ddd; background:#fff; cursor:pointer; font-weight:600}
+    .options{display:flex; flex-wrap:wrap; gap:10px; justify-content:center}
+    .opt{padding:10px 14px; border-radius:10px; border:2px solid #ddd; background:#fff; cursor:pointer; font-weight:600; min-width:140px; text-align:center}
     .opt.is-selected{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-weak)}
     .choice{display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid #ddd; border-radius:10px; background:#fff}
     .range-wrap{display:grid; gap:8px}
-
     .actions{display:flex; justify-content:space-between; gap:12px; margin-top:16px}
     .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 16px; border-radius:12px; font-weight:700; text-decoration:none; cursor:pointer; border:2px solid transparent}
     .btn.prev{background:#fff; border-color:#cfd2ff; color:#1b1b2f}
     .btn.next{background:var(--accent); color:#fff}
     .btn.next.ghost{background:var(--accent-weak); color:var(--accent); border-color:var(--accent)}
     .btn:disabled{opacity:.5; cursor:not-allowed}
-
     .summary{background:#fff; border:1px solid #e3e3e3; border-radius:12px; padding:16px; line-height:1.9}
     .summary b{font-weight:800}
-
     /* Steps */
     .step{display:none}
     .step.active{display:block}
-
     /* Footer */
      .footerlinks{
     display:flex;
     gap:28px;
     justify-content:center;
-    color:#fff !important;              /* Text im Footer */
+    color:#fff !important;
     font-weight:600;
     letter-spacing:.06em;
     padding:26px 0 18px;
@@ -86,37 +76,27 @@
   .footerlinks a:link,
   .footerlinks a:visited,
   .footerlinks a:active{
-    color:#fff !important;              /* Links weiß, auch visited */
+    color:#fff !important;
     text-decoration:none;
   }
   .footerlinks a:hover{
     text-decoration:underline;
-    color:#eae7ff !important;           /* optional leichtes Hover-Weiß */
+    color:#eae7ff !important;
   }
-
-  /* === WIDTH OVERRIDE (ans Ende des <style>-Blocks setzen) === */
+  /* === WIDTH OVERRIDE === */
 :root{
-  --container-w: 1920px;  /* Seite gesamt */
-  --frame-w: 1680px;      /* weißer Kasten */
+  --container-w: 1920px;
+  --frame-w: 1680px;
 }
-
-/* höherer Selektor + !important, damit nichts anderes drüberbügelt */
 body > .container{
   max-width: min(var(--container-w), 98vw) !important;
 }
-
 body > .container > .frame{
   max-width: min(var(--frame-w), 96vw) !important;
 }
-
-/* (Optional zum Testen – nach dem Reload sollte man den roten Rand sehen)
-body > .container > .frame{ outline: 2px dashed #f33; }
-*/
-
  .step .row {
   text-align: center;
 }
-
 .step .options,
 .step .range-wrap,
 .step .row[id="contentChecks"] {
@@ -125,14 +105,12 @@ body > .container > .frame{ outline: 2px dashed #f33; }
   flex-wrap: wrap;
   gap: 10px;
 }
-
 .step .choice {
   justify-content: center;
 }
-</style>
+  </style>
 </head>
 <body>
-
   <!-- Top-Leiste als IFRAME -->
   <iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
   <style>
@@ -145,23 +123,10 @@ body > .container > .frame{ outline: 2px dashed #f33; }
       background:transparent;
     }
   </style>
-  <script>
-  (function(){
-    const iframe = document.querySelector('.topnav-embed');
-    const ORIGIN = window.location.origin;
-    window.addEventListener('message', (e)=>{
-      if(e.origin !== ORIGIN) return;
-      if(e.data?.type === 'TOPNAV_AUTH_OPEN')  iframe.classList.add('topnav-full');
-      if(e.data?.type === 'TOPNAV_AUTH_CLOSE') iframe.classList.remove('topnav-full');
-    });
-  })();
-</script>
-
-
   <div class="container" style="max-width: 1920px !important; width: 100% !important;">
     <div class="frame" id="rechner" style="max-width: 1680px !important;">
       <h1>Mein Abibuch-Creator</h1>
-     
+    
       <!-- STEP 0 -->
       <section class="step active" data-step="0">
         <div class="row">
@@ -177,7 +142,6 @@ body > .container > .frame{ outline: 2px dashed #f33; }
           <button class="btn next">Weiter</button>
         </div>
       </section>
-
       <!-- STEP 1 -->
       <section class="step" data-step="1">
         <div class="row">
@@ -192,7 +156,6 @@ body > .container > .frame{ outline: 2px dashed #f33; }
           <button class="btn next">Weiter</button>
         </div>
       </section>
-
       <!-- STEP 2 -->
       <section class="step " data-step="2">
         <div class="row">
@@ -208,15 +171,14 @@ body > .container > .frame{ outline: 2px dashed #f33; }
           <button class="btn next">Weiter</button>
         </div>
       </section>
-
-      <!-- STEP 3 -->
+      <!-- STEP 3 – Speicherplatz (jetzt als .opt Buttons) -->
       <section class="step" data-step="3">
         <div class="row">
           <p class="mb-4" style="font-size:18px; font-weight:700">Wie viel Speicherplatz benötigst du für deine digitale Version?</p>
-          <div class="row">
-            <label class="choice"><input type="radio" name="storage" value="Basic (5 GB)"> Basic&nbsp;(5&nbsp;GB)</label>
-            <label class="choice"><input type="radio" name="storage" value="Plus (25 GB)" checked> Plus&nbsp;(25&nbsp;GB)</label>
-            <label class="choice"><input type="radio" name="storage" value="Premium (50 GB)"> Premium&nbsp;(50&nbsp;GB)</label>
+          <div class="options" id="storageOptions">
+            <button class="opt" data-value="Basic (5 GB)">Basic (5 GB)</button>
+            <button class="opt is-selected" data-value="Plus (25 GB)">Plus (25 GB)</button>
+            <button class="opt" data-value="Premium (50 GB)">Premium (50 GB)</button>
           </div>
         </div>
         <div class="actions">
@@ -224,7 +186,6 @@ body > .container > .frame{ outline: 2px dashed #f33; }
           <button class="btn next">Weiter</button>
         </div>
       </section>
-
       <!-- STEP 4 -->
       <section class="step" data-step="4">
         <div class="row">
@@ -244,14 +205,13 @@ body > .container > .frame{ outline: 2px dashed #f33; }
           <button class="btn next">Weiter</button>
         </div>
       </section>
-
-      <!-- STEP 5 -->
+      <!-- STEP 5 – Format (jetzt als .opt Buttons) -->
       <section class="step" data-step="5">
         <div class="row">
           <p class="mb-4" style="font-size:18px; font-weight:700">Welches Format soll dein Abibuch haben?</p>
-          <div class="row" style="display:grid; gap:8px">
-            <label class="choice"><input type="radio" name="size" value="DIN A4" checked> DIN A4 (210×297&nbsp;mm)</label>
-            <label class="choice"><input type="radio" name="size" value="Buchformat"> Buchformat (170×210&nbsp;mm)</label>
+          <div class="options" id="sizeOptions">
+            <button class="opt is-selected" data-value="DIN A4">DIN A4 (210×297 mm)</button>
+            <button class="opt" data-value="Buchformat">Buchformat (170×210 mm)</button>
           </div>
         </div>
         <div class="actions">
@@ -259,14 +219,13 @@ body > .container > .frame{ outline: 2px dashed #f33; }
           <button class="btn next">Weiter</button>
         </div>
       </section>
-
-      <!-- STEP 6 -->
+      <!-- STEP 6 – Cover (jetzt als .opt Buttons) -->
       <section class="step" data-step="6">
         <div class="row">
           <p class="mb-4" style="font-size:18px; font-weight:700">Welche Art von Cover soll dein Abibuch haben?</p>
-          <div class="row" style="display:grid; gap:8px">
-            <label class="choice"><input type="radio" name="cover" value="Hard-Cover" checked> Hard-Cover</label>
-            <label class="choice"><input type="radio" name="cover" value="Soft-Cover"> Soft-Cover</label>
+          <div class="options" id="coverOptions">
+            <button class="opt is-selected" data-value="Hard-Cover">Hard-Cover</button>
+            <button class="opt" data-value="Soft-Cover">Soft-Cover</button>
           </div>
         </div>
         <div class="actions">
@@ -274,7 +233,6 @@ body > .container > .frame{ outline: 2px dashed #f33; }
           <button class="btn next">Weiter</button>
         </div>
       </section>
-
       <!-- STEP 7 -->
       <section class="step" data-step="7">
         <div class="row">
@@ -289,7 +247,6 @@ body > .container > .frame{ outline: 2px dashed #f33; }
         </div>
       </section>
     </div>
-
     <footer class="footerlinks">
       <a href="kontakt.html">Kontakt</a>
       <a href="impressum.html">Impressum</a>
@@ -298,20 +255,18 @@ body > .container > .frame{ outline: 2px dashed #f33; }
       <a href="rechtliche-hinweise.html">Rechtliche Hinweise</a>
     </footer>
   </div>
-
   <script>
   // --- State ---
   const form = {
     year: 2025,
     persons: 85,
     digital_option: "Ja",
-    storage: "64GB",
+    storage: "Plus (25 GB)",
     content: [],
     size: "DIN A4",
     cover: "Hard-Cover"
   };
   let step = 0;
-
   // --- Elements ---
   const steps = [...document.querySelectorAll('.step')];
   const personsRange = document.getElementById('personsRange');
@@ -320,9 +275,12 @@ body > .container > .frame{ outline: 2px dashed #f33; }
   const digitalOpts = document.getElementById('digitalOptions');
   const contentChecks = document.getElementById('contentChecks');
   const summaryBox = document.getElementById('summaryBox');
-
-  // --- NEU: Weiter-Button in Step 4 ---
   const step4NextBtn = steps[4].querySelector('.btn.next');
+
+  // --- NEU: Optionen für Step 3, 5, 6 ---
+  const storageOpts = document.getElementById('storageOptions');
+  const sizeOpts = document.getElementById('sizeOptions');
+  const coverOpts = document.getElementById('coverOptions');
 
   // --- Helpers ---
   function showStep(n){
@@ -331,13 +289,8 @@ body > .container > .frame{ outline: 2px dashed #f33; }
     if (target) target.classList.add('active');
     step = n;
     if (step === 7) renderSummary();
-
-    // --- NEU: Prüfe Inhalte bei Step 4 ---
-    if (step === 4) {
-      updateContentNextButton();
-    }
+    if (step === 4) updateContentNextButton();
   }
-
   function nextStep(){
     if (step === 2 && form.digital_option === "Nein") return showStep(4);
     if (step === 2 && form.digital_option === "Nur digital") return showStep(3);
@@ -345,7 +298,6 @@ body > .container > .frame{ outline: 2px dashed #f33; }
     if (step === 6) return showStep(7);
     return showStep(Math.min(step+1, 7));
   }
-
   function prevStep(){
     if (step === 7 && form.digital_option === "Nur digital") return showStep(4);
     if (step === 7 && form.digital_option !== "Nur digital") return showStep(6);
@@ -353,7 +305,6 @@ body > .container > .frame{ outline: 2px dashed #f33; }
     if (step === 3) return showStep(2);
     return showStep(Math.max(step-1, 0));
   }
-
   function renderSummary(){
     const items = [
       ["Jahr", form.year],
@@ -368,8 +319,6 @@ body > .container > .frame{ outline: 2px dashed #f33; }
       items.map(([k,v]) => `<li><b>${k}:</b> ${v}</li>`).join("") +
       "</ul>";
   }
-
-  // --- NEU: Button aktivieren/deaktivieren ---
   function updateContentNextButton() {
     if (step4NextBtn) {
       step4NextBtn.disabled = form.content.length === 0;
@@ -404,25 +353,33 @@ body > .container > .frame{ outline: 2px dashed #f33; }
     }
   });
 
-  // Storage radios
-  document.querySelectorAll('input[name="storage"]').forEach(r =>
-    r.addEventListener('change', e => form.storage = e.target.value)
-  );
-
-  // Size radios
-  document.querySelectorAll('input[name="size"]').forEach(r =>
-    r.addEventListener('change', e => form.size = e.target.value)
-  );
-
-  // Cover radios
-  document.querySelectorAll('input[name="cover"]').forEach(r =>
-    r.addEventListener('change', e => form.cover = e.target.value)
-  );
+  // --- NEU: Storage, Size, Cover als .opt Buttons ---
+  storageOpts.addEventListener('click', (e) => {
+    if (e.target.closest('.opt')) {
+      storageOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
+      const b = e.target.closest('.opt'); b.classList.add('is-selected');
+      form.storage = b.dataset.value;
+    }
+  });
+  sizeOpts.addEventListener('click', (e) => {
+    if (e.target.closest('.opt')) {
+      sizeOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
+      const b = e.target.closest('.opt'); b.classList.add('is-selected');
+      form.size = b.dataset.value;
+    }
+  });
+  coverOpts.addEventListener('click', (e) => {
+    if (e.target.closest('.opt')) {
+      coverOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
+      const b = e.target.closest('.opt'); b.classList.add('is-selected');
+      form.cover = b.dataset.value;
+    }
+  });
 
   // Content checkboxes
   contentChecks.addEventListener('change', () => {
     form.content = [...contentChecks.querySelectorAll('input[type="checkbox"]:checked')].map(c => c.value);
-    updateContentNextButton(); // ← NEU: Button updaten
+    updateContentNextButton();
   });
 
   // Price button
@@ -430,7 +387,7 @@ body > .container > .frame{ outline: 2px dashed #f33; }
     alert('Preisberechnung folgt – Logik wird noch hinterlegt.');
   });
 
-  // --- INIT: Button initial deaktivieren, falls leer ---
+  // --- INIT ---
   updateContentNextButton();
 </script>
 </body>
