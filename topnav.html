@@ -64,21 +64,28 @@
   </style>
 </head>
 <body>
-  <nav class="toplinks" role="navigation" aria-label="Hauptnavigation">
-    <!-- zentrierte Links -->
+<nav class="toplinks" role="navigation" aria-label="Hauptnavigation">
+  <!-- LOGO LINKS -->
+  <a href="index.html" class="logo-link" aria-label="DigitABI Startseite">
+    <img src="assets/logo-digitabi.png" alt="DigitABI Logo" class="nav-logo">
+  </a>
+
+  <!-- Zentrierte Links -->
+  <div class="nav-links">
     <a href="index.html">Startseite</a>
     <a href="abirechner.html">Abibuch-Creator</a>
     <a href="steckbrief.html">Abibuch-Editor</a>
     <a href="index.html#mottos">Motto-Ideen</a>
     <a href="ueber-uns.html">Über Uns</a>
+  </div>
 
-    <!-- rechts: Auth -->
-    <div class="authbox">
-      <span id="userEmail" data-requires-auth></span>
-      <button id="logoutBtn" class="btn" data-requires-auth>Logout</button>
-      <button class="btn" data-requires-anon data-action="open-auth">Login / Registrieren</button>
-    </div>
-  </nav>
+  <!-- Rechts: Auth -->
+  <div class="authbox">
+    <span id="userEmail" data-requires-auth></span>
+    <button id="logoutBtn" class="btn" data-requires-auth>Logout</button>
+    <button class="btn" data-requires-anon data-action="open-auth">Login / Registrieren</button>
+  </div>
+</nav>
 
   <!-- Login/Registrieren Modal -->
   <dialog id="authModal">
