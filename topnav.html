@@ -8,12 +8,11 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
     :root { --link: rgba(255,255,255,.9); }
-
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; background: transparent; }
     body { font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif; }
 
-    /* NAVIGATION */
+    /* === NAVIGATION === */
     nav.toplinks {
       position: relative;
       display: flex;
@@ -24,20 +23,25 @@
       letter-spacing: .04em;
     }
 
-    /* LOGO */
+    /* === LOGO === */
     .logo-link {
       display: flex;
       align-items: center;
       height: 100%;
       margin-right: 20px;
+      transition: opacity 0.2s ease;
     }
+    .logo-link:hover { opacity: 0.85; }
+
     .nav-logo {
       height: 36px;
       width: auto;
       display: block;
+      object-fit: contain;          /* Verhindert Verzerrung */
+      background: transparent;      /* Kein roter Balken bei Fehler */
     }
 
-    /* ZENTRIERTE LINKS */
+    /* === ZENTRIERTE LINKS === */
     .nav-links {
       display: flex;
       justify-content: center;
@@ -56,7 +60,7 @@
       outline: none;
     }
 
-    /* AUTH BOX */
+    /* === AUTH BOX (rechts) === */
     .authbox {
       position: absolute;
       right: 12px;
@@ -74,15 +78,16 @@
       color: #fff;
       font-weight: 800;
       cursor: pointer;
+      font-size: 13px;
     }
     .btn:hover { background: rgba(255,255,255,.15); }
-    #userEmail { color: #fff; font-weight: 700; }
+    #userEmail { color: #fff; font-weight: 700; font-size: 14px; }
 
-    /* LOGIN STATUS */
+    /* === LOGIN STATUS === */
     [data-requires-auth] { display: none; }
     [data-requires-anon] { display: inline-flex; }
 
-    /* RESPONSIVE */
+    /* === RESPONSIVE === */
     @media (max-width: 720px) {
       .nav-logo { height: 32px; }
       .logo-link { margin-right: 12px; }
@@ -91,9 +96,10 @@
     @media (max-width: 520px) {
       .nav-links { gap: 12px; font-size: 13px; }
       .authbox { right: 8px; }
+      .btn { font-size: 12px; padding: 6px 8px; }
     }
 
-    /* DIALOG */
+    /* === DIALOG === */
     dialog {
       border: none;
       border-radius: 16px;
@@ -113,7 +119,11 @@
 <nav class="toplinks" role="navigation" aria-label="Hauptnavigation">
   <!-- LOGO LINKS -->
   <a href="index.html" class="logo-link" aria-label="DigitABI Startseite">
-    <img src="assets/logo-digitabi.png" alt="DigitABI Logo" class="nav-logo">
+    <!-- SVG bevorzugt! Fallback auf PNG -->
+    <img src="assets/place-holder.png" 
+         onerror="this.src='assets/logo-digitabi.png'; this.onerror=null;" 
+         alt="" 
+         class="nav-logo">
   </a>
 
   <!-- ZENTRIERTE LINKS -->
@@ -156,8 +166,10 @@
 <script type="module">
   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+  // <<< HIER DEINE SUPABASE KEYS EINTRAGEN >>>
   const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
   const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
+
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   async function loadProfileName(session) {
