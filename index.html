@@ -217,6 +217,32 @@
       background: transparent;
     }
   </style>
+  <!-- Top-Leiste als IFRAME einbinden -->
+<iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
+
+<!-- 👇 Direkt darunter einfügen -->
+<style>
+  .topnav-embed.topnav-full {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background: transparent;
+  }
+</style>
+<script>
+  (function(){
+    const iframe = document.querySelector('.topnav-embed');
+    const ORIGIN = window.location.origin;
+    window.addEventListener('message', (e)=>{
+      if(e.origin !== ORIGIN) return;
+      if(e.data?.type === 'TOPNAV_AUTH_OPEN')  iframe.classList.add('topnav-full');
+      if(e.data?.type === 'TOPNAV_AUTH_CLOSE') iframe.classList.remove('topnav-full');
+    });
+  })();
+</script>
+
   <div class="container">
     <!-- Hero -->
     <section class="hero">
