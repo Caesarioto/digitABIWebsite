@@ -250,6 +250,13 @@
       </ul>
     </section>
     <!-- Footer -->
+    <section class="center" style="margin-top:40px">
+  <h2>Datei hochladen (Test)</h2>
+  <input type="file" id="fileInput" accept="image/*,application/pdf" />
+  <button id="uploadBtn">Hochladen</button>
+  <div id="status" style="margin-top:10px;color:#fff;font-weight:600"></div>
+</section>
+
     <footer class="footerlinks smallcaps">
       <a href="./kontakt.html">Kontakt</a>
       <a href="./impressum.html">Impressum</a>
@@ -258,5 +265,41 @@
       <a href="./rechtliche-hinweise.html">rechtliche Hinweise</a>
     </footer>
   </div>
+  <script type="module">
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+  // 🔑 Trage hier deine echten Supabase-Daten ein:
+  const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
+  const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const fileInput = document.getElementById("fileInput");
+  const uploadBtn = document.getElementById("uploadBtn");
+  const status = document.getElementById("status");
+
+  uploadBtn.addEventListener("click", async () => {
+    const file = fileInput.files[0];
+    if (!file) {
+      status.textContent = "Bitte eine Datei auswählen.";
+      return;
+    }
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      status.textContent = "Bitte zuerst einloggen!";
+      return;
+    }
+
+    const path = `${user.id}/${file.name}`;
+    status.textContent = "Lade hoch...";
+
+    const { error } = await supabase.storage.from("yearbooks").upload(path, file, {
+      upsert: true
+    });
+
+    status.textContent = error ? `❌ Fehler: ${error.message}` : "✅ Upload erfolgreich!";
+  });
+</script>
+
 </body>
 </html>
