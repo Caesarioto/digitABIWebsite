@@ -150,6 +150,7 @@ p {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-weak);
 }
+.logo-link:hover .nav-logo { opacity: 0.85; transition: 0.2s; }
 
 /* --- Footer --- */
 .footerlinks{
