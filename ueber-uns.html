@@ -70,9 +70,23 @@
 
   <!-- Top-Leiste als IFRAME -->
   <iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
-  <style>
-    .topnav-embed{ width:100%; height:48px; border:0; display:block; overflow:hidden; background:transparent; }
-  </style>
+<!-- direkt UNTER dem <iframe src="topnav.html" ...> -->
+<style>
+  .topnav-embed.topnav-full{
+    position:fixed; inset:0; width:100vw; height:100vh;
+    z-index:9999; background:transparent; border:0;
+  }
+</style>
+<script>
+  (function(){
+    const iframe = document.querySelector('.topnav-embed');
+    window.addEventListener('message', (e)=>{
+      if (e.data?.type === 'TOPNAV_AUTH_OPEN')  iframe.classList.add('topnav-full');
+      if (e.data?.type === 'TOPNAV_AUTH_CLOSE') iframe.classList.remove('topnav-full');
+    });
+  })();
+</script>
+
 
   <div class="container">
     <h1>Über uns</h1>
