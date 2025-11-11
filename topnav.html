@@ -101,13 +101,49 @@
 
     /* === DIALOG === */
     dialog {
-      border: none;
-      border-radius: 16px;
-      padding: 0;
-      max-width: 420px;
-      width: 92vw;
-      box-shadow: 0 20px 60px rgba(0,0,0,.35);
-    }
+  border: none;
+  border-radius: 16px;
+  padding: 0;
+  width: min(420px, 92vw);
+  background: #fff;
+  color: #111;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+}
+dialog form {
+  padding: 26px 22px;
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+dialog input {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font: inherit;
+}
+dialog button[type="submit"] {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #2e1df7;
+  background: #eae7ff;
+  color: #2e1df7;
+  font-weight: 700;
+  cursor: pointer;
+}
+#authMessage {
+  margin-top: 10px;
+  color: #333;
+  font-weight: 600;
+}
+
     dialog form { padding: 22px 18px; font-family: inherit; }
     dialog label { display: grid; gap: 6px; margin-bottom: 12px; font-weight: 600; color: #222; }
     dialog input { padding: 10px 12px; border: 1px solid #ddd; border-radius: 10px; font: inherit; }
@@ -145,6 +181,7 @@
 
 <!-- MODAL -->
 <dialog id="authModal">
+  <dialog id="authModal" style="max-width:500px; width:90vw; height:auto;">
   <form id="authForm" method="dialog">
     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px">
       <strong style="font-size:18px">Einloggen / Registrieren</strong>
