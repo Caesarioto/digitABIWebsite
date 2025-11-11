@@ -102,30 +102,48 @@
 
   <!-- Supabase Auth -->
   <script type="module">
-    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-    // <<< HIER EINTRAGEN >>>
-    const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
-    const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
+  // <<< HIER DEINE KEYS EINTRAGEN >>>
+  const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
+  const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
 
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    function updateAuthUI(session){
-      const isLoggedIn = !!session?.user;
-      document.querySelectorAll("[data-requires-auth]").forEach(el => el.style.display = isLoggedIn ? "" : "none");
-      document.querySelectorAll("[data-requires-anon]").forEach(el => el.style.display = isLoggedIn ? "none" : "");
-      const emailSpan = document.querySelector("#userEmail");
-      if (emailSpan) emailSpan.textContent = isLoggedIn ? session.user.email : "";
+  /* --- NEU: Anzeigename aus profiles laden --- */
+  async function loadProfileName(session){
+    if(!session?.user) return '';
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('display_name')
+      .eq('id', session.user.id)
+      .maybeSingle();
+    if (error) return session.user.email;
+    return data?.display_name || session.user.email;
+  }
+
+  /* --- ERSETZEN: updateAuthUI --- */
+  async function updateAuthUI(session){
+    const isLoggedIn = !!session?.user;
+
+    document.querySelectorAll("[data-requires-auth]")
+      .forEach(el => el.style.display = isLoggedIn ? "" : "none");
+    document.querySelectorAll("[data-requires-anon]")
+      .forEach(el => el.style.display = isLoggedIn ? "none" : "");
+
+    const emailSpan = document.querySelector("#userEmail");
+    if (emailSpan) {
+      emailSpan.textContent = isLoggedIn ? await loadProfileName(session) : "";
     }
+  }
 
-    // Initialstatus
-    const { data: init } = await supabase.auth.getSession();
-    updateAuthUI(init.session);
+  // Initialstatus
+  const { data: init } = await supabase.auth.getSession();
+  await updateAuthUI(init.session);
 
-    // Reaktiv bleiben
-    supabase.auth.onAuthStateChange((_evt, session) => updateAuthUI(session));
+  // Reaktiv bleiben
+  supabase.auth.onAuthStateChange((_evt, session) => updateAuthUI(session));
 
-    // Login (Magic Link)
     async function signInWithEmail(e){
       e.preventDefault();
       const msg = document.querySelector("#authMessage");
