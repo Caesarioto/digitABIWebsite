@@ -31,6 +31,48 @@
     }
     nav.toplinks a:hover, nav.toplinks a:focus{ text-decoration:underline; outline:none }
 
+    /* LOGO */
+.nav-logo {
+  height: 36px;            /* passt zur Nav-Höhe */
+  width: auto;
+  margin-right: 20px;      /* Abstand zu den Links */
+  display: block;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Zentrierte Links in eigenem Container */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  flex: 1;                 /* füllt den Raum zwischen Logo und Auth */
+}
+
+nav.toplinks {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+/* Responsiv: Logo kleiner bei schmalen Screens */
+@media (max-width: 720px) {
+  .nav-logo { height: 32px; margin-right: 12px; }
+  .nav-links { gap: 16px; font-size: 14px; }
+}
+@media (max-width: 520px) {
+  .nav-links { gap: 12px; font-size: 13px; }
+}
+
     /* Rechts: Auth-Bereich */
     .authbox{
       position:absolute; right:12px; top:50%; transform:translateY(-50%);
