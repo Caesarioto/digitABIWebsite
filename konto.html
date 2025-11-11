@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mein Konto – DigitABI</title>
+<style>
+  body{margin:0;font-family:Poppins,system-ui,sans-serif;color:#fff;
+       background:linear-gradient(100deg,#FA565D 0%,#C45CAD 50%,#9052F8 100%);
+       min-height:100vh;display:flex;flex-direction:column}
+  .container{max-width:720px;margin:0 auto;padding:32px 24px;flex:1}
+  h1{margin:0 0 16px;font-weight:800}
+  .card{background:rgba(255,255,255,.12);backdrop-filter:blur(4px);
+        border-radius:14px;padding:20px;border:1px solid rgba(255,255,255,.3)}
+  label{display:grid;gap:6px;margin:12px 0}
+  input{padding:10px 12px;border-radius:10px;border:1px solid #ddd}
+  button{padding:10px 14px;border-radius:12px;border:2px solid #2e1df7;
+         background:#eae7ff;color:#2e1df7;font-weight:800;cursor:pointer}
+  .muted{opacity:.9}
+</style>
+</head>
+<body>
+
+<!-- Topnav -->
+<iframe src="topnav.html" title="Navigation" style="width:100%;height:48px;border:0;display:block;background:transparent"></iframe>
+
+<div class="container">
+  <h1>Mein Konto</h1>
+
+  <div class="card" data-auth="guarded">
+    <div class="muted" id="userId"></div>
+
+    <label> Anzeigename
+      <input id="displayName" placeholder="z. B. Mulan Mustermann">
+    </label>
+
+    <label> Klassen-/Jahrgangs-Code (class_id)
+      <input id="classId" placeholder="z. B. abi2026-hg-b">
+    </label>
+
+    <button id="saveBtn">Speichern</button>
+    <div id="msg" class="muted" style="margin-top:10px"></div>
+  </div>
+
+  <div data-auth="anon">
+    <p>Bitte zuerst einloggen.</p>
+  </div>
+</div>
+
+<script type="module">
+  import { supabase, getSession } from './auth.js';
+
+  (async ()=>{
+    const session = await getSession();
+    const authed = !!session?.user;
+
+    document.querySelectorAll('[data-auth="guarded"]').forEach(el=>el.style.display = authed?'':'none');
+    document.querySelectorAll('[data-auth="anon"]').forEach(el=>el.style.display = authed?'none':'');
+
+    if(!authed) return;
+
+    document.getElementById('userId').textContent = 'User-ID: ' + session.user.id;
+
+    // Laden
+    const { data } = await supabase.from('profiles')
+      .select('display_name,class_id')
+      .eq('id', session.user.id)
+      .maybeSingle();
+    if (data){
+      document.getElementById('displayName').value = data.display_name || '';
+      document.getElementById('classId').value = data.class_id || '';
+    }
+
+    // Speichern
+    document.getElementById('saveBtn').addEventListener('click', async ()=>{
+      const display_name = document.getElementById('displayName').value.trim();
+      const class_id = document.getElementById('classId').value.trim();
+      const up = { id: session.user.id, display_name, class_id };
+      const { error } = await supabase.from('profiles').upsert(up, { onConflict: 'id' });
+      document.getElementById('msg').textContent = error ? ('Fehler: '+error.message) : 'Gespeichert.';
+    });
+  })();
+</script>
+</body>
+</html>
