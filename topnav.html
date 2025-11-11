@@ -3,116 +3,120 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Links im Iframe sollen im Elternfenster öffnen -->
   <base target="_parent" />
   <title>Top Navigation</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
-    :root{ --link: rgba(255,255,255,.9); }
+    :root { --link: rgba(255,255,255,.9); }
 
-    *{ box-sizing:border-box }
-    html,body{ height:100% }
-    body{
-      margin:0;
-      background:transparent;
-      font-family:'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
-    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; background: transparent; }
+    body { font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif; }
 
-    /* zentrierte Linkleiste wie bisher */
-    nav.toplinks{
-      position:relative; /* für .authbox */
-      display:flex; justify-content:center; align-items:center; gap:28px;
-      height:48px;
-      font-weight:700; letter-spacing:.04em;
-      line-height:1;
+    /* NAVIGATION */
+    nav.toplinks {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 48px;
+      padding: 0 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
     }
-    nav.toplinks a{
-      color:var(--link); text-decoration:none; white-space:nowrap;
-    }
-    nav.toplinks a:hover, nav.toplinks a:focus{ text-decoration:underline; outline:none }
 
     /* LOGO */
-.nav-logo {
-  height: 36px;            /* passt zur Nav-Höhe */
-  width: auto;
-  margin-right: 20px;      /* Abstand zu den Links */
-  display: block;
-}
-
-.logo-link {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-/* Zentrierte Links in eigenem Container */
-.nav-links {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 28px;
-  flex: 1;                 /* füllt den Raum zwischen Logo und Auth */
-}
-
-nav.toplinks {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 48px;
-  padding: 0 12px;
-  font-weight: 700;
-  letter-spacing: .04em;
-}
-
-/* Responsiv: Logo kleiner bei schmalen Screens */
-@media (max-width: 720px) {
-  .nav-logo { height: 32px; margin-right: 12px; }
-  .nav-links { gap: 16px; font-size: 14px; }
-}
-@media (max-width: 520px) {
-  .nav-links { gap: 12px; font-size: 13px; }
-}
-
-    /* Rechts: Auth-Bereich */
-    .authbox{
-      position:absolute; right:12px; top:50%; transform:translateY(-50%);
-      display:flex; align-items:center; gap:10px;
+    .logo-link {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      margin-right: 20px;
     }
-    .btn{
-      padding:7px 10px; border-radius:10px; border:2px solid rgba(255,255,255,.9);
-      background:transparent; color:#fff; font-weight:800; cursor:pointer;
+    .nav-logo {
+      height: 36px;
+      width: auto;
+      display: block;
     }
-    .btn:hover{ background:rgba(255,255,255,.15) }
-    #userEmail{ color:#fff; font-weight:700; }
 
-    /* Sichtbarkeit je nach Login-Status */
-    [data-requires-auth]{ display:none; }
-    [data-requires-anon]{ display:inline-flex; }
-
-    /* kleine Screens */
-    @media (max-width:520px){ nav.toplinks{ gap:16px; font-size:14px } .authbox{ right:8px } }
-    @media (max-width:420px){ nav.toplinks{ gap:12px; font-size:13px } }
-
-    /* Login-Dialog */
-    dialog{
-      border:none; border-radius:16px; padding:0; max-width:420px; width:92vw;
-      box-shadow:0 20px 60px rgba(0,0,0,.35);
+    /* ZENTRIERTE LINKS */
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 28px;
+      flex: 1;
     }
-    dialog form{ padding:22px 18px; font-family:inherit }
-    dialog label{ display:grid; gap:6px; margin-bottom:12px; font-weight:600; color:#222 }
-    dialog input{ padding:10px 12px; border:1px solid #ddd; border-radius:10px; font:inherit }
-    dialog button{ cursor:pointer }
-    #authMessage{ margin-top:10px; color:#333; font-weight:600 }
+    .nav-links a {
+      color: var(--link);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus {
+      text-decoration: underline;
+      outline: none;
+    }
+
+    /* AUTH BOX */
+    .authbox {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn {
+      padding: 7px 10px;
+      border-radius: 10px;
+      border: 2px solid rgba(255,255,255,.9);
+      background: transparent;
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .btn:hover { background: rgba(255,255,255,.15); }
+    #userEmail { color: #fff; font-weight: 700; }
+
+    /* LOGIN STATUS */
+    [data-requires-auth] { display: none; }
+    [data-requires-anon] { display: inline-flex; }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      .nav-logo { height: 32px; }
+      .logo-link { margin-right: 12px; }
+      .nav-links { gap: 16px; font-size: 14px; }
+    }
+    @media (max-width: 520px) {
+      .nav-links { gap: 12px; font-size: 13px; }
+      .authbox { right: 8px; }
+    }
+
+    /* DIALOG */
+    dialog {
+      border: none;
+      border-radius: 16px;
+      padding: 0;
+      max-width: 420px;
+      width: 92vw;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+    dialog form { padding: 22px 18px; font-family: inherit; }
+    dialog label { display: grid; gap: 6px; margin-bottom: 12px; font-weight: 600; color: #222; }
+    dialog input { padding: 10px 12px; border: 1px solid #ddd; border-radius: 10px; font: inherit; }
+    #authMessage { margin-top: 10px; color: #333; font-weight: 600; }
   </style>
 </head>
 <body>
+
 <nav class="toplinks" role="navigation" aria-label="Hauptnavigation">
   <!-- LOGO LINKS -->
   <a href="index.html" class="logo-link" aria-label="DigitABI Startseite">
-    <img src="assets/hero-placeholder.png" alt="DigitABI Logo" class="nav-logo">
+    <img src="assets/logo-digitabi.png" alt="DigitABI Logo" class="nav-logo">
   </a>
 
-  <!-- Zentrierte Links -->
+  <!-- ZENTRIERTE LINKS -->
   <div class="nav-links">
     <a href="index.html">Startseite</a>
     <a href="abirechner.html">Abibuch-Creator</a>
@@ -121,7 +125,7 @@ nav.toplinks {
     <a href="ueber-uns.html">Über Uns</a>
   </div>
 
-  <!-- Rechts: Auth -->
+  <!-- RECHTS: AUTH -->
   <div class="authbox">
     <span id="userEmail" data-requires-auth></span>
     <button id="logoutBtn" class="btn" data-requires-auth>Logout</button>
@@ -129,112 +133,98 @@ nav.toplinks {
   </div>
 </nav>
 
-  <!-- Login/Registrieren Modal -->
-  <dialog id="authModal">
-    <form id="authForm" method="dialog">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <strong style="font-size:18px">Einloggen / Registrieren</strong>
-        <button type="button" id="closeAuth" style="background:#eee;border:none;border-radius:8px;padding:6px 10px">✕</button>
-      </div>
-      <p style="margin:8px 0 12px;color:#333">E-Mail eingeben – wir senden dir einen Magic-Link.</p>
-      <label>
-        E-Mail
-        <input name="email" type="email" required placeholder="du@example.com" />
-      </label>
-      <button type="submit"
-        style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;">
-        Magic-Link senden
-      </button>
-      <div id="authMessage"></div>
-    </form>
-  </dialog>
+<!-- MODAL -->
+<dialog id="authModal">
+  <form id="authForm" method="dialog">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px">
+      <strong style="font-size:18px">Einloggen / Registrieren</strong>
+      <button type="button" id="closeAuth" style="background:#eee; border:none; border-radius:8px; padding:6px 10px">✕</button>
+    </div>
+    <p style="margin:8px 0 12px; color:#333">E-Mail eingeben – wir senden dir einen Magic-Link.</p>
+    <label>
+      E-Mail
+      <input name="email" type="email" required placeholder="du@example.com" />
+    </label>
+    <button type="submit" style="width:100%; padding:12px 14px; border-radius:12px; border:2px solid #2e1df7; background:#eae7ff; color:#2e1df7; font-weight:800;">
+      Magic-Link senden
+    </button>
+    <div id="authMessage"></div>
+  </form>
+</dialog>
 
-  <!-- Supabase Auth -->
-  <script type="module">
+<!-- SUPABASE AUTH -->
+<script type="module">
   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-  // <<< HIER DEINE KEYS EINTRAGEN >>>
   const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
   const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
-
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  /* --- NEU: Anzeigename aus profiles laden --- */
-  async function loadProfileName(session){
-    if(!session?.user) return '';
-    const { data, error } = await supabase
+  async function loadProfileName(session) {
+    if (!session?.user) return '';
+    const { data } = await supabase
       .from('profiles')
       .select('display_name')
       .eq('id', session.user.id)
       .maybeSingle();
-    if (error) return session.user.email;
     return data?.display_name || session.user.email;
   }
 
-  /* --- ERSETZEN: updateAuthUI --- */
-  async function updateAuthUI(session){
+  async function updateAuthUI(session) {
     const isLoggedIn = !!session?.user;
-
     document.querySelectorAll("[data-requires-auth]")
       .forEach(el => el.style.display = isLoggedIn ? "" : "none");
     document.querySelectorAll("[data-requires-anon]")
       .forEach(el => el.style.display = isLoggedIn ? "none" : "");
-
     const emailSpan = document.querySelector("#userEmail");
-    if (emailSpan) {
-      emailSpan.textContent = isLoggedIn ? await loadProfileName(session) : "";
+    if (emailSpan && isLoggedIn) {
+      emailSpan.textContent = await loadProfileName(session);
     }
   }
 
-  // Initialstatus
+  // Init
   const { data: init } = await supabase.auth.getSession();
   await updateAuthUI(init.session);
 
-  // Reaktiv bleiben
+  // Listener
   supabase.auth.onAuthStateChange((_evt, session) => updateAuthUI(session));
 
-    async function signInWithEmail(e){
-      e.preventDefault();
-      const msg = document.querySelector("#authMessage");
-      const email = e.currentTarget.querySelector('input[name="email"]').value.trim();
-      if (!email){ msg.textContent = "Bitte E-Mail eingeben."; return; }
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: { emailRedirectTo: window.location.origin }
-      });
-      msg.textContent = error ? ("Fehler: " + error.message) : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
-    }
-
-    // Logout
-    async function signOut(){ await supabase.auth.signOut(); }
-
-    // Hooks
-    document.querySelector("#authForm")?.addEventListener("submit", signInWithEmail);
-    document.querySelector("#logoutBtn")?.addEventListener("click", signOut);
-
-    const authModal = document.querySelector("#authModal");
-    document.querySelectorAll("[data-action='open-auth']").forEach(b =>
-      b.addEventListener("click", () => authModal?.showModal?.())
-    );
-    document.querySelector("#closeAuth")?.addEventListener("click", () => authModal?.close?.());
-
-     async function sendAuthState() {
-      const { data } = await supabase.auth.getSession();
-      window.parent.postMessage(
-        { type: "auth-state", loggedIn: !!data.session?.user },
-        "*"
-      );
-    }
-
-    // beim Start & bei jedem Wechsel
-    sendAuthState();
-    supabase.auth.onAuthStateChange((_event, session) => {
-      window.parent.postMessage(
-        { type: "auth-state", loggedIn: !!session?.user },
-        "*"
-      );
+  // Login
+  async function signInWithEmail(e) {
+    e.preventDefault();
+    const msg = document.querySelector("#authMessage");
+    const email = e.currentTarget.querySelector('input[name="email"]').value.trim();
+    if (!email) { msg.textContent = "Bitte E-Mail eingeben."; return; }
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: window.location.origin }
     });
-  </script>
+    msg.textContent = error ? ("Fehler: " + error.message) : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
+  }
+
+  // Logout
+  async function signOut() { await supabase.auth.signOut(); }
+
+  // Events
+  document.querySelector("#authForm")?.addEventListener("submit", signInWithEmail);
+  document.querySelector("#logoutBtn")?.addEventListener("click", signOut);
+  const authModal = document.querySelector("#authModal");
+  document.querySelectorAll("[data-action='open-auth']").forEach(b =>
+    b.addEventListener("click", () => authModal?.showModal?.())
+  );
+  document.querySelector("#closeAuth")?.addEventListener("click", () => authModal?.close?.());
+
+  // PostMessage an Parent
+  async function sendAuthState() {
+    const { data } = await supabase.auth.getSession();
+    window.parent.postMessage(
+      { type: "auth-state", loggedIn: !!data.session?.user },
+      "*"
+    );
+  }
+  sendAuthState();
+  supabase.auth.onAuthStateChange(() => sendAuthState());
+</script>
+
 </body>
 </html>
-
