@@ -145,6 +145,17 @@ body > .container > .frame{ outline: 2px dashed #f33; }
       background:transparent;
     }
   </style>
+  <script>
+  (function(){
+    const iframe = document.querySelector('.topnav-embed');
+    const ORIGIN = window.location.origin;
+    window.addEventListener('message', (e)=>{
+      if(e.origin !== ORIGIN) return;
+      if(e.data?.type === 'TOPNAV_AUTH_OPEN')  iframe.classList.add('topnav-full');
+      if(e.data?.type === 'TOPNAV_AUTH_CLOSE') iframe.classList.remove('topnav-full');
+    });
+  })();
+</script>
 
 
   <div class="container" style="max-width: 1920px !important; width: 100% !important;">
@@ -424,6 +435,7 @@ body > .container > .frame{ outline: 2px dashed #f33; }
 </script>
 </body>
 </html>
+
 
 
 
