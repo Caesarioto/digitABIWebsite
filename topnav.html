@@ -150,6 +150,23 @@
       b.addEventListener("click", () => authModal?.showModal?.())
     );
     document.querySelector("#closeAuth")?.addEventListener("click", () => authModal?.close?.());
+
+     async function sendAuthState() {
+      const { data } = await supabase.auth.getSession();
+      window.parent.postMessage(
+        { type: "auth-state", loggedIn: !!data.session?.user },
+        "*"
+      );
+    }
+
+    // beim Start & bei jedem Wechsel
+    sendAuthState();
+    supabase.auth.onAuthStateChange((_event, session) => {
+      window.parent.postMessage(
+        { type: "auth-state", loggedIn: !!session?.user },
+        "*"
+      );
+    });
   </script>
 </body>
 </html>
