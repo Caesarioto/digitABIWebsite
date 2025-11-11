@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-<base target="_parent">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Links im Iframe sollen im Elternfenster öffnen -->
+  <base target="_parent" />
   <title>Top Navigation</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
     :root{ --link: rgba(255,255,255,.9); }
+
     *{ box-sizing:border-box }
     html,body{ height:100% }
     body{
@@ -15,30 +17,140 @@
       background:transparent;
       font-family:'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
     }
+
+    /* zentrierte Linkleiste wie bisher */
     nav.toplinks{
+      position:relative; /* für .authbox */
       display:flex; justify-content:center; align-items:center; gap:28px;
-      height:48px; /* feste Höhe damit das Iframe exakt passt */
+      height:48px;
       font-weight:700; letter-spacing:.04em;
       line-height:1;
     }
     nav.toplinks a{
-      color:var(--link); text-decoration:none;
-      white-space:nowrap;
+      color:var(--link); text-decoration:none; white-space:nowrap;
     }
     nav.toplinks a:hover, nav.toplinks a:focus{ text-decoration:underline; outline:none }
-    /* Kleine Bildschirme: minimal kleinere Schrift, damit es einzeilig bleibt */
-    @media (max-width: 520px){ nav.toplinks{ gap:16px; font-size:14px } }
-    @media (max-width: 420px){ nav.toplinks{ gap:12px; font-size:13px } }
+
+    /* Rechts: Auth-Bereich */
+    .authbox{
+      position:absolute; right:12px; top:50%; transform:translateY(-50%);
+      display:flex; align-items:center; gap:10px;
+    }
+    .btn{
+      padding:7px 10px; border-radius:10px; border:2px solid rgba(255,255,255,.9);
+      background:transparent; color:#fff; font-weight:800; cursor:pointer;
+    }
+    .btn:hover{ background:rgba(255,255,255,.15) }
+    #userEmail{ color:#fff; font-weight:700; }
+
+    /* Sichtbarkeit je nach Login-Status */
+    [data-requires-auth]{ display:none; }
+    [data-requires-anon]{ display:inline-flex; }
+
+    /* kleine Screens */
+    @media (max-width:520px){ nav.toplinks{ gap:16px; font-size:14px } .authbox{ right:8px } }
+    @media (max-width:420px){ nav.toplinks{ gap:12px; font-size:13px } }
+
+    /* Login-Dialog */
+    dialog{
+      border:none; border-radius:16px; padding:0; max-width:420px; width:92vw;
+      box-shadow:0 20px 60px rgba(0,0,0,.35);
+    }
+    dialog form{ padding:22px 18px; font-family:inherit }
+    dialog label{ display:grid; gap:6px; margin-bottom:12px; font-weight:600; color:#222 }
+    dialog input{ padding:10px 12px; border:1px solid #ddd; border-radius:10px; font:inherit }
+    dialog button{ cursor:pointer }
+    #authMessage{ margin-top:10px; color:#333; font-weight:600 }
   </style>
 </head>
 <body>
   <nav class="toplinks" role="navigation" aria-label="Hauptnavigation">
-  <a href="index.html" target="_parent">Startseite</a>
-  <a href="abirechner.html" target="_parent">Abibuch-Konfigurator</a>
-  <a href="steckbrief.html" target="_parent">Abibuch-Editor</a>
-  <a href="index.html#mottos" target="_parent">Motto-Ideen</a>
-  <a href="ueber-uns.html" target="_parent">Über Uns</a>
-</nav>
+    <!-- zentrierte Links -->
+    <a href="index.html">Startseite</a>
+    <a href="abirechner.html">Abibuch-Konfigurator</a>
+    <a href="steckbrief.html">Abibuch-Editor</a>
+    <a href="index.html#mottos">Motto-Ideen</a>
+    <a href="ueber-uns.html">Über Uns</a>
 
+    <!-- rechts: Auth -->
+    <div class="authbox">
+      <span id="userEmail" data-requires-auth></span>
+      <button id="logoutBtn" class="btn" data-requires-auth>Logout</button>
+      <button class="btn" data-requires-anon data-action="open-auth">Login / Registrieren</button>
+    </div>
+  </nav>
+
+  <!-- Login/Registrieren Modal -->
+  <dialog id="authModal">
+    <form id="authForm" method="dialog">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <strong style="font-size:18px">Einloggen / Registrieren</strong>
+        <button type="button" id="closeAuth" style="background:#eee;border:none;border-radius:8px;padding:6px 10px">✕</button>
+      </div>
+      <p style="margin:8px 0 12px;color:#333">E-Mail eingeben – wir senden dir einen Magic-Link.</p>
+      <label>
+        E-Mail
+        <input name="email" type="email" required placeholder="du@example.com" />
+      </label>
+      <button type="submit"
+        style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;">
+        Magic-Link senden
+      </button>
+      <div id="authMessage"></div>
+    </form>
+  </dialog>
+
+  <!-- Supabase Auth -->
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    // <<< HIER EINTRAGEN >>>
+    const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
+    const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    function updateAuthUI(session){
+      const isLoggedIn = !!session?.user;
+      document.querySelectorAll("[data-requires-auth]").forEach(el => el.style.display = isLoggedIn ? "" : "none");
+      document.querySelectorAll("[data-requires-anon]").forEach(el => el.style.display = isLoggedIn ? "none" : "");
+      const emailSpan = document.querySelector("#userEmail");
+      if (emailSpan) emailSpan.textContent = isLoggedIn ? session.user.email : "";
+    }
+
+    // Initialstatus
+    const { data: init } = await supabase.auth.getSession();
+    updateAuthUI(init.session);
+
+    // Reaktiv bleiben
+    supabase.auth.onAuthStateChange((_evt, session) => updateAuthUI(session));
+
+    // Login (Magic Link)
+    async function signInWithEmail(e){
+      e.preventDefault();
+      const msg = document.querySelector("#authMessage");
+      const email = e.currentTarget.querySelector('input[name="email"]').value.trim();
+      if (!email){ msg.textContent = "Bitte E-Mail eingeben."; return; }
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.origin }
+      });
+      msg.textContent = error ? ("Fehler: " + error.message) : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
+    }
+
+    // Logout
+    async function signOut(){ await supabase.auth.signOut(); }
+
+    // Hooks
+    document.querySelector("#authForm")?.addEventListener("submit", signInWithEmail);
+    document.querySelector("#logoutBtn")?.addEventListener("click", signOut);
+
+    const authModal = document.querySelector("#authModal");
+    document.querySelectorAll("[data-action='open-auth']").forEach(b =>
+      b.addEventListener("click", () => authModal?.showModal?.())
+    );
+    document.querySelector("#closeAuth")?.addEventListener("click", () => authModal?.close?.());
+  </script>
 </body>
 </html>
+
