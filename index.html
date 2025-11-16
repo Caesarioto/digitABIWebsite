@@ -219,7 +219,6 @@
   </style>
   <!-- Top-Leiste als IFRAME einbinden -->
 <iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
-
 <!-- 👇 Direkt darunter einfügen -->
 <style>
   .topnav-embed.topnav-full {
@@ -237,12 +236,11 @@
     const ORIGIN = window.location.origin;
     window.addEventListener('message', (e)=>{
       if(e.origin !== ORIGIN) return;
-      if(e.data?.type === 'TOPNAV_AUTH_OPEN')  iframe.classList.add('topnav-full');
+      if(e.data?.type === 'TOPNAV_AUTH_OPEN') iframe.classList.add('topnav-full');
       if(e.data?.type === 'TOPNAV_AUTH_CLOSE') iframe.classList.remove('topnav-full');
     });
   })();
 </script>
-
   <div class="container">
     <!-- Hero -->
     <section class="hero">
@@ -259,30 +257,61 @@
     <section class="center">
       <p class="smallcaps" style="color:var(--muted)">Eure Erinnerungen, digital und gedruckt – mit unserer Plattform für moderne Abibücher</p>
     </section>
-    <section class="bullets features">
-      <div class="smallcaps">
-        <div></br>🤝 Gemeinsames Bearbeiten im Team</div>
-        <div></br>💾 Digital &amp; sicher gespeichert</div>
-        <div></br>⚡Professionell &amp; schnell druckbar</div>
-        <div></br>🔝 Auch als digitale Version mit Videos, Sprachnachrichten u.v.m.</div>
+   
+<!-- === OBERER SPLIT-BLOCK: BIS GRÜNE LINIE, BREITER === -->
+<section class="features-split full-edge-split" style="margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 32px;">
+  <!-- Linker Block: Rot, kompakt -->
+  <div style="flex: 1.2; min-width: 280px; text-align: center; align-self: center;">
+    <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 20px 24px; color: #fff;">
+      <h2 style="margin: 0; font-size: clamp(20px, 3.5vw, 28px); font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3);">
+        Was wir bieten:
+      </h2>
+      <h3 style="margin: 8px 0 0; font-size: clamp(18px, 3vw, 24px); font-weight: 700; color: #fff;">
+        Dein All-in-One für das perfekte Abibuch
+      </h3>
+    </div>
+  </div>
+  <!-- Rechter Block: Grün, breiter -->
+  <div style="flex: 2.5; min-width: 320px;">
+    <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 24px 32px; color: #fff;">
+      <div class="smallcaps" style="display: grid; gap: 24px; font-size: clamp(15px, 2.2vw, 18px);">
+        <div>🖨️ <strong>Buch-Version:</strong> Professionell und schnell gedrucktes Buch, das du in der Hand halten kannst – frei gestaltbar und auf deinen Bedarf zugeschnitten.</div>
+        <div>📱 <strong>Digitale Version:</strong> Als Einzige bieten wir eine interaktive Digitale-Version mit Multimedia-Elementen.</div>
+        <div>🤝 <strong>Gemeinsames Erstellen:</strong> Alle füllen online ihre Steckbriefe aus, nehmen an Rankings teil oder laden Fotos und Videos hoch – einfache Zusammenarbeit ohne Chaos.</div>
+        <div>🎨 <strong>Freie Gestaltung:</strong> Intuitives Tool, das sich an eure Wünsche anpasst – von Layout bis Inhalt habt ihr die richtige Mischungs aus Unterstützung und Freiheit.</div>
       </div>
-    </section>
-    <section class="bullets">
-      <ul>
-        <li>DSGVO-konform</li>
-        <li>Server in Deutschland</li>
-        <li>Keine Weitergabe von Daten</li>
-        <li>Keine versteckten Kosten</li>
-      </ul>
-    </section>
-    <!-- Footer -->
-    <section class="center" style="margin-top:40px">
-  <h2>Datei hochladen (Test)</h2>
-  <input type="file" id="fileInput" accept="image/*,application/pdf" />
-  <button id="uploadBtn">Hochladen</button>
-  <div id="status" style="margin-top:10px;color:#fff;font-weight:600"></div>
+    </div>
+  </div>
 </section>
-
+<!-- === ENDE === -->
+<!-- === NEUER SPLIT-BLOCK: GRÜN LINKS, ROT RECHTS, MITTE === -->
+<section class="benefits-split" style="margin: 48px 0; display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: center; max-width: 1180px; margin-left: auto; margin-right: auto;">
+  <!-- Linke Seite: Grüner Inhaltsblock -->
+  <div style="flex: 2.5; min-width: 320px;">
+    <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 24px 28px; color: #fff;">
+      <div class="smallcaps" style="display: grid; gap: 16px; font-size: clamp(15px, 2.2vw, 18px);"> 
+        <div>📈 <strong>Lebens-Updates:</strong> Teilt über die Jahre Neuigkeiten zu Studium, Job oder Familie – euer Abibuch wächst mit euch.</div>
+        <div>🖼️ <strong>Mehr Inhalte:</strong> Teilt mehr gemeinsame Bilder, ohne Platzprobleme.</div>
+        <div>🎥 <strong>Videos integrieren:</strong> Fügt Highlights wie Abiball, Aufführungen oder lustige Momente ein – lebendiger als je zuvor.</div>
+	<div>🗣️ <strong>Sprachnachrichten:</strong> Abschließende Botschaften und Glückwünsche oder noch ein Mal die Stimme deines Lieblingslehrers hören - mit DigitABI ist das möglich!</div>
+	<div>🔗 <strong>Für immer verbunden:</strong> Bleibt einfach in Kontakt – automatische Erinnerungen an Jubiläen und Klassentreffen.</div>   
+        <div>🔒 <strong>Immer verfügbar:</strong> Verliere niemals dein Abibuch – sicherer Zugriff jederzeit, überall, DSGVO-konform und auf Servern in Deutschland.</div>
+      </div>
+    </div>
+  </div>
+  <!-- Rechte Seite: Roter Titelblock -->
+  <div style="flex: 1.2; min-width: 280px; text-align: center; align-self: center;">
+    <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 20px 24px; color: #fff;">
+      <h2 style="margin: 0; font-size: clamp(20px, 3.5vw, 28px); font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3);">
+        Warum digital?
+      </h2>
+      <h3 style="margin: 8px 0 0; font-size: clamp(18px, 3vw, 24px); font-weight: 700; color: #fff;">
+        Mehr als nur ein Buch – eine lebendige Community
+      </h3>
+    </div>
+  </div>
+</section>
+<!-- === ENDE SPLIT-BLOCK === -->
     <footer class="footerlinks smallcaps">
       <a href="./kontakt.html">Kontakt</a>
       <a href="./impressum.html">Impressum</a>
@@ -293,39 +322,31 @@
   </div>
   <script type="module">
   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
   // 🔑 Trage hier deine echten Supabase-Daten ein:
   const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
   const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
   const fileInput = document.getElementById("fileInput");
   const uploadBtn = document.getElementById("uploadBtn");
   const status = document.getElementById("status");
-
   uploadBtn.addEventListener("click", async () => {
     const file = fileInput.files[0];
     if (!file) {
       status.textContent = "Bitte eine Datei auswählen.";
       return;
     }
-
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
       status.textContent = "Bitte zuerst einloggen!";
       return;
     }
-
     const path = `${user.id}/${file.name}`;
     status.textContent = "Lade hoch...";
-
     const { error } = await supabase.storage.from("yearbooks").upload(path, file, {
       upsert: true
     });
-
     status.textContent = error ? `❌ Fehler: ${error.message}` : "✅ Upload erfolgreich!";
   });
 </script>
-
 </body>
 </html>
