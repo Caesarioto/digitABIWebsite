@@ -252,13 +252,23 @@
 
   const authModal = document.getElementById("authModal");
 
-  document.getElementById("authForm")?.addEventListener("submit", signInWithEmail);
-  document.getElementById("logoutBtn")?.addEventListener("click", signOut);
+document.getElementById("authForm")?.addEventListener("submit", signInWithEmail);
+document.getElementById("logoutBtn")?.addEventListener("click", signOut);
 
-  document.querySelectorAll("[data-action='open-auth']").forEach(b =>
-    b.addEventListener("click", () => authModal?.showModal())
-  );
-  document.getElementById("closeAuth")?.addEventListener("click", () => authModal?.close());
+// Login-Dialog öffnen UND Parent informieren -> Iframe wird fullscreen
+document.querySelectorAll("[data-action='open-auth']").forEach(b =>
+  b.addEventListener("click", () => {
+    authModal?.showModal();
+    window.parent.postMessage({ type: "TOPNAV_AUTH_OPEN" }, "*");
+  })
+);
+
+// Dialog schließen UND Parent informieren -> Iframe wieder 48px hoch
+document.getElementById("closeAuth")?.addEventListener("click", () => {
+  authModal?.close();
+  window.parent.postMessage({ type: "TOPNAV_AUTH_CLOSE" }, "*");
+});
+
 </script>
 
 </body>
