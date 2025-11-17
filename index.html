@@ -217,6 +217,17 @@
       background: transparent;
     }
   </style>
+	<script>
+  (function(){
+    const iframe = document.querySelector('.topnav-embed');
+    const ORIGIN = window.location.origin;
+    window.addEventListener('message', (e)=>{
+      if(e.origin !== ORIGIN) return;
+      if(e.data?.type === 'TOPNAV_AUTH_OPEN') iframe.classList.add('topnav-full');
+      if(e.data?.type === 'TOPNAV_AUTH_CLOSE') iframe.classList.remove('topnav-full');
+    });
+  })();
+</script>
   <!-- Top-Leiste als IFRAME einbinden -->
 
   <div class="container">
