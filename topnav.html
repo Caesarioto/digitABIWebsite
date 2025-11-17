@@ -8,49 +8,155 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
     :root { --link: rgba(255,255,255,.9); }
-    *{ box-sizing:border-box }
-    html,body{ height:100%; margin:0; background:transparent }
-    body{ font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; background: transparent; }
+    body { font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif; }
 
-    /* NAV */
-    nav.toplinks{
-      position:relative; display:flex; align-items:center; height:48px; padding:0 12px;
-      font-weight:700; letter-spacing:.04em;
+    /* NAVIGATION */
+    nav.toplinks {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 48px;
+      padding: 0 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
     }
-    .nav-links{ display:flex; justify-content:center; align-items:center; gap:28px; flex:1 }
-    .nav-links a{ color:var(--link); text-decoration:none; white-space:nowrap }
-    .nav-links a:hover{ text-decoration:underline }
 
-    .authbox{ position:absolute; right:12px; top:50%; transform:translateY(-50%); display:flex; gap:10px; align-items:center }
-    .btn{ padding:7px 10px; border-radius:10px; border:2px solid rgba(255,255,255,.9); background:transparent; color:#fff; font-weight:800; cursor:pointer; font-size:13px }
-    .btn:hover{ background:rgba(255,255,255,.15) }
-    #userEmail{ color:#fff; font-weight:700; font-size:14px }
-
-    [data-requires-auth]{ display:none }
-    [data-requires-anon]{ display:inline-flex }
-
-    /* DIALOG */
-    dialog{
-      border:none; border-radius:16px; padding:0;
-      width:min(480px, 92vw); max-width:92vw;
-      background:#fff; color:#111;
-      box-shadow:0 25px 80px rgba(0,0,0,.5);
-      display:flex; flex-direction:column; overflow:hidden;
+    /* LOGO */
+    .logo-link {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      margin-right: 20px;
+      transition: opacity 0.2s ease;
     }
-    dialog::backdrop{ background:rgba(0,0,0,.45); backdrop-filter:blur(3px) }
-    dialog form{ padding:26px 22px; display:flex; flex-direction:column; gap:14px; font:inherit }
-    dialog label{ display:grid; gap:6px; font-weight:600; color:#222 }
-    dialog input{ padding:10px 12px; border:1px solid #ccc; border-radius:8px; font:inherit }
-    dialog button[type="submit"]{
-      padding:10px 14px; border-radius:10px; border:2px solid #2e1df7;
-      background:#eae7ff; color:#2e1df7; font-weight:700; cursor:pointer;
+    .logo-link:hover { opacity: 0.85; }
+    .nav-logo {
+      height: 36px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+      background: transparent;
     }
-    #authMessage{ margin-top:10px; color:#333; font-weight:600 }
+
+    /* ZENTRIERTE LINKS */
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 28px;
+      flex: 1;
+    }
+    .nav-links a {
+      color: var(--link);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus {
+      text-decoration: underline;
+      outline: none;
+    }
+
+    /* AUTH BOX rechts */
+    .authbox {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn {
+      padding: 7px 10px;
+      border-radius: 10px;
+      border: 2px solid rgba(255,255,255,.9);
+      background: transparent;
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .btn:hover { background: rgba(255,255,255,.15); }
+    #userEmail { color: #fff; font-weight: 700; font-size: 14px; }
+
+    [data-requires-auth] { display: none; }
+    [data-requires-anon] { display: inline-flex; }
+
+    @media (max-width: 720px) {
+      .nav-logo { height: 32px; }
+      .logo-link { margin-right: 12px; }
+      .nav-links { gap: 16px; font-size: 14px; }
+    }
+    @media (max-width: 520px) {
+      .nav-links { gap: 12px; font-size: 13px; }
+      .authbox { right: 8px; }
+      .btn { font-size: 12px; padding: 6px 8px; }
+    }
+
+    /* LOGIN-DIALOG */
+    dialog {
+      border: none;
+      border-radius: 16px;
+      padding: 0;
+      width: min(420px, 92vw);
+      background: #fff;
+      color: #111;
+      box-shadow: 0 25px 80px rgba(0,0,0,.5);
+    }
+    dialog::backdrop {
+      background: rgba(0,0,0,.45);
+      backdrop-filter: blur(3px);
+    }
+    dialog form {
+      padding: 26px 22px;
+      font-family: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    dialog label {
+      display: grid;
+      gap: 6px;
+      font-weight: 600;
+      color: #222;
+    }
+    dialog input {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font: inherit;
+    }
+    dialog button[type="submit"] {
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 2px solid #2e1df7;
+      background: #eae7ff;
+      color: #2e1df7;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    #authMessage {
+      margin-top: 6px;
+      color: #333;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
 
-<nav class="toplinks" aria-label="Hauptnavigation">
+<nav class="toplinks" role="navigation" aria-label="Hauptnavigation">
+  <!-- Logo -->
+  <a href="index.html" class="logo-link" aria-label="DigitABI Startseite">
+    <img src="assets/place-holder.png"
+         onerror="this.src='assets/logo-digitabi.png'; this.onerror=null;"
+         alt=""
+         class="nav-logo">
+  </a>
+
+  <!-- Links -->
   <div class="nav-links">
     <a href="index.html">Startseite</a>
     <a href="abirechner.html">Abibuch-Creator</a>
@@ -59,6 +165,7 @@
     <a href="ueber-uns.html">Über Uns</a>
   </div>
 
+  <!-- Auth rechts -->
   <div class="authbox">
     <span id="userEmail" data-requires-auth></span>
     <button id="logoutBtn" class="btn" data-requires-auth>Logout</button>
@@ -66,20 +173,24 @@
   </div>
 </nav>
 
-<!-- Nur EIN Dialog! -->
+<!-- EINZELNES Dialog-Element – kein verschachteltes dialog mehr! -->
 <dialog id="authModal">
   <form id="authForm" method="dialog">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
       <strong style="font-size:18px">Einloggen / Registrieren</strong>
       <button type="button" id="closeAuth"
               style="background:#eee;border:none;border-radius:8px;padding:6px 10px;cursor:pointer">✕</button>
     </div>
-    <p style="margin:8px 0 12px;color:#333">E-Mail eingeben – wir senden dir einen Magic-Link.</p>
+    <p style="margin:0 0 8px;color:#333">
+      E-Mail eingeben – wir senden dir einen Magic-Link.
+    </p>
     <label>
       E-Mail
-      <input name="email" type="email" required placeholder="du@example.com" />
+      <input name="email" type="email" required placeholder="du@example.com">
     </label>
-    <button type="submit">Magic-Link senden</button>
+    <button type="submit">
+      Magic-Link senden
+    </button>
     <div id="authMessage"></div>
   </form>
 </dialog>
@@ -87,55 +198,67 @@
 <script type="module">
   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-  // ⇩ Deine Keys eintragen
+  // TODO: durch deine echten Daten ersetzen
   const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
   const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
+
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   async function loadProfileName(session){
-    if(!session?.user) return '';
-    const { data } = await supabase.from('profiles').select('display_name').eq('id', session.user.id).maybeSingle();
+    if (!session?.user) return "";
+    const { data } = await supabase
+      .from("profiles")
+      .select("display_name")
+      .eq("id", session.user.id)
+      .maybeSingle();
     return data?.display_name || session.user.email;
   }
+
   async function updateAuthUI(session){
-    const isIn = !!session?.user;
-    document.querySelectorAll('[data-requires-auth]').forEach(el=>el.style.display = isIn ? '' : 'none');
-    document.querySelectorAll('[data-requires-anon]').forEach(el=>el.style.display = isIn ? 'none' : '');
-    const span = document.querySelector('#userEmail');
-    if (span) span.textContent = isIn ? await loadProfileName(session) : '';
+    const isLoggedIn = !!session?.user;
+    document.querySelectorAll("[data-requires-auth]")
+      .forEach(el => el.style.display = isLoggedIn ? "" : "none");
+    document.querySelectorAll("[data-requires-anon]")
+      .forEach(el => el.style.display = isLoggedIn ? "none" : "");
+    const span = document.querySelector("#userEmail");
+    if (span) span.textContent = isLoggedIn ? await loadProfileName(session) : "";
   }
 
+  // Initial-Session
   const { data: init } = await supabase.auth.getSession();
   await updateAuthUI(init.session);
-  supabase.auth.onAuthStateChange((_e, s)=>updateAuthUI(s));
 
-  // Dialog öffnen/schließen + Parent informieren
-  const authModal = document.querySelector('#authModal');
-  const openButtons = document.querySelectorAll('[data-action="open-auth"]');
-  openButtons.forEach(b=>b.addEventListener('click', ()=>{
-    window.parent.postMessage({type:'TOPNAV_AUTH_OPEN'}, '*');
-    authModal.showModal();
-  }));
-  document.querySelector('#closeAuth')?.addEventListener('click', ()=>{
-    authModal.close();
-  });
-  authModal.addEventListener('close', ()=>{
-    window.parent.postMessage({type:'TOPNAV_AUTH_CLOSE'}, '*');
-  });
+  // Änderungen verfolgen
+  supabase.auth.onAuthStateChange((_evt, session) => updateAuthUI(session));
 
-  // Login via Magic Link
+  // Login
   async function signInWithEmail(e){
     e.preventDefault();
-    const msg = document.querySelector('#authMessage');
+    const msg = document.querySelector("#authMessage");
     const email = e.currentTarget.querySelector('input[name="email"]').value.trim();
     if (!email){ msg.textContent = "Bitte E-Mail eingeben."; return; }
+
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options:{ emailRedirectTo: window.location.origin }
+      options: { emailRedirectTo: window.location.origin }
     });
-    msg.textContent = error ? ("Fehler: "+error.message) : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
+    msg.textContent = error
+      ? ("Fehler: " + error.message)
+      : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
   }
-  document.querySelector('#authForm')?.addEventListener('submit', signInWithEmail);
+
+  // Logout
+  async function signOut(){ await supabase.auth.signOut(); }
+
+  const authModal = document.getElementById("authModal");
+
+  document.getElementById("authForm")?.addEventListener("submit", signInWithEmail);
+  document.getElementById("logoutBtn")?.addEventListener("click", signOut);
+
+  document.querySelectorAll("[data-action='open-auth']").forEach(b =>
+    b.addEventListener("click", () => authModal?.showModal())
+  );
+  document.getElementById("closeAuth")?.addEventListener("click", () => authModal?.close());
 </script>
 
 </body>
