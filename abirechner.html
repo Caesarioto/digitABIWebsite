@@ -28,7 +28,7 @@
       background:var(--paper);
       border:3px solid var(--border);
       border-radius:10px;
-      padding:48px 38px;
+      padding: 25px 38px 25px;
       max-width:min(2400px, 98vw);
       margin:18px auto;
       box-shadow:0 8px 30px rgba(17,16,50,.18);
@@ -38,14 +38,28 @@
     .row{margin:18px 0}
     .options{display:flex; flex-wrap:wrap; gap:14px; justify-content:center}
     .opt{padding:14px 19px; border-radius:10px; border:2px solid #ddd; background:#fff; cursor:pointer; font-weight:600; min-width:192px; text-align:center}
-    .opt.is-selected{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-weak)}
+    .opt.is-selected {
+  background: #fff !important;      /* lila Hintergrund */
+  border-color: #BA55D3 !important;    /* lila Rahmen */
+}
     .choice{display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid #ddd; border-radius:10px; background:#fff}
     .choice.disabled{opacity:0.5; pointer-events:none}
     .range-wrap{display:grid; gap:8px}
     .actions{display:flex; justify-content:space-between; gap:12px; margin-top:16px}
+	.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0 5px 0;   /* ← NEU: nur 5px Abstand unten statt 10px */
+  margin-top: 0;
+  margin-bottom: 0;
+}
     .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:14px 21px; border-radius:12px; font-weight:700; text-decoration:none; cursor:pointer; border:2px solid transparent}
     .btn.prev{background:#fff; border-color:#cfd2ff; color:#1b1b2f}
-    .btn.next{background:var(--accent); color:#fff}
+    .btn.next {
+  background: #BA55D3;      /* <-- HIER die neue Farbe eintragen */
+  color: #fff;               /* Text bleibt weiß, damit es gut lesbar ist */
+}
     .btn.next.ghost{background:var(--accent-weak); color:var(--accent); border-color:var(--accent)}
     .btn:disabled{opacity:.5; cursor:not-allowed}
     .summary{background:#fff; border:1px solid #e3e3e3; border-radius:12px; padding:16px; line-height:1.9}
