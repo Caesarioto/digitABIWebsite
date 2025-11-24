@@ -3,21 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DigitABI – mein digitales Abibuch</title>
-  <!-- Basis-URL für alle relativen Links -->
-  <base href="./">
+  <title>Über uns – DigitABI</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
-    
-    :root {
-      --grad-left: #FA565D;
-      --grad-mid: #C45CAD;
-      --grad-right: #9052F8;
-      --ink: #1f1f2f;
-      --muted: rgba(255, 255, 255, .85);
+    :root{
+      --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8; --ink:#151527;
+      --paper:#f6f6f8; --card:#ffffff; --border:#6c50ff; --accent:#2e1df7; --accent-weak:#eae7ff;
     }
-
-    /* ==================== FIX: FLÜSSIGER GRADIENT ==================== */
+    *{box-sizing:border-box}
+   /* ==================== FIX: FLÜSSIGER GRADIENT ==================== */
     html {
       min-height: 100%;
       height: 100%;
@@ -36,58 +30,61 @@
       flex-direction: column;
     }
     /* ==================== ENDE FIX ==================== */
+    .container{max-width:min(1440px,96vw); margin:0 auto; padding:32px 24px; flex:1; display:flex; flex-direction:column;}
 
-    * { box-sizing: border-box }
+     h1{margin:0 0 14px;font-size:clamp(28px,3.8vw,40px);font-weight:800; text-align:center; letter-spacing:.06em;text-decoration:underline;text-underline-offset:6px;color:#fff}
+  .wrap{max-width:75ch;margin:0 auto 26px;line-height:1.8;color:#fff}
+  .block{margin:10px 0 24px;line-height:1.9;font-size:clamp(16px,2.1vw,22px);color:#fff}
+  .brand{font-weight:700}
+  .contact-title{text-decoration:underline;text-underline-offset:4px;margin-top:10px}
 
-    .container {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 32px 24px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    /* Sections */
+    .section{margin-top:22px}
+    .section h2{margin:0 0 10px; font-size:clamp(18px,2.4vw,22px); font-weight:800; text-align:center; text-decoration:underline; text-underline-offset:6px}
+    .kernsatz{font-size:clamp(18px,2.6vw,22px); font-weight:800; text-align:center; margin:6px 0 12px}
+    .sub{font-size:clamp(16px,2.2vw,20px); text-align:center; color:#fff; margin-bottom:10px}
+
+    .points{display:grid; gap:10px; max-width:900px; margin:14px auto 0}
+    .point{
+      background:rgba(255,255,255,0.15); border-radius:12px; padding:14px 16px;
+      line-height:1.6; color:#fff; backdrop-filter: blur(4px);
     }
 
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      color: var(--muted);
-      font-weight: 600;
-      letter-spacing: .06em;
+    /* Team */
+    .team{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:12px}
+    @media (max-width:820px){ .team{grid-template-columns:1fr} }
+    .member{
+      background:rgba(255,255,255,0.15); border-radius:12px; padding:16px;
+      display:grid; grid-template-columns:56px 1fr; gap:12px; align-items:start;
+      color:#fff; backdrop-filter: blur(4px);
     }
-    .nav a {
-      color: var(--muted);
-      text-decoration: none;
-      margin-right: 18px;
+    .avatar{
+      width:56px; height:56px; border-radius:50%; background:var(--accent-weak); border:2px solid var(--accent);
+      display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--accent);
     }
-    .nav .right a { margin-right: 0 }
+    .name{font-weight:800}
+    .role{color:#eee; font-size:14px; margin-top:2px}
+    .desc{color:#fff; font-size:14.5px; line-height:1.55; margin-top:6px}
+
+    /* Kontakt */
+    .contact{
+      margin-top:18px; text-align:center;
+      background:rgba(255,255,255,0.15); border-radius:12px; padding:16px; color:#fff; backdrop-filter: blur(4px);
+    }
+    .pill{
+      display:inline-block; background:var(--accent-weak); color:var(--accent); border:2px solid var(--accent);
+      padding:8px 12px; border-radius:999px; font-weight:800; text-decoration:none;
+    }
 
     /* Footer */
-    .footerlinks {
-      display: flex;
-      gap: 28px;
-      justify-content: center;
-      color: #fff !important;
-      font-weight: 600;
-      letter-spacing: .06em;
-      padding: 26px 0 18px;
-      flex-wrap: wrap;
-    }
-    .footerlinks a,
-    .footerlinks a:link,
-    .footerlinks a:visited,
-    .footerlinks a:active {
-      color: #fff !important;
-      text-decoration: none;
-    }
-    .footerlinks a:hover {
-      text-decoration: underline;
-      color: #eae7ff !important;
-    }
+    .footerlinks{display:flex; gap:28px; justify-content:center; color:#fff; font-weight:600; letter-spacing:.06em; padding:26px 0 18px; flex-wrap:wrap}
+    .footerlinks a{color:#fff; text-decoration:none}
+    .footerlinks a:hover{text-decoration:underline}
 
-    .center { text-align: center }
+	.section .lead {
+  text-align: center !important;
+}
+.center { text-align: center }
     .smallcaps { letter-spacing: .18em }
     .hr {
       width: 36px;
@@ -158,34 +155,38 @@
   </style>
 </head>
 <body>
-  <!-- Top-Leiste als IFRAME einbinden -->
+
+  <!-- Top-Leiste als IFRAME -->
   <iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
-  <style>
-    .topnav-embed {
-      width: 100%;
-      height: 48px;
-      border: 0;
-      display: block;
-      overflow: hidden;
-      background: transparent;
-    }
-  </style>
+<!-- direkt UNTER dem <iframe src="topnav.html" ...> -->
+<style>
+  .topnav-embed.topnav-full{
+    position:fixed; inset:0; width:100vw; height:100vh;
+    z-index:9999; background:transparent; border:0;
+  }
+</style>
+<script>
+  (function(){
+    const iframe = document.querySelector('.topnav-embed');
+    window.addEventListener('message', (e)=>{
+      if (e.data?.type === 'TOPNAV_AUTH_OPEN')  iframe.classList.add('topnav-full');
+      if (e.data?.type === 'TOPNAV_AUTH_CLOSE') iframe.classList.remove('topnav-full');
+    });
+  })();
+</script>
 
+ <div class="container">
   <div class="container">
-    <!-- Hero -->
-    <section class="hero">
-      <div class="illus" aria-hidden="true"></div>
-      <div class="copy">
-        <h1>DigitABI</h1>
-        <div class="hr"></div>
-        <h2>mein digitales Abibuch</h2>
-        <p class="sub">Erstellt euer Abibuch einfach online – gemeinsam, sicher und mit Stil</p>
-        <p style="height:16px"></p>
-        <a class="cta" href="abirechner.html">Los geht’s zu deinem Abibuch! 🚀</a>
-      </div>
-    </section>
+    <h1>Über Uns</h1>
 
-    <section class="center">
+    <div class="section">
+      <div class="kernsatz">Dafür steht DigitABI</div>
+      <div class="sub">Dein Jahrgang. Deine Geschichten. Für immer.</div>
+      <p class="lead">
+        Wir wollen revolutionieren, wie Abschlussjahrgänge ihre Erinnerungen bewahren</br> — multimedial, sozial und jederzeit erreichbar.
+      </p>
+
+      <section class="center">
       <p class="smallcaps" style="color:var(--muted)">Eure Erinnerungen, digital und gedruckt – mit unserer Plattform für moderne Abibücher</p>
     </section>
   
@@ -238,12 +239,46 @@
       </div>
     </section>
 
-    <footer class="footerlinks smallcaps">
-      <a href="./kontakt.html">Kontakt</a>
-      <a href="./impressum.html">Impressum</a>
-      <a href="./nutzungsbedingungen.html">Nutzungsbedingungen</a>
-      <a href="./datenschutz.html">Datenschutz</a>
-      <a href="./rechtliche-hinweise.html">rechtliche Hinweise</a>
+    <div class="section">
+      <h2>Das sind eure Ansprechpartner</h2>
+      <div class="team">
+        <div class="member">
+          <div class="avatar">J</div>
+          <div>
+            <div class="name">Julius Wahl</div>
+            <div class="role">Co-Founder &amp; Tech</div>
+            <div class="desc">
+              Sorgt für die technische Umsetzung: Infrastruktur, benutzerfreundliche Anwendungen, Backups und DSGVO-konforme Datenhaltung.
+              Macht die Technik zuverlässig — damit eure Erinnerungen sicher bleiben.
+            </div>
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="avatar">M</div>
+          <div>
+            <div class="name">Marco Ciocca</div>
+            <div class="role">Co-Founder &amp; Product Management</div>
+            <div class="desc">
+              Verantwortet das Produktmanagement — von der Feature-Priorisierung bis zum Editor.
+              Macht das Erstellen eurer Erinnerung so einfach und qualitativ hochwertig, wie es euer Abibuch verdient hat.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section contact">
+      <div style="font-weight:800; margin-bottom:8px">Kontakt</div>
+      <a class="pill" href="mailto:team@digitabi.example">team@digitabi.example</a>
+    </div>
+
+    <footer class="footerlinks">
+      <a href="kontakt.html">Kontakt</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="rechtliche-hinweise.html">Rechtliche Hinweise</a>
     </footer>
   </div>
 </body>
