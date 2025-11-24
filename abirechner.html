@@ -54,7 +54,7 @@
   margin-top: 0;
   margin-bottom: 0;
 }
-    .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:14px 21px; border-radius:12px; font-weight:700; text-decoration:none; cursor:pointer; border:2px solid transparent}
+    .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 25px; border-radius:12px; font-weight:700; text-decoration:none; cursor:pointer; border:2px solid transparent}
     .btn.prev{background:#fff; border-color:#cfd2ff; color:#1b1b2f}
     .btn.next {
   background: #BA55D3;      /* <-- HIER die neue Farbe eintragen */
@@ -79,7 +79,18 @@
       display:flex; justify-content:center; flex-wrap:wrap; gap:10px;
     }
     .step .choice{justify-content:center}
-	
+    /* === Nur im Inhalte-Step (Step 3) kleinere Schrift === */
+.step[data-step="3"] .choice,
+.step[data-step="3"] .choice input + * {
+  font-size: 0.95rem !important;     /* ca. 15–16 px statt 24 px */
+  line-height: 1.4 !important;
+  padding: 11px 16px !important;     /* etwas weniger Innenabstand → kompakter */
+}
+    #summaryBox ul {
+  list-style: none !important;     /* entfernt die Punkte */
+  padding-left: 0 !important;      /* entfernt den linken Einzug */
+  margin: 0 !important;
+}
   </style>
 </head>
 <body>
@@ -403,3 +414,4 @@
   </script>
 </body>
 </html>
+
