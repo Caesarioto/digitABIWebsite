@@ -1,8 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Abi-Rechner – DigitABI</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Über uns – DigitABI</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
     :root{
@@ -10,223 +12,268 @@
       --paper:#f6f6f8; --card:#ffffff; --border:#6c50ff; --accent:#2e1df7; --accent-weak:#eae7ff;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:#111;
-      background:linear-gradient(100deg,var(--grad-left) 0%,var(--grad-mid) 50%,var(--grad-right) 100%);
-      min-height:100vh; display:flex; flex-direction:column;
+   /* ==================== FIX: FLÜSSIGER GRADIENT ==================== */
+    html {
+      min-height: 100%;
+      height: 100%;
+      background: linear-gradient(100deg, var(--grad-left) 0%, var(--grad-mid) 50%, var(--grad-right) 100%) fixed no-repeat;
+      background-size: cover;
+      background-position: center;
     }
-    .container{
-      max-width:min(1920px, 98vw);
-      margin:0 auto;
-      padding:32px 24px;
-      flex:1;
-      display:flex;
-      flex-direction:column;
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
+      color: #fff;
+      background: transparent;               /* WICHTIG: body ist jetzt transparent */
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    .frame{
-      background:var(--paper);
-      border:3px solid var(--border);
-      border-radius:10px;
-      padding: 25px 38px 25px;
-      max-width:min(2400px, 98vw);
-      margin:18px auto;
-      box-shadow:0 8px 30px rgba(17,16,50,.18);
-	font-size: 1.5em;
+    /* ==================== ENDE FIX ==================== */
+    .container{max-width:min(1440px,96vw); margin:0 auto; padding:32px 24px; flex:1; display:flex; flex-direction:column;}
+
+     h1{margin:0 0 14px;font-size:clamp(28px,3.8vw,40px);font-weight:800; text-align:center; letter-spacing:.06em;text-decoration:underline;text-underline-offset:6px;color:#fff}
+  .wrap{max-width:75ch;margin:0 auto 26px;line-height:1.8;color:#fff}
+  .block{margin:10px 0 24px;line-height:1.9;font-size:clamp(16px,2.1vw,22px);color:#fff}
+  .brand{font-weight:700}
+  .contact-title{text-decoration:underline;text-underline-offset:4px;margin-top:10px}
+
+    /* Sections */
+    .section{margin-top:22px}
+    .section h2{margin:0 0 10px; font-size:clamp(18px,2.4vw,22px); font-weight:800; text-align:center; text-decoration:underline; text-underline-offset:6px}
+    .kernsatz{font-size:clamp(18px,2.6vw,22px); font-weight:800; text-align:center; margin:6px 0 12px}
+    .sub{font-size:clamp(16px,2.2vw,20px); text-align:center; color:#fff; margin-bottom:10px}
+
+    .points{display:grid; gap:10px; max-width:900px; margin:14px auto 0}
+    .point{
+      background:rgba(255,255,255,0.15); border-radius:12px; padding:14px 16px;
+      line-height:1.6; color:#fff; backdrop-filter: blur(4px);
     }
-    h1{margin:0 0 8px; text-align:center; font-size:clamp(25px,4vw,48px); font-weight:800; letter-spacing:.04em}
-    .row{margin:18px 0}
-    .options{display:flex; flex-wrap:wrap; gap:14px; justify-content:center}
-    .opt{padding:14px 19px; border-radius:10px; border:2px solid #ddd; background:#fff; cursor:pointer; font-weight:600; min-width:192px; text-align:center}
-    .opt.is-selected {
-  background: #fff !important;      /* lila Hintergrund */
-  border-color: #BA55D3 !important;    /* lila Rahmen */
-}
-    .choice{display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid #ddd; border-radius:10px; background:#fff}
-    .choice.disabled{opacity:0.5; pointer-events:none}
-    .range-wrap{display:grid; gap:8px}
-    .actions{display:flex; justify-content:space-between; gap:12px; margin-top:16px}
-	.actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0 5px 0;   /* ← NEU: nur 5px Abstand unten statt 10px */
-  margin-top: 0;
-  margin-bottom: 0;
-}
-    .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 25px; border-radius:12px; font-weight:700; text-decoration:none; cursor:pointer; border:2px solid transparent}
-    .btn.prev{background:#fff; border-color:#cfd2ff; color:#1b1b2f}
-    .btn.next {
-  background: #BA55D3;      /* <-- HIER die neue Farbe eintragen */
-  color: #fff;               /* Text bleibt weiß, damit es gut lesbar ist */
-}
-    .btn.next.ghost{background:var(--accent-weak); color:var(--accent); border-color:var(--accent)}
-    .btn:disabled{opacity:.5; cursor:not-allowed}
-    .summary{background:#fff; border:1px solid #e3e3e3; border-radius:12px; padding:16px; line-height:1.9}
-    .summary b{font-weight:800}
-    .step{display:none}
-    .step.active{display:block}
-    .footerlinks{
-      display:flex; gap:28px; justify-content:center; color:#fff !important; font-weight:600; letter-spacing:.06em; padding:26px 0 18px; flex-wrap:wrap;
+
+    /* Team */
+    .team{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:12px}
+    @media (max-width:820px){ .team{grid-template-columns:1fr} }
+    .member{
+      background:rgba(255,255,255,0.15); border-radius:12px; padding:16px;
+      display:grid; grid-template-columns:56px 1fr; gap:12px; align-items:start;
+      color:#fff; backdrop-filter: blur(4px);
     }
-    .footerlinks a{color:#fff !important; text-decoration:none}
-    .footerlinks a:hover{text-decoration:underline; color:#eae7ff !important}
-    :root{--container-w:1920px; --frame-w:1680px}
-    body > .container{max-width:min(var(--container-w),98vw)!important}
-    body > .container > .frame{max-width:min(var(--frame-w),96vw)!important}
-    .step .row{text-align:center}
-    .step .options, .step .range-wrap, .step .row[id="contentChecks"]{
-      display:flex; justify-content:center; flex-wrap:wrap; gap:10px;
+    .avatar{
+      width:56px; height:56px; border-radius:50%; background:var(--accent-weak); border:2px solid var(--accent);
+      display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--accent);
     }
-    .step .choice{justify-content:center}
-    /* === Nur im Inhalte-Step (Step 3) kleinere Schrift === */
-.step[data-step="3"] .choice,
-.step[data-step="3"] .choice input + * {
-  font-size: 0.95rem !important;     /* ca. 15–16 px statt 24 px */
-  line-height: 1.4 !important;
-  padding: 11px 16px !important;     /* etwas weniger Innenabstand → kompakter */
+    .name{font-weight:800}
+    .role{color:#eee; font-size:14px; margin-top:2px}
+    .desc{color:#fff; font-size:14.5px; line-height:1.55; margin-top:6px}
+
+    /* Kontakt */
+    .contact{
+      margin-top:18px; text-align:center;
+      background:rgba(255,255,255,0.15); border-radius:12px; padding:16px; color:#fff; backdrop-filter: blur(4px);
+    }
+    .pill{
+      display:inline-block; background:var(--accent-weak); color:var(--accent); border:2px solid var(--accent);
+      padding:8px 12px; border-radius:999px; font-weight:800; text-decoration:none;
+    }
+
+    /* Footer */
+    .footerlinks{display:flex; gap:28px; justify-content:center; color:#fff; font-weight:600; letter-spacing:.06em; padding:26px 0 18px; flex-wrap:wrap}
+    .footerlinks a{color:#fff; text-decoration:none}
+    .footerlinks a:hover{text-decoration:underline}
+
+	.section .lead {
+  text-align: center !important;
 }
-    #summaryBox ul {
-  list-style: none !important;     /* entfernt die Punkte */
-  padding-left: 0 !important;      /* entfernt den linken Einzug */
-  margin: 0 !important;
-}
+.center { text-align: center }
+    .smallcaps { letter-spacing: .18em }
+    .hr {
+      width: 36px;
+      height: 4px;
+      background: #fff;
+      border-radius: 999px;
+      margin: 6px auto 18px;
+      opacity: .9;
+    }
+
+    /* hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 32px;
+      align-items: center;
+      padding: 56px 0 24px;
+    }
+    .hero h1 {
+      font-size: clamp(44px, 6vw, 72px);
+      margin: 0 0 4px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .hero h2 {
+      font-weight: 300;
+      letter-spacing: .12em;
+      font-size: clamp(18px, 2.5vw, 28px);
+      margin: 0 0 24px;
+    }
+    .hero .sub {
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 46ch;
+    }
+    .hero .cta {
+      display: inline-block;
+      padding: 14px 22px;
+      background: #E6E8FF;
+      color: #2d2d7a;
+      border: 2px solid #2d2d7a;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      box-shadow: 0 6px 0 rgba(45, 45, 122, .25);
+      text-decoration: none;
+    }
+    .hero .cta:hover {
+      transform: translateY(-1px);
+    }
+    .illus {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: transparent url('assets/hero-placeholder.png') center/contain no-repeat;
+      border-radius: 12px;
+    }
+
+    /* responsive */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr }
+    }
+    .hero .copy { text-align: center; margin: 0 auto; }
+    .hero .sub { margin: 0 auto; }
+    .hero .cta { margin: 0 auto; }
+
+    .bullets.features { display: flex; justify-content: center; }
+    .bullets.features > div { text-align: center; max-width: 58ch; }
   </style>
 </head>
 <body>
+
+  <!-- Top-Leiste als IFRAME -->
   <iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
-  <style>
-    .topnav-embed{width:100%; height:48px; border:0; display:block; overflow:hidden; background:transparent}
-  </style>
-  <div class="container" style="max-width:1920px!important;width:100%!important">
-    <div class="frame" id="rechner" style="max-width:1680px!important">
-      <h1>Mein Abibuch-Creator</h1>
+<!-- direkt UNTER dem <iframe src="topnav.html" ...> -->
+<style>
+  .topnav-embed.topnav-full{
+    position:fixed; inset:0; width:100vw; height:100vh;
+    z-index:9999; background:transparent; border:0;
+  }
+</style>
+<script>
+  (function(){
+    const iframe = document.querySelector('.topnav-embed');
+    window.addEventListener('message', (e)=>{
+      if (e.data?.type === 'TOPNAV_AUTH_OPEN')  iframe.classList.add('topnav-full');
+      if (e.data?.type === 'TOPNAV_AUTH_CLOSE') iframe.classList.remove('topnav-full');
+    });
+  })();
+</script>
 
-      <!-- STEP 0: Jahr -->
-      <section class="step active" data-step="0">
-        <div class="row">
-          <p class="mb-4" style="font-size:18px;font-weight:700">Für welches Jahr ist dein Abibuch?</p>
-          <div class="options" id="yearOptions">
-            <button class="opt" data-value="2025">2025</button>
-            <button class="opt is-selected" data-value="2026">2026</button>
-            <button class="opt" data-value="2027">2027</button>
+ <div class="container">
+  <div class="container">
+    <h1>Über Uns</h1>
+
+    <div class="section">
+      <div class="kernsatz">Dafür steht DigitABI</div>
+      <div class="sub">Dein Jahrgang. Deine Geschichten. Für immer.</div>
+      <p class="lead">
+        Wir wollen revolutionieren, wie Abschlussjahrgänge ihre Erinnerungen bewahren</br> — multimedial, sozial und jederzeit erreichbar.
+      </p>
+
+      <section class="center">
+      <p class="smallcaps" style="color:var(--muted)">Eure Erinnerungen, digital und gedruckt – mit unserer Plattform für moderne Abibücher</p>
+    </section>
+  
+    <!-- Deine Split-Blöcke (unverändert) -->
+    <section class="features-split full-edge-split" style="margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 32px;">
+      <div style="flex: 1.2; min-width: 280px; text-align: center; align-self: center;">
+        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 20px 24px; color: #fff;">
+          <h2 style="margin: 0; font-size: clamp(20px, 3.5vw, 28px); font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3);">
+            Was wir bieten:
+          </h2>
+          <h3 style="margin: 8px 0 0; font-size: clamp(18px, 3vw, 24px); font-weight: 700; color: #fff;">
+            Dein All-in-One für das perfekte Abibuch
+          </h3>
+        </div>
+      </div>
+      <div style="flex: 2.5; min-width: 320px;">
+        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 24px 32px; color: #fff;">
+          <div class="smallcaps" style="display: grid; gap: 24px; font-size: clamp(15px, 2.2vw, 18px);">
+            <div>🖨️ <strong>Buch-Version:</strong> Professionell und schnell gedrucktes Buch, das du in der Hand halten kannst – frei gestaltbar und auf deinen Bedarf zugeschnitten.</div>
+            <div>📱 <strong>Digitale Version:</strong> Als Einzige bieten wir eine interaktive Digitale-Version mit Multimedia-Elementen.</div>
+            <div>🤝 <strong>Gemeinsames Erstellen:</strong> Alle füllen online ihre Steckbriefe aus, nehmen an Rankings teil oder laden Fotos und Videos hoch – einfache Zusammenarbeit ohne Chaos.</div>
+            <div>🎨 <strong>Freie Gestaltung:</strong> Intuitives Tool, das sich an eure Wünsche anpasst – von Layout bis Inhalt habt ihr die richtige Mischung aus Unterstützung und Freiheit.</div>
           </div>
         </div>
-        <div class="actions">
-          <button class="btn prev" disabled>Zurück</button>
-          <button class="btn next">Weiter</button>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- STEP 1: Personen -->
-      <section class="step" data-step="1">
-        <div class="row">
-          <p class="mb-4" style="font-size:18px;font-weight:700">Wie viele Personen sollen ein Abibuch bekommen?</p>
-          <div class="range-wrap">
-            <input id="personsRange" type="range" min="1" max="170" value="85">
-            <div style="text-align:center;font-size:18px;font-weight:700"><span id="personsOut">85</span> Personen</div>
+    <section class="benefits-split" style="margin: 48px 0; display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: center; max-width: 1180px; margin-left: auto; margin-right: auto;">
+      <div style="flex: 2.5; min-width: 320px;">
+        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 24px 28px; color: #fff;">
+          <div class="smallcaps" style="display: grid; gap: 16px; font-size: clamp(15px, 2.2vw, 18px);">
+            <div>🔗 <strong>Für immer verbunden:</strong> Bleibt mit Mitschülern in Kontakt – automatische Erinnerungen an Jubiläen und Klassentreffen.</div>
+        <div>📈 <strong>Lebens-Updates:</strong> Teilt über die Jahre Neuigkeiten wie Studium, Job oder Familie – euer Abibuch wächst mit euch.</div>
+        <div>🖼️ <strong>Mehr Inhalte:</strong> Unbegrenzt Bilder hochladen, ohne Platzprobleme.</div>
+        <div>🎥 <strong>Videos integrieren:</strong> Fügt Highlights wie Abiball, Reden oder lustige Momente ein – lebendiger als je zuvor.</div>
+        <div>🗣️ <strong>Sprachnachrichten:</strong> Persönliche Botschaften oder Sprachnotizen an Freunde – emotional und authentisch.</div>
+        <div>🔒 <strong>Immer verfügbar:</strong> Kein Verlust mehr – sicherer Zugriff jederzeit, überall, DSGVO-konform und auf Servern in Deutschland.</div>
           </div>
         </div>
-        <div class="actions">
-          <button class="btn prev">Zurück</button>
-          <button class="btn next">Weiter</button>
+      </div>
+      <div style="flex: 1.2; min-width: 280px; text-align: center; align-self: center;">
+        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 20px 24px; color: #fff;">
+          <h2 style="margin: 0; font-size: clamp(20px, 3.5vw, 28px); font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3);">
+            Warum digital?
+          </h2>
+          <h3 style="margin: 8px 0 0; font-size: clamp(18px, 3vw, 24px); font-weight: 700; color: #fff;">
+            Mehr als nur ein Buch – eine lebendige Community
+          </h3>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- STEP 2: Digital? -->
-      <section class="step" data-step="2">
-        <div class="row">
-          <p class="mb-4" style="font-size:18px;font-weight:700">Möchtest du eine digitale Version deines Abibuchs?</p>
-          <div class="options" id="digitalOptions">
-            <button class="opt is-selected" data-value="Ja">Ja</button>
-            <button class="opt" data-value="Nein">Nein</button>
-            <button class="opt" data-value="Nur digital">Nur digital</button>
+    <div class="section">
+      <h2>Das sind eure Ansprechpartner</h2>
+      <div class="team">
+        <div class="member">
+          <div class="avatar">J</div>
+          <div>
+            <div class="name"></br>Julius Wahl</div>
+            <div class="role">Co-Founder &amp; Tech</div>
+            <div class="desc">
+              Sorgt für die technische Umsetzung: Infrastruktur, benutzerfreundliche Anwendungen, Backups und DSGVO-konforme Datenhaltung.
+              Macht die Technik zuverlässig — damit eure Erinnerungen sicher bleiben.
+            </div>
           </div>
         </div>
-        <div class="actions">
-          <button class="btn prev">Zurück</button>
-          <button class="btn next">Weiter</button>
-        </div>
-      </section>
 
-      <!-- STEP 3: Inhalte -->
-      <section class="step" data-step="3">
-        <div class="row">
-          <p class="mb-4" style="font-size:18px;font-weight:700">Welche Inhalte möchtest du in deinem Abibuch?</p>
-          <div class="row" id="contentChecks" style="display:grid;gap:8px">
-            <label class="choice"><input type="checkbox" value="Lehrer-Steckbriefe"> Lehrer-Steckbriefe</label>
-            <label class="choice"><input type="checkbox" value="Schüler-Steckbriefe"> Schüler-Steckbriefe</label>
-            <label class="choice"><input type="checkbox" value="Fotos"> Fotos</label>
-            <label class="choice"><input type="checkbox" value="Schüler-Rankings"> Schüler-Rankings</label>
-            <label class="choice"><input type="checkbox" value="Lehrer-Rankings"> Lehrer-Rankings</label>
-            <label class="choice" data-type="digital-only"><input type="checkbox" value="Videos"> Videos</label>
-            <label class="choice" data-type="digital-only"><input type="checkbox" value="Sprachmemos" checked> Sprachmemos</label>
+        <div class="member">
+          <div class="avatar">M</div>
+          <div>
+            <div class="name"></br>Marco Ciocca</div>
+            <div class="role">Co-Founder &amp; Product Management</div>
+            <div class="desc">
+              Verantwortet das Produktmanagement — von der Feature-Priorisierung bis zum Editor.
+              Macht das Erstellen eurer Erinnerung so einfach und qualitativ hochwertig, wie es euer Abibuch verdient hat.
+            </div>
           </div>
         </div>
-        <div class="actions">
-          <button class="btn prev">Zurück</button>
-          <button class="btn next">Weiter</button>
-        </div>
-      </section>
-
-      <!-- STEP 4: Speicherplatz -->
-      <section class="step" data-step="4">
-        <div class="row">
-          <p class="mb-4" style="font-size:18px;font-weight:700">Wie viel Speicherplatz benötigst du für deine digitale Version?</p>
-          <div class="options" id="storageOptions">
-            <button class="opt" data-value="Basic (5 GB)">Basic (5 GB)</button>
-            <button class="opt is-selected" data-value="Plus (25 GB)">Plus (25 GB)</button>
-            <button class="opt" data-value="Premium (50 GB)">Premium (50 GB)</button>
-          </div>
-        </div>
-        <div class="actions">
-          <button class="btn prev">Zurück</button>
-          <button class="btn next">Weiter</button>
-        </div>
-      </section>
-
-      <!-- STEP 5: Format (wird bei "Nur digital" übersprungen!) -->
-      <section class="step" data-step="5">
-        <div class="row">
-          <p class="mb-4" style="font-size:18px;font-weight:700">Welches Format soll dein Abibuch haben?</p>
-          <div class="options" id="sizeOptions">
-            <button class="opt is-selected" data-value="DIN A4">DIN A4 (210×297 mm)</button>
-            <button class="opt" data-value="Buchformat">Buchformat (170×210 mm)</button>
-          </div>
-        </div>
-        <div class="actions">
-          <button class="btn prev">Zurück</button>
-          <button class="btn next">Weiter</button>
-        </div>
-      </section>
-
-      <!-- STEP 6: Cover (wird bei "Nur digital" übersprungen!) -->
-      <section class="step" data-step="6">
-        <div class="row">
-          <p class="mb-4" style="font-size:18px;font-weight:700">Welche Art von Cover soll dein Abibuch haben?</p>
-          <div class="options" id="coverOptions">
-            <button class="opt is-selected" data-value="Hard-Cover">Hard-Cover</button>
-            <button class="opt" data-value="Soft-Cover">Soft-Cover</button>
-          </div>
-        </div>
-        <div class="actions">
-          <button class="btn prev">Zurück</button>
-          <button class="btn next">Weiter</button>
-        </div>
-      </section>
-
-      <!-- STEP 7: Zusammenfassung -->
-      <section class="step" data-step="7">
-        <div class="row">
-          <p class="mb-2" style="font-size:18px;font-weight:700">Zusammenfassung deiner Auswahl:</p>
-          <div class="summary" id="summaryBox"></div>
-        </div>
-        <div class="actions">
-          <button class="btn prev">Zurück</button>
-          <button class="btn next ghost" id="priceBtn">Preis berechnen</button>
-        </div>
-      </section>
+      </div>
     </div>
+
+    <div class="section contact">
+      <div style="font-weight:800; margin-bottom:8px">Kontakt</div>
+      <a class="pill" href="mailto:team@digitabi.example">team@digitabi.example</a>
+    </div>
+
     <footer class="footerlinks">
       <a href="kontakt.html">Kontakt</a>
       <a href="impressum.html">Impressum</a>
@@ -235,183 +282,5 @@
       <a href="rechtliche-hinweise.html">Rechtliche Hinweise</a>
     </footer>
   </div>
-
-  <script>
-    // --- State ---
-    const form = {
-      year: 2026,
-      persons: 85,
-      digital_option: "Ja",
-      storage: "Plus (25 GB)",
-      content: ["Sprachmemos"],
-      size: "DIN A4",
-      cover: "Hard-Cover"
-    };
-    let step = 0;
-
-    // --- Elements ---
-    const steps = [...document.querySelectorAll('.step')];
-    const personsRange = document.getElementById('personsRange');
-    const personsOut = document.getElementById('personsOut');
-    const yearOpts = document.getElementById('yearOptions');
-    const digitalOpts = document.getElementById('digitalOptions');
-    const contentChecks = document.getElementById('contentChecks');
-    const summaryBox = document.getElementById('summaryBox');
-    const step3NextBtn = steps[3].querySelector('.btn.next');
-    const storageOpts = document.getElementById('storageOptions');
-    const sizeOpts = document.getElementById('sizeOptions');
-    const coverOpts = document.getElementById('coverOptions');
-
-    // --- Digital-only Inhalte ---
-    const digitalOnlyLabels = contentChecks.querySelectorAll('.choice[data-type="digital-only"]');
-    const digitalOnlyInputs = [...digitalOnlyLabels].map(l => l.querySelector('input'));
-
-    // --- Update digital-only checkboxes ---
-    function updateDigitalOnly() {
-      const isDisabled = form.digital_option === "Nein";
-      digitalOnlyLabels.forEach(label => {
-        label.classList.toggle('disabled', isDisabled);
-      });
-      digitalOnlyInputs.forEach(input => {
-        input.disabled = isDisabled;
-        if (isDisabled && input.checked) {
-          input.checked = false;
-        }
-      });
-      form.content = [...contentChecks.querySelectorAll('input[type="checkbox"]:checked')].map(c => c.value);
-      updateContentNextButton();
-    }
-
-    // --- Navigation ---
-    function showStep(n) {
-      steps.forEach(s => s.classList.remove('active'));
-      steps[n].classList.add('active');
-      step = n;
-      if (step === 7) renderSummary();
-      if (step === 3) {
-        updateDigitalOnly();
-        updateContentNextButton();
-      }
-    }
-
-    function nextStep() {
-      if (step === 2) {
-        return showStep(3); // Immer zu Inhalte
-      }
-      if (step === 3) {
-        if (form.digital_option === "Nur digital") return showStep(4); // → Speicher
-        if (form.digital_option === "Ja") return showStep(4);         // → Speicher
-        if (form.digital_option === "Nein") return showStep(5);       // → Format
-      }
-      if (step === 4) {
-        if (form.digital_option === "Nur digital") return showStep(7); // → direkt Zusammenfassung
-        return showStep(5); // → Format (bei Ja/Nein)
-      }
-      if (step === 5) {
-        return showStep(6); // → Cover (nur bei Ja/Nein)
-      }
-      if (step === 6) return showStep(7);
-      return showStep(Math.min(step + 1, 7));
-    }
-
-    function prevStep() {
-      if (step === 7) {
-        if (form.digital_option === "Nur digital") return showStep(4); // Speicher
-        if (form.digital_option === "Ja") return showStep(6);          // Cover
-        if (form.digital_option === "Nein") return showStep(5);        // Format
-      }
-      if (step === 6) return showStep(5);
-      if (step === 5) {
-        if (form.digital_option === "Nein") return showStep(3);
-        return showStep(4);
-      }
-      if (step === 4) return showStep(3);
-      if (step === 3) return showStep(2);
-      return showStep(Math.max(step - 1, 0));
-    }
-
-    function renderSummary() {
-      const items = [
-        ["Jahr", form.year],
-        ["Personen", form.persons],
-        ["Digital", form.digital_option],
-        ["Inhalte", form.content.length ? form.content.join(', ') : "—"],
-        ["Speicherplatz", form.digital_option === "Nur digital" || form.digital_option === "Ja" ? form.storage : "—"],
-        ["Buchgröße", form.digital_option === "Nur digital" ? "—" : form.size],
-        ["Cover", form.digital_option === "Nur digital" ? "—" : form.cover],
-      ];
-      summaryBox.innerHTML = "<ul style='margin:0;padding-left:18px'>" +
-        items.map(([k,v]) => `<li><b>${k}:</b> ${v}</li>`).join("") + "</ul>";
-    }
-
-    function updateContentNextButton() {
-      if (step3NextBtn) {
-        step3NextBtn.disabled = form.content.length === 0;
-      }
-    }
-
-    // --- Events ---
-    document.querySelectorAll('.btn.next').forEach(btn => btn.addEventListener('click', nextStep));
-    document.querySelectorAll('.btn.prev').forEach(btn => btn.addEventListener('click', prevStep));
-
-    personsRange.addEventListener('input', e => {
-      form.persons = parseInt(e.target.value, 10);
-      personsOut.textContent = form.persons;
-    });
-
-    yearOpts.addEventListener('click', e => {
-      if (e.target.closest('.opt')) {
-        yearOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
-        const b = e.target.closest('.opt'); b.classList.add('is-selected');
-        form.year = parseInt(b.dataset.value, 10);
-      }
-    });
-
-    digitalOpts.addEventListener('click', e => {
-      if (e.target.closest('.opt')) {
-        digitalOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
-        const b = e.target.closest('.opt'); b.classList.add('is-selected');
-        form.digital_option = b.dataset.value;
-        if (step === 3) updateDigitalOnly();
-      }
-    });
-
-    storageOpts.addEventListener('click', e => {
-      if (e.target.closest('.opt')) {
-        storageOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
-        const b = e.target.closest('.opt'); b.classList.add('is-selected');
-        form.storage = b.dataset.value;
-      }
-    });
-
-    sizeOpts.addEventListener('click', e => {
-      if (e.target.closest('.opt')) {
-        sizeOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
-        const b = e.target.closest('.opt'); b.classList.add('is-selected');
-        form.size = b.dataset.value;
-      }
-    });
-
-    coverOpts.addEventListener('click', e => {
-      if (e.target.closest('.opt')) {
-        coverOpts.querySelectorAll('.opt').forEach(b => b.classList.remove('is-selected'));
-        const b = e.target.closest('.opt'); b.classList.add('is-selected');
-        form.cover = b.dataset.value;
-      }
-    });
-
-    contentChecks.addEventListener('change', () => {
-      form.content = [...contentChecks.querySelectorAll('input[type="checkbox"]:checked')].map(c => c.value);
-      updateContentNextButton();
-    });
-
-    document.getElementById('priceBtn').addEventListener('click', () => {
-      alert('Preisberechnung folgt – Logik wird noch hinterlegt.');
-    });
-
-    // --- INIT ---
-    updateContentNextButton();
-  </script>
 </body>
 </html>
-
