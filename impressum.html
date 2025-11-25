@@ -5,8 +5,23 @@
   <title>Impressum – DigitABI</title>
   <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
-  :root{ --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8; --ink:#151527; }
-  *{box-sizing:border-box} html,body{height:100%}
+    
+    :root {
+      --grad-left: #FA565D;
+      --grad-mid: #C45CAD;
+      --grad-right: #9052F8;
+      --ink: #1f1f2f;
+      --muted: rgba(255, 255, 255, .85);
+    }
+
+    /* ==================== FIX: FLÜSSIGER GRADIENT ==================== */
+    html {
+      min-height: 100%;
+      height: 100%;
+      background: linear-gradient(100deg, var(--grad-left) 0%, var(--grad-mid) 50%, var(--grad-right) 100%) fixed no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
   body{ margin:0; font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:#fff;
         background:linear-gradient(100deg,var(--grad-left) 0%,var(--grad-mid) 50%,var(--grad-right) 100%);
         min-height:100vh; display:flex; flex-direction:column; }
@@ -59,18 +74,19 @@
    
     <main class="center" style="padding:32px 0">
       <h1>📋Impressum</h1>
-      <div class="center"></div></br>Angaben gemäß § 5 DDG:</div>
-      <div class="center">
-        <div class="brand"></br>digitABI GbR</div>
+      <div class="block"></br>Angaben gemäß § 5 DDG:</div>
+      <div class="block">
+        <div class="brand">digitABI GbR</div>
         Heinestraße 23<br>64295 Darmstadt<br>Deutschland
       </div>
-      <div class="center"></br>Vertreten durch die Gesellschafter Marco Ciocca &amp; Julius Wahl</div>
-      <div class="center">
-        <div class="contact-title"></br>Kontakt:</br>
+      <div class="block">Vertreten durch die Gesellschafter Marco Ciocca &amp; Julius Wahl</div>
+      <div class="block">
+        <div class="contact-title"></br>Kontakt:</div>
         E‑Mail: kraftsaft.mp3@gmail.com<br>Telefon: 01234 / 567890
       </div>
     </main>
-       <footer class="footerlinks">
+
+    <footer class="footerlinks">
       <a href="kontakt.html">Kontakt</a>
       <a href="impressum.html">Impressum</a>
       <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
