@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -52,7 +53,13 @@
     .section{margin-top:22px}
     .section h2{margin:0 0 10px; font-size:clamp(18px,2.4vw,22px); font-weight:800; text-align:center; text-decoration:underline; text-underline-offset:6px}
     .kernsatz{font-size:clamp(18px,2.6vw,22px); font-weight:800; text-align:center; margin:6px 0 12px}
-    .sub{font-size:clamp(16px,2.2vw,20px); text-align:center; color:#fff; margin-bottom:10px}
+    .sub{
+  margin: 10px 0 24px;
+  line-height: 1.9;
+  font-size: clamp(16px, 2.1vw, 28px);   /* ← das ist die entscheidende Zeile */
+  color: #fff;
+text-align:center;
+}
 
     .points{display:grid; gap:10px; max-width:900px; margin:14px auto 0}
     .point{
@@ -90,7 +97,12 @@
     .footerlinks{display:flex; gap:28px; justify-content:center; color:#fff; font-weight:600; letter-spacing:.06em; padding:26px 0 18px; flex-wrap:wrap}
     .footerlinks a{color:#fff; text-decoration:none}
     .footerlinks a:hover{text-decoration:underline}
-
+.lead {
+  margin: 10px 0 24px;
+  line-height: 1.9;
+  font-size: clamp(16px, 2.1vw, 22px);   /* ← das ist die entscheidende Zeile */
+  color: #fff;
+}
 	.section .lead {
   text-align: center !important;
 }
@@ -191,11 +203,11 @@
 
  <div class="container">
   <div class="container">
-    <h1>Über Uns</h1>
+    <h1>Dafür steht DigitABI</h1>
 
     <div class="section">
-      <div class="kernsatz">Dafür steht DigitABI</div>
-      <div class="sub">Dein Jahrgang. Deine Geschichten. Für immer.</div>
+      
+      <div class="sub"><strong>Dein Jahrgang. Deine Geschichten. Für immer.</strong></div>
       <p class="lead">
         Wir wollen verändern, wie Abschlussjahrgänge ihre Erinnerungen bewahren.</br> Eure Erlebnisse, digital und gedruckt – mit unserer Plattform für moderne Abibücher.
       </p>
@@ -294,4 +306,3 @@
   </div>
 </body>
 </html>
-
