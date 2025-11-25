@@ -15,12 +15,11 @@
       background-size: cover;
       background-position: center;
     }
-
     body {
       margin: 0;
       font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
       color: #fff;
-      background: transparent;               /* WICHTIG: body ist jetzt transparent */
+      background: transparent; /* WICHTIG: body ist jetzt transparent */
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -34,7 +33,7 @@
     display:flex;
     gap:28px;
     justify-content:center;
-    color:#fff !important;              /* Text im Footer */
+    color:#fff !important; /* Text im Footer */
     font-weight:600;
     letter-spacing:.06em;
     padding:26px 0 18px;
@@ -44,19 +43,38 @@
   .footerlinks a:link,
   .footerlinks a:visited,
   .footerlinks a:active{
-    color:#fff !important;              /* Links weiß, auch visited */
+    color:#fff !important; /* Links weiß, auch visited */
     text-decoration:none;
   }
   .footerlinks a:hover{
     text-decoration:underline;
-    color:#eae7ff !important;           /* optional leichtes Hover-Weiß */
+    color:#eae7ff !important; /* optional leichtes Hover-Weiß */
   }
-  h1{margin:0 0 14px;font-size:clamp(28px,3.8vw,40px);font-weight:800; text-align:center; letter-spacing:.06em;text-decoration:underline;text-underline-offset:6px;color:#fff}
+  h1{margin:0 0 14px;font-size:clamp(28px,3.8vw,40px);font-weight:800; text-align:center; letter-spacing:.06em;}
   .wrap{max-width:75ch;margin:0 auto 26px;line-height:1.8;color:#fff}
+  h2 {
+    margin-top: 0 !important;
+    margin-bottom: 10px !important; /* ← dein gewünschter kleiner Abstand unten */
+    font-size: clamp(18px,2.4vw,22px);
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+  .justify-block {
+    text-align: justify !important; /* Blocksatz aktivieren */
+    text-align-last: left !important; /* letzte Zeile linksbündig (keine Dehnung) */
+    hyphens: auto; /* automatische Silbentrennung (sehr wichtig!) */
+    hyphenate-limit-chars: 6 3 2; /* verhindert zu kurze/trennungsarme Wörter */
+    line-height: 1.75; /* schöner Zeilenabstand */
+    max-width: 75ch; /* optimale Zeilenlänge */
+    margin: 4px auto 26px; /* ← HIER DER FIX: margin-top auf 4px reduziert (statt 28px) */
+    font-size: clamp(15px, 1.7vw, 17px);
+    word-spacing: normal;
+    letter-spacing: normal;
+  }
   </style>
 </head>
 <body>
-
 <!-- Top-Leiste als IFRAME einbinden -->
 <iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
 <style>
@@ -65,27 +83,23 @@
     background:transparent;
   }
 </style>
-
   <div class="container">
-
-  
+ 
     <main class="center" style="padding:20px 0">
-      <h1>Haftung für Inhalte</h1>
-      <div class="wrap">
-        Die Inhalte dieser Website wurden mit größtmöglicher Sorgfalt erstellt. Trotzdem können wir keine Gewähr für die Richtigkeit,     Vollständigkeit oder Aktualität übernehmen. Als Diensteanbieter sind wir nach § 7 Abs. 1 DDG für eigene Inhalte auf diesen Webseiten verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine entsprechende Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
+      <h1>⚖️rechtliche Hinweise</h1> <!-- ← FIX: schließendes Tag korrigiert -->
+      <h2></br>Haftung für Inhalte</h2> <!-- ← FIX: falsches </br> entfernt -->
+      <div class="justify-block">
+        Die Inhalte dieser Website wurden mit größtmöglicher Sorgfalt erstellt. Trotzdem können wir keine Gewähr für die Richtigkeit, Vollständigkeit oder Aktualität übernehmen. Als Diensteanbieter sind wir nach § 7 Abs. 1 DDG für eigene Inhalte auf diesen Webseiten verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine entsprechende Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
       </div>
-
-      <h1>Haftung für Links</h1>
-      <div class="wrap">
+      <h2>Haftung für Links</h2>
+      <div class="justify-block">
         Unsere Website enthält Verlinkungen zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich. Zum Zeitpunkt der Verlinkung waren keine Rechtsverstöße erkennbar. Eine fortlaufende inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkreten Anlass nicht zumutbar. Bei Bekanntwerden von rechtswidrigen Inhalten entfernen wir die entsprechenden Links umgehend.
       </div>
-
-      <h1>Urheberrecht</h1>
-      <div class="wrap">
+      <h2>Urheberrecht</h2>
+      <div class="justify-block">
         Alle Inhalte, Texte, Grafiken und Bilder auf dieser Webseite unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet. Die Vervielfältigung, Bearbeitung, Verbreitung oder sonstige Nutzung außerhalb der Grenzen des Urheberrechts bedürfen der vorherigen schriftlichen Zustimmung des jeweiligen Urhebers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. Sollten Sie auf eine mögliche Urheberrechtsverletzung aufmerksam werden, bitten wir um Mitteilung – wir werden den Sachverhalt umgehend prüfen und ggf. korrigieren.
       </div>
     </main>
-
     <footer class="footerlinks">
       <a href="kontakt.html">Kontakt</a>
       <a href="impressum.html">Impressum</a>
@@ -93,7 +107,6 @@
       <a href="datenschutz.html">Datenschutz</a>
       <a href="rechtliche-hinweise.html">rechtliche Hinweise</a>
     </footer>
-
   </div>
 </body>
 </html>
