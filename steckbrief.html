@@ -729,155 +729,167 @@
       { id: "comment2", label: "Da sehe ich die Person in 10 Jahren:", value: "glücklich, am Strand mit Villa, reich, mit dem heißesten Partner" },
       { id: "comment3", label: "Das will ich dir noch mit auf den Weg geben:", value: "viel Glück bei allem was du machst, ohne dich wäre die Schule nur halb so witzig gewesen, danke" }
     ];
-    // Sitzungslokale Daten (keine Speicherung über reload)
-    let customFields = [];
-    let customComments = [];
-    let deletedBase = new Set();
-    let deletedComments = new Set();
-    const IMG_KEY_CURRENT = "digitabiPhotoCurrentV1";
-    const IMG_KEY_CHILD = "digitabiPhotoChildV1";
-    function getImgKey(id) { return `digitabiPhoto_${id}V1`; }
-    function setPhoto(el, dataUrl){
-      if (!el) return;
-      if (dataUrl){
-        el.style.backgroundImage = `url('${dataUrl}')`;
-        el.setAttribute("data-has-img", "true");
-      }else{
-        el.style.backgroundImage = "none";
-        el.setAttribute("data-has-img", "false");
-      }
+   // Sitzungslokale Daten (keine Speicherung über reload)
+  let customFields = [];
+  let customComments = [];
+  let deletedBase = new Set();
+  let deletedComments = new Set();
+  const IMG_KEY_CURRENT = "digitabiPhotoCurrentV1";
+  const IMG_KEY_CHILD = "digitabiPhotoChildV1";
+  function getImgKey(id) { return `digitabiPhoto_${id}V1`; }
+  function setPhoto(el, dataUrl){
+    if (!el) return;
+    if (dataUrl){
+      el.style.backgroundImage = `url('${dataUrl}')`;
+      el.setAttribute("data-has-img", "true");
+    }else{
+      el.style.backgroundImage = "none";
+      el.setAttribute("data-has-img", "false");
     }
-    function loadImages(){
-      // explizit alles leeren
-      setPhoto(document.getElementById('photo-current'), null);
-      setPhoto(document.getElementById('photo-child'), null);
-      BASE_FIELDS.forEach(f => {
-        if (f.type === "photo") {
-          const el = document.getElementById(`photo-${f.id}`);
-          if (el) setPhoto(el, null);
+  }
+  function loadImages(){
+    // explizit alles leeren
+    setPhoto(document.getElementById('photo-current'), null);
+    setPhoto(document.getElementById('photo-child'), null);
+    BASE_FIELDS.forEach(f => {
+      if (f.type === "photo") {
+        const el = document.getElementById(`photo-${f.id}`);
+        if (el) setPhoto(el, null);
+      }
+    });
+  }
+  function handleFile(inputEl, key, targetEl){
+    const file = inputEl.files?.[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result;
+      setPhoto(targetEl, dataUrl);
+    };
+    reader.readAsDataURL(file);
+  }
+  // NEU: Funktion zum Anhängen der Upload-Listener (nach jedem Render aufrufen)
+  function attachPhotoListeners() {
+    BASE_FIELDS.forEach(f => {
+      if (f.type === "photo") {
+        const input = document.getElementById(`file-${f.id}`);
+        const label = document.getElementById(`photo-${f.id}`);
+        if (input && label) {
+          input.addEventListener('change', () => handleFile(input, null, label));
         }
-      });
-    }
-    function handleFile(inputEl, key, targetEl){
-      const file = inputEl.files?.[0];
-      if(!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        const dataUrl = reader.result;
-        setPhoto(targetEl, dataUrl);
-      };
-      reader.readAsDataURL(file);
-    }
-    const factsEl = document.getElementById("facts");
-    const commentsEl = document.getElementById("comments");
-    function rowBaseHTML(f){
-      return `<div class="row"><button class="remove" data-type="base" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
-    }
-    function rowPhotoHTML(f) {
-      const photoId = `photo-${f.id}`;
-      const fileId = `file-${f.id}`;
-      return `
-        <div class="photo-row" style="position: relative;">  <!-- Wrapper für absolute × -->
-          <button class="remove" data-type="base" data-id="${f.id}">x</button>
-          <label class="ph" id="${photoId}" data-has-img="false">
-            <input type="file" id="${fileId}" accept="image/*">
-            <span>${f.labelText}</span>
-            <div class="overlay">
-              <button type="button" class="tinybtn primary" data-action="select" data-target="${f.id}">Bild wählen</button>
-            </div>
-          </label>
-        </div>`;
-    }
-    function rowCustomHTML(f, i){
-      return `<div class="row"><button class="remove" data-type="custom" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
-    }
-    function renderFacts(){
-      let html = "", inPhotos = false;
-      for (const f of BASE_FIELDS){
-        if (deletedBase.has(f.id)) continue;
-        if (f.type === "photo") {
-          if (!inPhotos) { html += '<div class="photos-extra">'; inPhotos = true; }
-          html += rowPhotoHTML(f);
-        } else {
-          if (inPhotos) { html += '</div>'; inPhotos = false; }
-          html += rowBaseHTML(f);
-        }
-        if (f.id === "dreier-worte-head") html += `<div class="spacer"></div>`;
       }
-      if (inPhotos) html += '</div>';
-      customFields.forEach((f,i) => html += rowCustomHTML(f,i));
-      factsEl.innerHTML = html;
-    }
-    function rowCommentHTML(f){
-      return `<div class="comment"><div class="row"><button class="remove" data-type="comment" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
-    }
-    function rowCustomCommentHTML(f, i){
-      return `<div class="comment"><div class="row"><button class="remove" data-type="custom-comment" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
-    }
-    function renderComments(){
-      let html = "";
-      for (const f of COMMENT_FIELDS){
-        if (deletedComments.has(f.id)) continue;
-        html += rowCommentHTML(f);
+    });
+  }
+  const factsEl = document.getElementById("facts");
+  const commentsEl = document.getElementById("comments");
+  function rowBaseHTML(f){
+    return `<div class="row"><button class="remove" data-type="base" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
+  }
+  function rowPhotoHTML(f) {
+    const photoId = `photo-${f.id}`;
+    const fileId = `file-${f.id}`;
+    return `
+      <div class="photo-row" style="position: relative;"> <!-- Wrapper für absolute × -->
+        <button class="remove" data-type="base" data-id="${f.id}">x</button>
+        <label class="ph" id="${photoId}" data-has-img="false">
+          <input type="file" id="${fileId}" accept="image/*">
+          <span>${f.labelText}</span>
+          <div class="overlay">
+            <button type="button" class="tinybtn primary" data-action="select" data-target="${f.id}">Bild wählen</button>
+          </div>
+        </label>
+      </div>`;
+  }
+  function rowCustomHTML(f, i){
+    return `<div class="row"><button class="remove" data-type="custom" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
+  }
+  function renderFacts(){
+    let html = "", inPhotos = false;
+    for (const f of BASE_FIELDS){
+      if (deletedBase.has(f.id)) continue;
+      if (f.type === "photo") {
+        if (!inPhotos) { html += '<div class="photos-extra">'; inPhotos = true; }
+        html += rowPhotoHTML(f);
+      } else {
+        if (inPhotos) { html += '</div>'; inPhotos = false; }
+        html += rowBaseHTML(f);
       }
-      customComments.forEach((f,i) => html += rowCustomCommentHTML(f,i));
-      commentsEl.innerHTML = html;
+      if (f.id === "dreier-worte-head") html += `<div class="spacer"></div>`;
     }
+    if (inPhotos) html += '</div>';
+    customFields.forEach((f,i) => html += rowCustomHTML(f,i));
+    factsEl.innerHTML = html;
+    attachPhotoListeners();  // ← NEU: Listener nach Render anhängen
+  }
+  function rowCommentHTML(f){
+    return `<div class="comment"><div class="row"><button class="remove" data-type="comment" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
+  }
+  function rowCustomCommentHTML(f, i){
+    return `<div class="comment"><div class="row"><button class="remove" data-type="custom-comment" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
+  }
+  function renderComments(){
+    let html = "";
+    for (const f of COMMENT_FIELDS){
+      if (deletedComments.has(f.id)) continue;
+      html += rowCommentHTML(f);
+    }
+    customComments.forEach((f,i) => html += rowCustomCommentHTML(f,i));
+    commentsEl.innerHTML = html;
+  }
+  renderFacts();
+  renderComments();
+  loadImages();
+  // FAKTEN: + Eigenes Feld
+  const toggleBtn = document.getElementById("toggleCustom");
+  const formBox = document.getElementById("customForm");
+  const addBtn = document.getElementById("cfAdd");
+  const inLabel = document.getElementById("cfLabel");
+  const inValue = document.getElementById("cfValue");
+  toggleBtn.addEventListener("click", () => {
+    toggleBtn.style.display = 'none';
+    formBox.classList.add("show");
+    inLabel.focus();
+  });
+  addBtn.addEventListener("click", () => {
+    const label = inLabel.value.trim();
+    const value = inValue.value.trim();
+    if (!label || !value){ alert("Bitte Feldtitel und Inhalt eingeben."); return; }
+    customFields.push({ label, value });
+    inLabel.value = ""; inValue.value = "";
+    formBox.classList.remove("show");
+    toggleBtn.style.display = 'block';
     renderFacts();
+  });
+  // KOMMENTARE: + Eigenes Feld
+  const toggleBtnComments = document.getElementById("toggleCustomComments");
+  const formBoxComments = document.getElementById("customFormComments");
+  const addBtnComments = document.getElementById("cfAddComments");
+  const inLabelComments = document.getElementById("cfLabelComments");
+  const inValueComments = document.getElementById("cfValueComments");
+  toggleBtnComments.addEventListener("click", () => {
+    toggleBtnComments.style.display = 'none';
+    formBoxComments.classList.add("show");
+    inLabelComments.focus();
+  });
+  addBtnComments.addEventListener("click", () => {
+    const label = inLabelComments.value.trim();
+    const value = inValueComments.value.trim();
+    if (!label || !value){ alert("Bitte Feldtitel und Inhalt eingeben."); return; }
+    customComments.push({ label, value });
+    inLabelComments.value = ""; inValueComments.value = "";
+    formBoxComments.classList.remove("show");
+    toggleBtnComments.style.display = 'block';
     renderComments();
-    loadImages();
-    // FAKTEN: + Eigenes Feld
-    const toggleBtn = document.getElementById("toggleCustom");
-    const formBox = document.getElementById("customForm");
-    const addBtn = document.getElementById("cfAdd");
-    const inLabel = document.getElementById("cfLabel");
-    const inValue = document.getElementById("cfValue");
-    toggleBtn.addEventListener("click", () => {
-      toggleBtn.style.display = 'none';
-      formBox.classList.add("show");
-      inLabel.focus();
-    });
-    addBtn.addEventListener("click", () => {
-      const label = inLabel.value.trim();
-      const value = inValue.value.trim();
-      if (!label || !value){ alert("Bitte Feldtitel und Inhalt eingeben."); return; }
-      customFields.push({ label, value });
-      inLabel.value = ""; inValue.value = "";
-      formBox.classList.remove("show");
-      toggleBtn.style.display = 'block';
-      renderFacts();
-    });
-    // KOMMENTARE: + Eigenes Feld
-    const toggleBtnComments = document.getElementById("toggleCustomComments");
-    const formBoxComments = document.getElementById("customFormComments");
-    const addBtnComments = document.getElementById("cfAddComments");
-    const inLabelComments = document.getElementById("cfLabelComments");
-    const inValueComments = document.getElementById("cfValueComments");
-    toggleBtnComments.addEventListener("click", () => {
-      toggleBtnComments.style.display = 'none';
-      formBoxComments.classList.add("show");
-      inLabelComments.focus();
-    });
-    addBtnComments.addEventListener("click", () => {
-      const label = inLabelComments.value.trim();
-      const value = inValueComments.value.trim();
-      if (!label || !value){ alert("Bitte Feldtitel und Inhalt eingeben."); return; }
-      customComments.push({ label, value });
-      inLabelComments.value = ""; inValueComments.value = "";
-      formBoxComments.classList.remove("show");
-      toggleBtnComments.style.display = 'block';
-      renderComments();
-    });
-   // ============ EINZIGER CLICK-LISTENER FÜR ALLES (Remove + Fotos) ============
+  });
+ // ============ EINZIGER CLICK-LISTENER FÜR ALLES (Remove + Fotos) ============
 document.addEventListener("click", (e) => {
   const removeBtn = e.target.closest(".remove");
   if (removeBtn) {
     const type = removeBtn.dataset.type;
-
     if (type === "base") {
       const id = removeBtn.dataset.id;
-      deletedBase.add(id);   // ← Jetzt auch für fantasie-photo, meme-photo etc.
-      renderFacts();         // ← Neu rendern → gelöschte Felder bleiben weg
+      deletedBase.add(id); // ← Jetzt auch für fantasie-photo, meme-photo etc.
+      renderFacts(); // ← Neu rendern → gelöschte Felder bleiben weg
     }
     else if (type === "custom") {
       const i = parseInt(removeBtn.dataset.i, 10);
@@ -909,7 +921,6 @@ document.addEventListener("click", (e) => {
       if (input) input.value = "";
       removeBtn.style.display = "none";
     }
-
     return; // verhindert weitere Verarbeitung
   }
       // 2. TINYBTN → Bild auswählen
