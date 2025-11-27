@@ -58,19 +58,54 @@
 <body>
 
 <!-- Top-Leiste als IFRAME einbinden -->
-<iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
-<style>
-  .topnav-embed{
-    width:100%; height:48px; border:0; display:block; overflow:hidden;
-    background:transparent;
-  }
-.center {
- margin: 10px 0 24px;
-  line-height: 1.9;
-  font-size: clamp(16px, 2.1vw, 22px);   /* ← das ist die entscheidende Zeile */
-  color: #fff;
-}
-</style>
+<header>
+    <nav class="topnav" aria-label="Hauptnavigation">
+      <a href="index.html" class="logo-link" aria-label="DigitABI Startseite">
+        <img src="assets/place-holder.png"
+             onerror="this.src='assets/logo-digitabi.png'; this.onerror=null;"
+             alt=""
+             class="nav-logo">
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html">Startseite</a>
+        <a href="abirechner.html">Abibuch-Creator</a>
+        <a href="steckbrief.html">Abibuch-Editor</a>
+        <a href="index.html#mottos">Motto-Ideen</a>
+        <a href="ueber-uns.html">Über Uns</a>
+        <a href="konto.html" data-requires-auth>Mein Konto</a>
+      </div>
+
+      <div class="authbox">
+        <span id="userEmail" data-requires-auth></span>
+        <button id="logoutBtn" class="btn" data-requires-auth>Logout</button>
+        <button class="btn" data-requires-anon data-action="open-auth">Login / Registrieren</button>
+      </div>
+    </nav>
+
+    <!-- Login / Registrieren Modal -->
+    <dialog id="authModal">
+      <form id="authForm" method="dialog">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <strong style="font-size:18px">Einloggen / Registrieren</strong>
+          <button type="button" id="closeAuth"
+                  style="background:#eee;border:none;border-radius:8px;padding:6px 10px">✕</button>
+        </div>
+        <p style="margin:8px 0 12px;color:#333">
+          E-Mail eingeben – wir senden dir einen Magic-Link.
+        </p>
+        <label>
+          E-Mail
+          <input name="email" type="email" required placeholder="du@example.com">
+        </label>
+        <button type="submit"
+                style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;">
+          Magic-Link senden
+        </button>
+        <div id="authMessage"></div>
+      </form>
+    </dialog>
+  </header>
 
   <div class="container">
     <main class="center" style="padding:32px 0">
@@ -90,5 +125,65 @@
       <a href="rechtliche-hinweise.html">rechtliche Hinweise</a>
     </footer>
   </div>
+    <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";   // <- DEINE URL
+    const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";                 // <- DEIN ANON KEY
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const authModal = document.getElementById("authModal");
+
+    async function loadProfileName(session){
+      if(!session?.user) return "";
+      const { data } = await supabase
+        .from("profiles")
+        .select("display_name")
+        .eq("id", session.user.id)
+        .maybeSingle();
+      return data?.display_name || session.user.email;
+    }
+
+    async function updateAuthUI(session){
+      const isLoggedIn = !!session?.user;
+      document.querySelectorAll("[data-requires-auth]")
+        .forEach(el => el.style.display = isLoggedIn ? "" : "none");
+      document.querySelectorAll("[data-requires-anon]")
+        .forEach(el => el.style.display = isLoggedIn ? "none" : "");
+
+      const span = document.getElementById("userEmail");
+      if(span) span.textContent = isLoggedIn ? await loadProfileName(session) : "";
+    }
+
+    // Initialstatus
+    const { data: init } = await supabase.auth.getSession();
+    await updateAuthUI(init.session);
+    supabase.auth.onAuthStateChange((_e, session) => updateAuthUI(session));
+
+    // Login
+    async function signInWithEmail(e){
+      e.preventDefault();
+      const msg = document.getElementById("authMessage");
+      const email = e.currentTarget.querySelector('input[name="email"]').value.trim();
+      if(!email){ msg.textContent = "Bitte E-Mail eingeben."; return; }
+
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.origin }
+      });
+      msg.textContent = error ? ("Fehler: " + error.message)
+                              : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
+    }
+
+    document.getElementById("authForm")?.addEventListener("submit", signInWithEmail);
+    document.getElementById("logoutBtn")?.addEventListener("click", () => supabase.auth.signOut());
+    document.querySelectorAll("[data-action='open-auth']").forEach(btn =>
+      btn.addEventListener("click", () => authModal.showModal())
+    );
+    document.getElementById("closeAuth")?.addEventListener("click", () => authModal.close());
+  </script>
+</body>
+</html>
+
 </body>
 </html>
