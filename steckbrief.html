@@ -5,27 +5,33 @@
   <title>Steckbrief – Vorschau | DigitABI</title>
   <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
-  :root{ --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8; --ink:#151527; --muted:rgba(0,0,0,.62); --vio:#BEB3FF; --vio-dark:#9e90ff; }
+  :root{
+    --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8;
+    --ink:#151527; --muted:rgba(0,0,0,.62); --vio:#BEB3FF; --vio-dark:#9e90ff;
+    --link:rgba(255,255,255,.9);
+  }
   *{box-sizing:border-box}
-  /* ==================== FIX: FLÜSSIGER GRADIENT ==================== */
-    html {
-      min-height: 100%;
-      height: 100%;
-      background: linear-gradient(100deg, var(--grad-left) 0%, var(--grad-mid) 50%, var(--grad-right) 100%) fixed no-repeat;
-      background-size: cover;
-      background-position: center;
-    }
 
-    body {
-      margin: 0;
-      font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
-      color: #fff;
-      background: transparent;               /* WICHTIG: body ist jetzt transparent */
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    /* ==================== ENDE FIX ==================== */
+  /* ==================== FIX: FLÜSSIGER GRADIENT ==================== */
+  html {
+    min-height: 100%;
+    height: 100%;
+    background: linear-gradient(100deg, var(--grad-left) 0%, var(--grad-mid) 50%, var(--grad-right) 100%) fixed no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
+    color: #fff;
+    background: transparent;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  /* ==================== ENDE FIX ==================== */
+
   .container{max-width:1180px;margin:0 auto;padding:32px 24px;flex:1;display:flex;flex-direction:column}
   .nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
   .nav .left,.nav .right{display:flex;gap:18px;align-items:center}
@@ -34,6 +40,7 @@
   .nav a{color:rgba(255,255,255,.88);text-decoration:none; font-weight:600}
   .nav a:hover{text-decoration:underline}
   h3.section{margin:22px 0 8px; text-align:center; text-decoration:underline; font-weight:700}
+
   .comment{margin-top:14px}
   .frame{
     background:#f6f6f8; border:3px solid #6c50ff; border-radius:8px;
@@ -43,6 +50,7 @@
   .frame h2{ text-align:center; margin:0; line-height:1.35; color:#1f1f2f; }
   .frame h2 .line2{font-weight:800}
   .sheet{ margin-top:18px; background:#f6f6f8; border:1px solid #b6a8ff; border-radius:10px; padding:24px 22px; }
+
   .photos{display:grid; grid-template-columns: 240px 1fr 240px; gap:24px; align-items:start; margin-top:6px}
   .ph{
     position:relative;
@@ -66,24 +74,28 @@
     border:2px solid #cfd2ff; background:#fff; color:#1b1b2f; font-size:12px;
   }
   .tinybtn.primary{ border-color:#2e1df7; background:#eae7ff; color:#2e1df7 }
-  .name{ 
-      display:flex; 
-      flex-direction:column; 
-      align-items:center; 
-      justify-content:center; 
-      height:160px; 
-      padding-top:0; 
-    }
+
+  .name{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:160px;
+    padding-top:0;
+  }
   .name .big{font-size:20px; font-weight:700; letter-spacing:.02em; color:#111; text-align:center}
   .name .date{font-size:12.5px; color:#333}
+
   .facts{margin-top:18px; display:grid; grid-template-columns:1fr; gap:10px}
   .row{display:flex; gap:10px; align-items:baseline}
   .label{color:#333; font-weight:600; flex:0 0 240px; }
   .value{color:#111; flex:1}
   .muted{color:var(--muted); font-weight:600}
   .spacer{height:10px}
+
   .photos-extra { grid-column: 1 / -1; margin: 16px 0; display: flex; gap:20px; }
   .photo-row { flex:1; display: flex; align-items: center; gap:10px; margin:0; }
+
   .custombar{
     display:flex; gap:8px; align-items:center; justify-content:flex-start;
     margin-top:8px; margin-bottom:4px;
@@ -103,6 +115,7 @@
   }
   .remove:hover{ color:#c00 }
   .show{ display:grid !important; }
+
   .next{
     display:inline-flex; align-items:center; justify-content:center;
     padding:10px 16px; font-weight:700; border-radius:12px;
@@ -110,42 +123,175 @@
     position:absolute; right:18px; bottom:14px;
   }
   .next:hover{background:#dcd6ff}
+
   footer.footerlinks{display:flex; gap:16px; justify-content:center; margin-top:22px}
   footer.footerlinks a{color:#fff; text-decoration:none; font-weight:600}
   footer.footerlinks a:hover{text-decoration:underline}
-.sheet > h3.section {
-  color: #111 !important;     /* oder #1f1f2f, je nachdem wie dunkel du es willst */
-  margin: 28px 0 12px;        /* optional: etwas mehr Luft oben, sieht schöner aus */
-}
+
+  .sheet > h3.section {
+    color: #111 !important;
+    margin: 28px 0 12px;
+  }
+
+  /* ===== TOPNAV + LOGIN-DIALOG (wie Startseite/Abirechner) ===== */
+  .topnav{
+    position:relative;
+    display:flex;
+    align-items:center;
+    height:48px;
+    padding:0 12px;
+    font-weight:700;
+    letter-spacing:.04em;
+    color:#fff;
+    font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  }
+  .topnav .logo-link{
+    display:flex;
+    align-items:center;
+    height:100%;
+    margin-right:20px;
+    text-decoration:none;
+  }
+  .topnav .nav-logo{
+    height:36px;
+    width:auto;
+    object-fit:contain;
+  }
+  .topnav .nav-links{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:28px;
+    flex:1;
+  }
+  .topnav .nav-links a{
+    color:var(--link);
+    text-decoration:none;
+    white-space:nowrap;
+  }
+  .topnav .nav-links a:hover{ text-decoration:underline; }
+
+  .topnav .authbox{
+    position:absolute;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .topnav .btn{
+    padding:7px 10px;
+    border-radius:10px;
+    border:2px solid rgba(255,255,255,.9);
+    background:transparent;
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+    font-size:13px;
+  }
+  .topnav .btn:hover{ background:rgba(255,255,255,.15); }
+  #userEmail{ color:#fff; font-weight:700; font-size:14px; }
+
+  [data-requires-auth]{ display:none; }
+  [data-requires-anon]{ display:inline-flex; }
+
+  dialog{
+    border:none;
+    border-radius:16px;
+    padding:0;
+    width:min(420px,92vw);
+    background:#fff;
+    color:#111;
+    box-shadow:0 25px 80px rgba(0,0,0,.5);
+  }
+  dialog::backdrop{
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(3px);
+  }
+  dialog form{
+    padding:26px 22px;
+    font-family:inherit;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  dialog label{
+    display:grid;
+    gap:6px;
+    margin-bottom:12px;
+    font-weight:600;
+    color:#222;
+  }
+  dialog input{
+    padding:10px 12px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font:inherit;
+  }
+  dialog button[type="submit"]{
+    padding:10px 14px;
+    border-radius:10px;
+    border:2px solid #2e1df7;
+    background:#eae7ff;
+    color:#2e1df7;
+    font-weight:700;
+    cursor:pointer;
+  }
+  #authMessage{ margin-top:10px; color:#333; font-weight:600; }
   </style>
 </head>
 <body>
-<iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
-<!-- direkt UNTER dem <iframe src="topnav.html" ...> -->
-<style>
-  .topnav-embed.topnav-full{
-    position:fixed; inset:0; width:100vw; height:100vh;
-    z-index:9999; background:transparent; border:0;
-  }
-</style>
-<script>
-  (function(){
-    const iframe = document.querySelector('.topnav-embed');
-    window.addEventListener('message', (e)=>{
-      if (e.data?.type === 'TOPNAV_AUTH_OPEN')  iframe.classList.add('topnav-full');
-      if (e.data?.type === 'TOPNAV_AUTH_CLOSE') iframe.classList.remove('topnav-full');
-    });
-  })();
-// Sicher ist sicher: Beim Verlassen der Seite alles löschen (für besonders gründliche Browser)
-window.addEventListener('beforeunload', () => {
-  // Optional: alle relevanten Keys aus localStorage entfernen
-  localStorage.removeItem(IMG_KEY_CURRENT);
-  localStorage.removeItem(IMG_KEY_CHILD);
-  BASE_FIELDS.forEach(f => {
-    if (f.type === "photo") localStorage.removeItem(getImgKey(f.id));
-  });
-});
-</script>
+
+  <!-- HEADER MIT NAV + LOGIN -->
+  <header>
+    <nav class="topnav" aria-label="Hauptnavigation">
+      <a href="index.html" class="logo-link" aria-label="DigitABI Startseite">
+        <img src="assets/place-holder.png"
+             onerror="this.src='assets/logo-digitabi.png'; this.onerror=null;"
+             alt=""
+             class="nav-logo">
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html">Startseite</a>
+        <a href="abirechner.html">Abibuch-Creator</a>
+        <a href="steckbrief.html">Abibuch-Editor</a>
+        <a href="index.html#mottos">Motto-Ideen</a>
+        <a href="ueber-uns.html">Über Uns</a>
+        <a href="konto.html" data-requires-auth>Mein Konto</a>
+      </div>
+
+      <div class="authbox">
+        <span id="userEmail" data-requires-auth></span>
+        <button id="logoutBtn" class="btn" data-requires-auth>Logout</button>
+        <button class="btn" data-requires-anon data-action="open-auth">Login / Registrieren</button>
+      </div>
+    </nav>
+
+    <!-- Login / Registrieren Modal -->
+    <dialog id="authModal">
+      <form id="authForm" method="dialog">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <strong style="font-size:18px">Einloggen / Registrieren</strong>
+          <button type="button" id="closeAuth"
+                  style="background:#eee;border:none;border-radius:8px;padding:6px 10px">✕</button>
+        </div>
+        <p style="margin:8px 0 12px;color:#333">
+          E-Mail eingeben – wir senden dir einen Magic-Link.
+        </p>
+        <label>
+          E-Mail
+          <input name="email" type="email" required placeholder="du@example.com">
+        </label>
+        <button type="submit"
+                style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;">
+          Magic-Link senden
+        </button>
+        <div id="authMessage"></div>
+      </form>
+    </dialog>
+  </header>
 
   <div class="container">
     <div class="frame">
@@ -206,10 +352,70 @@ window.addEventListener('beforeunload', () => {
       <a href="impressum.html">Impressum</a>
       <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
       <a href="datenschutz.html">Datenschutz</a>
-      <a href="rechtliche-hinweise.html">Rechtliche Hinweise</a>
+      <a href="rechtliche-hinweise.html">rechtliche Hinweise</a>
     </footer>
   </div>
 
+  <!-- SUPABASE AUTH (gleich wie auf index/abirechner) -->
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";   // <- deine URL
+    const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";                 // <- dein anon key
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const authModal = document.getElementById("authModal");
+
+    async function loadProfileName(session){
+      if(!session?.user) return "";
+      const { data } = await supabase
+        .from("profiles")
+        .select("display_name")
+        .eq("id", session.user.id)
+        .maybeSingle();
+      return data?.display_name || session.user.email;
+    }
+
+    async function updateAuthUI(session){
+      const isLoggedIn = !!session?.user;
+      document.querySelectorAll("[data-requires-auth]")
+        .forEach(el => el.style.display = isLoggedIn ? "" : "none");
+      document.querySelectorAll("[data-requires-anon]")
+        .forEach(el => el.style.display = isLoggedIn ? "none" : "");
+
+      const span = document.getElementById("userEmail");
+      if(span) span.textContent = isLoggedIn ? await loadProfileName(session) : "";
+    }
+
+    // Initialstatus
+    const { data: init } = await supabase.auth.getSession();
+    await updateAuthUI(init.session);
+    supabase.auth.onAuthStateChange((_e, session) => updateAuthUI(session));
+
+    // Login
+    async function signInWithEmail(e){
+      e.preventDefault();
+      const msg = document.getElementById("authMessage");
+      const email = e.currentTarget.querySelector('input[name="email"]').value.trim();
+      if(!email){ msg.textContent = "Bitte E-Mail eingeben."; return; }
+
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.origin }
+      });
+      msg.textContent = error ? ("Fehler: " + error.message)
+                              : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
+    }
+
+    document.getElementById("authForm")?.addEventListener("submit", signInWithEmail);
+    document.getElementById("logoutBtn")?.addEventListener("click", () => supabase.auth.signOut());
+    document.querySelectorAll("[data-action='open-auth']").forEach(btn =>
+      btn.addEventListener("click", () => authModal.showModal())
+    );
+    document.getElementById("closeAuth")?.addEventListener("click", () => authModal.close());
+  </script>
+
+  <!-- STECKBRIEF-LOGIK -->
   <script>
     const BASE_FIELDS = [
       { id: "leistungskurse", label: "Leistungskurse:", value: "Bio, Sport" },
@@ -245,7 +451,7 @@ window.addEventListener('beforeunload', () => {
       { id: "comment3", label: "Das will ich dir noch mit auf den Weg geben:", value: "viel Glück bei allem was du machst, ohne dich wäre die Schule nur halb so witzig gewesen, danke" }
     ];
 
-    // Keine dauerhafte Speicherung mehr – alles nur während der Sitzung
+    // Sitzungslokale Daten (keine Speicherung über reload)
     let customFields = [];
     let customComments = [];
     let deletedBase = new Set();
@@ -267,21 +473,16 @@ window.addEventListener('beforeunload', () => {
     }
 
     function loadImages(){
-  // Nichts mehr aus localStorage laden → alles bleibt leer
-  // setPhoto(document.getElementById('photo-current'), localStorage.getItem(IMG_KEY_CURRENT));
-  // setPhoto(document.getElementById('photo-child'), localStorage.getItem(IMG_KEY_CHILD));
-  // BASE_FIELDS.forEach(...) → auch entfernen
-
-  // Optional: alle Felder explizit zurücksetzen
-  setPhoto(document.getElementById('photo-current'), null);
-  setPhoto(document.getElementById('photo-child'), null);
-  BASE_FIELDS.forEach(f => {
-    if (f.type === "photo") {
-      const el = document.getElementById(`photo-${f.id}`);
-      if (el) setPhoto(el, null);
+      // explizit alles leeren
+      setPhoto(document.getElementById('photo-current'), null);
+      setPhoto(document.getElementById('photo-child'), null);
+      BASE_FIELDS.forEach(f => {
+        if (f.type === "photo") {
+          const el = document.getElementById(`photo-${f.id}`);
+          if (el) setPhoto(el, null);
+        }
+      });
     }
-  });
-}
 
     function handleFile(inputEl, key, targetEl){
       const file = inputEl.files?.[0];
@@ -289,7 +490,6 @@ window.addEventListener('beforeunload', () => {
       const reader = new FileReader();
       reader.onload = () => {
         const dataUrl = reader.result;
-        
         setPhoto(targetEl, dataUrl);
       };
       reader.readAsDataURL(file);
@@ -404,37 +604,32 @@ window.addEventListener('beforeunload', () => {
       const value = inValueComments.value.trim();
       if (!label || !value){ alert("Bitte Feldtitel und Inhalt eingeben."); return; }
       customComments.push({ label, value });
-     
       inLabelComments.value = ""; inValueComments.value = "";
       formBoxComments.classList.remove("show");
       toggleBtnComments.style.display = 'block';
       renderComments();
     });
 
-    // Entfernen
+    // Entfernen (ohne save* – nur in dieser Sitzung)
     document.addEventListener("click", (e) => {
       const btn = e.target.closest(".remove"); if (!btn) return;
       const type = btn.dataset.type;
       if (type === "custom"){
         const i = parseInt(btn.dataset.i, 10);
         customFields.splice(i, 1);
-        saveCustom(customFields);
         renderFacts();
       }
       if (type === "base"){
         deletedBase.add(btn.dataset.id);
-        saveDeleted(deletedBase);
         renderFacts();
       }
       if (type === "comment"){
         deletedComments.add(btn.dataset.id);
-        saveDeletedComments(deletedComments);
         renderComments();
       }
       if (type === "custom-comment"){
         const i = parseInt(btn.dataset.i, 10);
         customComments.splice(i, 1);
-        
         renderComments();
       }
     });
