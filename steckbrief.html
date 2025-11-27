@@ -242,19 +242,21 @@
     }
 
     .photos-extra {
-      grid-column: 1 / -1;
-      margin: 16px 0;
-      display: flex;
-      gap: 20px;
-    }
+  grid-column: 1 / -1;
+  margin: 16px 0;
+  display: flex;
+  justify-content: center;  /* Zentriert Inhalte (bei 1 Feld mittig) */
+  gap: 20px;
+  flex-wrap: wrap;  /* Optional: Erlaubt Wrap bei mehr Feldern später */
+}
 
-    .photo-row {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0;
-    }
+.photo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  width: calc(50% - 10px);  /* Feste halbe Breite (behält Größe, minus half-gap) */
+}
 
     .custombar {
       display: flex;
