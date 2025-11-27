@@ -1,10 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Steckbrief – Vorschau | DigitABI</title>
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Steckbrief – Vorschau | DigitABI
+  </title>
   <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
   :root{
     --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8;
     --ink:#151527; --muted:rgba(0,0,0,.62); --vio:#BEB3FF; --vio-dark:#9e90ff;
@@ -240,125 +244,189 @@
   }
   #authMessage{ margin-top:10px; color:#333; font-weight:600; }
   </style>
-</head>
-<body>
-
+ </head>
+ <body>
   <!-- HEADER MIT NAV + LOGIN -->
   <header>
-    <nav class="topnav" aria-label="Hauptnavigation">
-      <a href="index.html" class="logo-link" aria-label="DigitABI Startseite">
-        <img src="assets/place-holder.png"
-             onerror="this.src='assets/logo-digitabi.png'; this.onerror=null;"
-             alt=""
-             class="nav-logo">
-      </a>
-
-      <div class="nav-links">
-        <a href="index.html">Startseite</a>
-        <a href="abirechner.html">Abibuch-Creator</a>
-        <a href="steckbrief.html">Abibuch-Editor</a>
-        <a href="index.html#mottos">Motto-Ideen</a>
-        <a href="ueber-uns.html">Über Uns</a>
-        <a href="konto.html" data-requires-auth>Mein Konto</a>
-      </div>
-
-      <div class="authbox">
-        <span id="userEmail" data-requires-auth></span>
-        <button id="logoutBtn" class="btn" data-requires-auth>Logout</button>
-        <button class="btn" data-requires-anon data-action="open-auth">Login / Registrieren</button>
-      </div>
-    </nav>
-
-    <!-- Login / Registrieren Modal -->
-    <dialog id="authModal">
-      <form id="authForm" method="dialog">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <strong style="font-size:18px">Einloggen / Registrieren</strong>
-          <button type="button" id="closeAuth"
-                  style="background:#eee;border:none;border-radius:8px;padding:6px 10px">✕</button>
-        </div>
-        <p style="margin:8px 0 12px;color:#333">
-          E-Mail eingeben – wir senden dir einen Magic-Link.
-        </p>
-        <label>
-          E-Mail
-          <input name="email" type="email" required placeholder="du@example.com">
-        </label>
-        <button type="submit"
-                style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;">
-          Magic-Link senden
-        </button>
-        <div id="authMessage"></div>
-      </form>
-    </dialog>
-  </header>
-
-  <div class="container">
-    <div class="frame">
-      <h2 class="smallcaps">Vorschau unseres Abibuch-Editors<br><span class="line2">–<br>so könnte dein Abibuch aussehen:</span></h2>
-      <div class="sheet">
-        <div class="photos">
-          <!-- AKTUELLES FOTO -->
-          <label class="ph" id="photo-current" data-has-img="false" title="Klicken zum Bild hochladen">
-            <input type="file" id="file-current" accept="image/*">
-            <span>AKTUELLES FOTO</span>
-            <div class="overlay">
-              <button type="button" class="tinybtn primary" data-action="select" data-target="current">Bild wählen</button>
-            </div>
-          </label>
-          <div class="name">
-            <div class="big">Mulan<br>Mustermann</div>
-            <div class="date">31.02.2008</div>
-          </div>
-          <!-- KINDERBILD -->
-          <label class="ph" id="photo-child" data-has-img="false" title="Klicken zum Bild hochladen">
-            <input type="file" id="file-child" accept="image/*">
-            <span>KINDERBILD</span>
-            <div class="overlay">
-              <button type="button" class="tinybtn primary" data-action="select" data-target="child">Bild wählen</button>
-            </div>
-          </label>
-        </div>
-
-        <!-- Faktenliste -->
-        <div class="facts" id="facts"><!-- per JS --></div>
-
-        <!-- Editorleiste für FAKTEN -->
-        <div class="custombar">
-          <button class="microbtn primary" id="toggleCustom">+ Eigenes Feld</button>
-          <div class="customform" id="customForm">
-            <input id="cfLabel" type="text" placeholder="Feldtitel (z. B. Lieblingsessen)">
-            <input id="cfValue" type="text" placeholder="Inhalt (z. B. Pizza)">
-            <button class="microbtn primary" id="cfAdd">Hinzufügen</button>
-          </div>
-        </div>
-
-        <h3 class="section"><br>Mitschüler Kommentare</h3>
-        <div class="comments" id="comments"><!-- per JS --></div>
-
-        <!-- Editorleiste für KOMMENTARE -->
-        <div class="custombar" id="custombar-comments">
-          <button class="microbtn primary" id="toggleCustomComments">+ Eigenes Feld</button>
-          <div class="customform" id="customFormComments">
-            <input id="cfLabelComments" type="text" placeholder="Feldtitel (z. B. Lieblingsessen)">
-            <input id="cfValueComments" type="text" placeholder="Inhalt (z. B. Pizza)">
-            <button class="microbtn primary" id="cfAddComments">Hinzufügen</button>
-          </div>
-        </div>
-      </div>
+   <nav aria-label="Hauptnavigation" class="topnav">
+    <a aria-label="DigitABI Startseite" class="logo-link" href="index.html">
+     <img alt="" class="nav-logo" onerror="this.src='assets/logo-digitabi.png'; this.onerror=null;" src="assets/place-holder.png"/>
+    </a>
+    <div class="nav-links">
+     <a href="index.html">
+      Startseite
+     </a>
+     <a href="abirechner.html">
+      Abibuch-Creator
+     </a>
+     <a href="steckbrief.html">
+      Abibuch-Editor
+     </a>
+     <a href="index.html#mottos">
+      Motto-Ideen
+     </a>
+     <a href="ueber-uns.html">
+      Über Uns
+     </a>
+     <a data-requires-auth="" href="konto.html">
+      Mein Konto
+     </a>
     </div>
-    <footer class="footerlinks">
-      <a href="kontakt.html">Kontakt</a>
-      <a href="impressum.html">Impressum</a>
-      <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
-      <a href="datenschutz.html">Datenschutz</a>
-      <a href="rechtliche-hinweise.html">rechtliche Hinweise</a>
-    </footer>
+    <div class="authbox">
+     <span data-requires-auth="" id="userEmail">
+     </span>
+     <button class="btn" data-requires-auth="" id="logoutBtn">
+      Logout
+     </button>
+     <button class="btn" data-action="open-auth" data-requires-anon="">
+      Login / Registrieren
+     </button>
+    </div>
+   </nav>
+   <!-- Login / Registrieren Modal -->
+   <dialog id="authModal">
+    <form id="authForm" method="dialog">
+     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <strong style="font-size:18px">
+       Einloggen / Registrieren
+      </strong>
+      <button id="closeAuth" style="background:#eee;border:none;border-radius:8px;padding:6px 10px" type="button">
+       ✕
+      </button>
+     </div>
+     <p style="margin:8px 0 12px;color:#333">
+      E-Mail eingeben – wir senden dir einen Magic-Link.
+     </p>
+     <label>
+      E-Mail
+      <input name="email" placeholder="du@example.com" required="" type="email"/>
+     </label>
+     <button style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;" type="submit">
+      Magic-Link senden
+     </button>
+     <div id="authMessage">
+     </div>
+    </form>
+   </dialog>
+  </header>
+  <div class="container">
+   <div class="frame">
+    <h2 class="smallcaps">
+     Vorschau unseres Abibuch-Editors
+     <br/>
+     <span class="line2">
+      –
+      <br/>
+      so könnte dein Abibuch aussehen:
+     </span>
+    </h2>
+    <div class="sheet">
+     <div class="photos">
+      <!-- AKTUELLES FOTO -->
+      <div style="position:relative">
+       <button class="remove" data-id="current" data-type="mainphoto" style="position:absolute;top:8px;left:8px;z-index:10;background:rgba(0,0,0,0.4);color:white;border-radius:50%;width:28px;height:28px;font-size:16px;">
+        x
+       </button>
+       <label class="ph" data-has-img="false" id="photo-current">
+        <input accept="image/*" id="file-current" type="file"/>
+        <span>
+         AKTUELLES FOTO
+        </span>
+        <div class="overlay">
+         <button class="tinybtn primary" data-action="select" data-target="current" type="button">
+          Bild wählen
+         </button>
+        </div>
+       </label>
+      </div>
+      <div class="name">
+       <div class="big">
+        Mulan
+        <br/>
+        Mustermann
+       </div>
+       <div class="date">
+        31.02.2008
+       </div>
+      </div>
+      <!-- KINDERBILD -->
+      <div style="position:relative">
+       <button class="remove" data-id="child" data-type="mainphoto" style="position:absolute;top:8px;left:8px;z-index:10;background:rgba(0,0,0,0.4);color:white;border-radius:50%;width:28px;height:28px;font-size:16px;">
+        x
+       </button>
+       <label class="ph" data-has-img="false" id="photo-child">
+        <input accept="image/*" id="file-child" type="file"/>
+        <span>
+         KINDERBILD
+        </span>
+        <div class="overlay">
+         <button class="tinybtn primary" data-action="select" data-target="child" type="button">
+          Bild wählen
+         </button>
+        </div>
+       </label>
+      </div>
+     </div>
+     <!-- Faktenliste -->
+     <div class="facts" id="facts">
+      <!-- per JS -->
+     </div>
+     <!-- Editorleiste für FAKTEN -->
+     <div class="custombar">
+      <button class="microbtn primary" id="toggleCustom">
+       + Eigenes Feld
+      </button>
+      <div class="customform" id="customForm">
+       <input id="cfLabel" placeholder="Feldtitel (z. B. Lieblingsessen)" type="text"/>
+       <input id="cfValue" placeholder="Inhalt (z. B. Pizza)" type="text"/>
+       <button class="microbtn primary" id="cfAdd">
+        Hinzufügen
+       </button>
+      </div>
+     </div>
+     <h3 class="section">
+      <br/>
+      Mitschüler Kommentare
+     </h3>
+     <div class="comments" id="comments">
+      <!-- per JS -->
+     </div>
+     <!-- Editorleiste für KOMMENTARE -->
+     <div class="custombar" id="custombar-comments">
+      <button class="microbtn primary" id="toggleCustomComments">
+       + Eigenes Feld
+      </button>
+      <div class="customform" id="customFormComments">
+       <input id="cfLabelComments" placeholder="Feldtitel (z. B. Lieblingsessen)" type="text"/>
+       <input id="cfValueComments" placeholder="Inhalt (z. B. Pizza)" type="text"/>
+       <button class="microbtn primary" id="cfAddComments">
+        Hinzufügen
+       </button>
+      </div>
+     </div>
+    </div>
+   </div>
+   <footer class="footerlinks">
+    <a href="kontakt.html">
+     Kontakt
+    </a>
+    <a href="impressum.html">
+     Impressum
+    </a>
+    <a href="nutzungsbedingungen.html">
+     Nutzungsbedingungen
+    </a>
+    <a href="datenschutz.html">
+     Datenschutz
+    </a>
+    <a href="rechtliche-hinweise.html">
+     rechtliche Hinweise
+    </a>
+   </footer>
   </div>
-
   <!-- SUPABASE AUTH (gleich wie auf index/abirechner) -->
   <script type="module">
-    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
     const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";   // <- deine URL
     const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";                 // <- dein anon key
@@ -414,10 +482,9 @@
     );
     document.getElementById("closeAuth")?.addEventListener("click", () => authModal.close());
   </script>
-
   <!-- STECKBRIEF-LOGIK -->
   <script>
-    const BASE_FIELDS = [
+   const BASE_FIELDS = [
       { id: "leistungskurse", label: "Leistungskurse:", value: "Bio, Sport" },
       { id: "lieblingsfach", label: "Lieblingsfach:", value: "Bio, Sport" },
       { id: "hassfach", label: "Hassfach:", value: "alle anderen" },
@@ -610,69 +677,85 @@
       renderComments();
     });
 
-    // Entfernen (ohne save* – nur in dieser Sitzung)
+   // ============ EINZIGER CLICK-LISTENER FÜR ALLES (Remove + Fotos) ============
     document.addEventListener("click", (e) => {
-      const btn = e.target.closest(".remove"); if (!btn) return;
-      const type = btn.dataset.type;
-      if (type === "custom"){
-        const i = parseInt(btn.dataset.i, 10);
-        customFields.splice(i, 1);
-        renderFacts();
+      // 1. REMOVE BUTTONS (alle Typen)
+      const removeBtn = e.target.closest(".remove");
+      if (removeBtn) {
+        const type = removeBtn.dataset.type;
+
+        if (type === "base") {
+          deletedBase.add(removeBtn.dataset.id);
+          renderFacts();
+        }
+        else if (type === "custom") {
+          const i = parseInt(removeBtn.dataset.i, 10);
+          if (!isNaN(i)) {
+            customFields.splice(i, 1);
+            renderFacts();
+          }
+        }
+        else if (type === "comment") {
+          deletedComments.add(removeBtn.dataset.id);
+          renderComments();
+        }
+        else if (type === "custom-comment") {
+          const i = parseInt(removeBtn.dataset.i, 10);
+          if (!isNaN(i)) {
+            customComments.splice(i, 1);
+            renderComments();
+          }
+        }
+        else if (type === "mainphoto") {
+          const id = removeBtn.dataset.id; // "current" oder "child"
+          const label = document.getElementById(`photo-${id}`);
+          const input = document.getElementById(`file-${id}`);
+          if (label) {
+            label.style.display = "none";        // Foto verstecken
+            setPhoto(label, null);
+          }
+          if (input) input.value = "";
+          removeBtn.style.display = "none";       // × verstecken
+        }
+        return; // verhindert Weiterverarbeitung
       }
-      if (type === "base"){
-        deletedBase.add(btn.dataset.id);
-        renderFacts();
-      }
-      if (type === "comment"){
-        deletedComments.add(btn.dataset.id);
-        renderComments();
-      }
-      if (type === "custom-comment"){
-        const i = parseInt(btn.dataset.i, 10);
-        customComments.splice(i, 1);
-        renderComments();
+
+      // 2. TINYBTN → Bild auswählen
+      const tiny = e.target.closest(".tinybtn");
+if (tiny?.dataset?.action === "select") {
+  const target = tiny.dataset.target;
+  if (!target) return;
+  const input = document.getElementById(`file-${target}`);
+  input?.click();  // nur klicken, wenn es existiert
+}
+
+      // 3. DIREKT AUF FOTO KLICKEN → Datei öffnen
+      const ph = e.target.closest(".ph");
+      if (ph && !e.target.closest(".tinybtn")) {
+        const input = ph.querySelector("input[type='file']");
+        if (input) input.click();
       }
     });
 
-    // Foto-Upload
+    // ============ DATEI-UPLOADS (change-Events) ============
     const currentLabel = document.getElementById('photo-current');
     const childLabel = document.getElementById('photo-child');
     const inputCurrent = document.getElementById('file-current');
     const inputChild = document.getElementById('file-child');
 
-    factsEl.addEventListener('click', (e) => {
-      const label = e.target.closest('.ph');
-      if (label && !e.target.closest('.tinybtn')) {
-        label.querySelector('input[type="file"]').click();
-      }
-    });
+    if (inputCurrent) inputCurrent.addEventListener('change', () => handleFile(inputCurrent, null, currentLabel));
+    if (inputChild) inputChild.addEventListener('change', () => handleFile(inputChild, null, childLabel));
 
-    currentLabel.addEventListener('click', (e) => { if (!e.target.closest('.tinybtn')) inputCurrent.click(); });
-    childLabel.addEventListener('click', (e) => { if (!e.target.closest('.tinybtn')) inputChild.click(); });
-
-    inputCurrent.addEventListener('change', () => handleFile(inputCurrent, IMG_KEY_CURRENT, currentLabel));
-    inputChild.addEventListener('change', () => handleFile(inputChild, IMG_KEY_CHILD, childLabel));
-
+    // Extra-Fotos (aus BASE_FIELDS)
     BASE_FIELDS.forEach(f => {
       if (f.type === "photo") {
         const input = document.getElementById(`file-${f.id}`);
         const label = document.getElementById(`photo-${f.id}`);
-        if (input) input.addEventListener('change', () => handleFile(input, getImgKey(f.id), label));
+        if (input && label) {
+          input.addEventListener('change', () => handleFile(input, null, label));
+        }
       }
     });
-
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.tinybtn'); if (!btn) return;
-      const action = btn.dataset.action;
-      const target = btn.dataset.target;
-      let key, node, inp;
-      if (target === 'current') { key = IMG_KEY_CURRENT; node = currentLabel; inp = inputCurrent; }
-      else if (target === 'child') { key = IMG_KEY_CHILD; node = childLabel; inp = inputChild; }
-      else { key = getImgKey(target); node = document.getElementById(`photo-${target}`); inp = document.getElementById(`file-${target}`); }
-      if (!node || !inp) return;
-      if (action === 'select') inp.click();
-      if (action === 'clear') { localStorage.removeItem(key); setPhoto(node, null); }
-    });
   </script>
-</body>
+ </body>
 </html>
