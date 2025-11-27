@@ -347,26 +347,36 @@
 
     <!-- Login / Registrieren Modal -->
     <dialog id="authModal">
-      <form id="authForm" method="dialog">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <strong style="font-size:18px">Einloggen / Registrieren</strong>
-          <button type="button" id="closeAuth"
-                  style="background:#eee;border:none;border-radius:8px;padding:6px 10px">✕</button>
-        </div>
-        <p style="margin:8px 0 12px;color:#333">
-          E-Mail eingeben – wir senden dir einen Magic-Link.
-        </p>
-        <label>
-          E-Mail
-          <input name="email" type="email" required placeholder="du@example.com">
-        </label>
-        <button type="submit"
-                style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;">
-          Magic-Link senden
-        </button>
-        <div id="authMessage"></div>
-      </form>
-    </dialog>
+  <form id="authForm" method="dialog">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <strong style="font-size:18px">Einloggen / Registrieren</strong>
+      <button type="button" id="closeAuth"
+              style="background:#eee;border:none;border-radius:8px;padding:6px 10px">✕</button>
+    </div>
+    <p style="margin:8px 0 12px;color:#333">
+      E-Mail und Username eingeben – wir senden dir einen Magic-Link.
+    </p>
+
+    <!-- E-Mail -->
+    <label>
+      E-Mail
+      <input name="email" type="email" required placeholder="du@example.com">
+    </label>
+
+    <!-- 👇 NEU: Username-Feld -->
+    <label>
+      Username
+      <input name="display_name" type="text" required placeholder="z.B. Mulan">
+    </label>
+
+    <button type="submit"
+            style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;">
+      Magic-Link senden
+    </button>
+    <div id="authMessage"></div>
+  </form>
+</dialog>
+
   </header>
 
   <div class="container">
