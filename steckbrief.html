@@ -1,481 +1,655 @@
-
 <!DOCTYPE html>
 <html lang="de">
- <head>
+<head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>
-   Steckbrief – Vorschau | DigitABI
-  </title>
+  <title>Steckbrief – Vorschau | DigitABI</title>
   <style>
-   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
-  :root{
-    --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8;
-    --ink:#151527; --muted:rgba(0,0,0,.62); --vio:#BEB3FF; --vio-dark:#9e90ff;
-    --link:rgba(255,255,255,.9);
-  }
-  *{box-sizing:border-box}
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+    :root {
+      --grad-left: #FA565D;
+      --grad-mid: #C45CAD;
+      --grad-right: #9052F8;
+      --ink: #151527;
+      --muted: rgba(0, 0, 0, .62);
+      --vio: #BEB3FF;
+      --vio-dark: #9e90ff;
+      --link: rgba(255, 255, 255, .9);
+    }
 
-  /* ==================== FIX: FLÜSSIGER GRADIENT ==================== */
-  html {
-    min-height: 100%;
-    height: 100%;
-    background: linear-gradient(100deg, var(--grad-left) 0%, var(--grad-mid) 50%, var(--grad-right) 100%) fixed no-repeat;
-    background-size: cover;
-    background-position: center;
-  }
+    * {
+      box-sizing: border-box
+    }
 
-  body {
-    margin: 0;
-    font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
-    color: #fff;
-    background: transparent;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  /* ==================== ENDE FIX ==================== */
+    /* ==================== FIX: FLÜSSIGER GRADIENT ==================== */
+    html {
+      min-height: 100%;
+      height: 100%;
+      background: linear-gradient(100deg, var(--grad-left) 0%, var(--grad-mid) 50%, var(--grad-right) 100%) fixed no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
 
-  .container{max-width:1180px;margin:0 auto;padding:32px 24px;flex:1;display:flex;flex-direction:column}
-  .nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-  .nav .left,.nav .right{display:flex;gap:18px;align-items:center}
-  .brand{font-weight:800; letter-spacing:.02em;color:#fff}
-  .smallcaps{text-transform:uppercase; letter-spacing:.08em; font-weight:600}
-  .nav a{color:rgba(255,255,255,.88);text-decoration:none; font-weight:600}
-  .nav a:hover{text-decoration:underline}
-  h3.section{margin:22px 0 8px; text-align:center; text-decoration:underline; font-weight:700}
+    body {
+      margin: 0;
+      font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
+      color: #fff;
+      background: transparent;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-  .comment{margin-top:14px}
-  .frame{
-    background:#f6f6f8; border:3px solid #6c50ff; border-radius:8px;
-    padding:28px 24px; max-width:860px; margin:16px auto; position:relative;
-    box-shadow:0 8px 30px rgba(17,16,50,.18);
-  }
-  .frame h2{ text-align:center; margin:0; line-height:1.35; color:#1f1f2f; }
-  .frame h2 .line2{font-weight:800}
-  .sheet{ margin-top:18px; background:#f6f6f8; border:1px solid #b6a8ff; border-radius:10px; padding:24px 22px; }
+    /* ==================== ENDE FIX ==================== */
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column
+    }
 
-  .photos{display:grid; grid-template-columns: 240px 1fr 240px; gap:24px; align-items:start; margin-top:6px}
-  .ph{
-    position:relative;
-    height:160px; border-radius:10px;
-    background:var(--vio);
-    display:flex; align-items:center; justify-content:center; font-weight:700; color:#3b2f77;
-    overflow:hidden; width:100%;
-  }
-  .ph[data-has-img="true"]{
-    background-size:cover;
-    background-position:center;
-    color:transparent;
-  }
-  .ph input[type="file"]{ display:none; }
-  .ph .overlay{
-    position:absolute; left:8px; bottom:8px;
-    display:flex; gap:6px;
-  }
-  .tinybtn{
-    font:inherit; font-weight:700; padding:6px 8px; border-radius:10px; cursor:pointer;
-    border:2px solid #cfd2ff; background:#fff; color:#1b1b2f; font-size:12px;
-  }
-  .tinybtn.primary{ border-color:#2e1df7; background:#eae7ff; color:#2e1df7 }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px
+    }
 
-  .name{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    height:160px;
-    padding-top:0;
-  }
-  .name .big{font-size:20px; font-weight:700; letter-spacing:.02em; color:#111; text-align:center}
-  .name .date{font-size:12.5px; color:#333}
+    .nav .left,
+    .nav .right {
+      display: flex;
+      gap: 18px;
+      align-items: center
+    }
 
-  .facts{margin-top:18px; display:grid; grid-template-columns:1fr; gap:10px}
-  .row{display:flex; gap:10px; align-items:baseline}
-  .label{color:#333; font-weight:600; flex:0 0 240px; }
-  .value{color:#111; flex:1}
-  .muted{color:var(--muted); font-weight:600}
-  .spacer{height:10px}
+    .brand {
+      font-weight: 800;
+      letter-spacing: .02em;
+      color: #fff
+    }
 
-  .photos-extra { grid-column: 1 / -1; margin: 16px 0; display: flex; gap:20px; }
-  .photo-row { flex:1; display: flex; align-items: center; gap:10px; margin:0; }
+    .smallcaps {
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 600
+    }
 
-  .custombar{
-    display:flex; gap:8px; align-items:center; justify-content:flex-start;
-    margin-top:8px; margin-bottom:4px;
-  }
-  .microbtn{
-    font:inherit; font-weight:700; padding:6px 10px; border-radius:10px; cursor:pointer;
-    border:2px solid #cfd2ff; background:#fff; color:#1b1b2f;
-  }
-  .microbtn.primary{ border-color:#2e1df7; background:#eae7ff; color:#2e1df7 }
-  .customform{ display:none; gap:8px; grid-template-columns:240px 1fr auto; align-items:center; margin:8px 0 2px }
-  .customform input{
-    width:100%; padding:8px 10px; border:1px solid #ddd; border-radius:10px; font-family:inherit;
-  }
-  .remove{
-    border:0; background:transparent; color:#777; cursor:pointer; font-weight:800; font-size:18px;
-    padding:0; margin:0; position:static; flex:none;
-  }
-  /* Bestehende Regel erweitern – gilt jetzt auch für die Foto-x-Buttons */
-.remove:hover,
-.remove[data-type="mainphoto"]:hover {
-  color: #c00 !important;   /* helles Rot, wie bei allen anderen x-Buttons */
-}
-  .show{ display:grid !important; }
+    .nav a {
+      color: rgba(255, 255, 255, .88);
+      text-decoration: none;
+      font-weight: 600
+    }
 
-  .next{
-    display:inline-flex; align-items:center; justify-content:center;
-    padding:10px 16px; font-weight:700; border-radius:12px;
-    border:2px solid #2e1df7; background:#eae7ff; text-decoration:none; color:#2e1df7;
-    position:absolute; right:18px; bottom:14px;
-  }
-  .next:hover{background:#dcd6ff}
+    .nav a:hover {
+      text-decoration: underline
+    }
 
-  footer.footerlinks{display:flex; gap:16px; justify-content:center; margin-top:22px}
-  footer.footerlinks a{color:#fff; text-decoration:none; font-weight:600}
-  footer.footerlinks a:hover{text-decoration:underline}
+    h3.section {
+      margin: 22px 0 8px;
+      text-align: center;
+      text-decoration: underline;
+      font-weight: 700
+    }
 
-  .sheet > h3.section {
-    color: #111 !important;
-    margin: 28px 0 12px;
-  }
+    .comment {
+      margin-top: 14px
+    }
 
-  /* ===== TOPNAV + LOGIN-DIALOG (wie Startseite/Abirechner) ===== */
-  .topnav{
-    position:relative;
-    display:flex;
-    align-items:center;
-    height:48px;
-    padding:0 12px;
-    font-weight:700;
-    letter-spacing:.04em;
-    color:#fff;
-    font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif;
-  }
-  .topnav .logo-link{
-    display:flex;
-    align-items:center;
-    height:100%;
-    margin-right:20px;
-    text-decoration:none;
-  }
-  .topnav .nav-logo{
-    height:36px;
-    width:auto;
-    object-fit:contain;
-  }
-  .topnav .nav-links{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:28px;
-    flex:1;
-  }
-  .topnav .nav-links a{
-    color:var(--link);
-    text-decoration:none;
-    white-space:nowrap;
-  }
-  .topnav .nav-links a:hover{ text-decoration:underline; }
+    .frame {
+      background: #f6f6f8;
+      border: 3px solid #6c50ff;
+      border-radius: 8px;
+      padding: 28px 24px;
+      max-width: 860px;
+      margin: 16px auto;
+      position: relative;
+      box-shadow: 0 8px 30px rgba(17, 16, 50, .18);
+    }
 
-  .topnav .authbox{
-    position:absolute;
-    right:12px;
-    top:50%;
-    transform:translateY(-50%);
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
-  .topnav .btn{
-    padding:7px 10px;
-    border-radius:10px;
-    border:2px solid rgba(255,255,255,.9);
-    background:transparent;
-    color:#fff;
-    font-weight:800;
-    cursor:pointer;
-    font-size:13px;
-  }
-  .topnav .btn:hover{ background:rgba(255,255,255,.15); }
-  #userEmail{ color:#fff; font-weight:700; font-size:14px; }
+    .frame h2 {
+      text-align: center;
+      margin: 0;
+      line-height: 1.35;
+      color: #1f1f2f;
+    }
 
-  [data-requires-auth]{ display:none; }
-  [data-requires-anon]{ display:inline-flex; }
+    .frame h2 .line2 {
+      font-weight: 800
+    }
 
-  dialog{
-    border:none;
-    border-radius:16px;
-    padding:0;
-    width:min(420px,92vw);
-    background:#fff;
-    color:#111;
-    box-shadow:0 25px 80px rgba(0,0,0,.5);
-  }
-  dialog::backdrop{
-    background:rgba(0,0,0,.45);
-    backdrop-filter:blur(3px);
-  }
-  dialog form{
-    padding:26px 22px;
-    font-family:inherit;
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-  }
-  dialog label{
-    display:grid;
-    gap:6px;
-    margin-bottom:12px;
-    font-weight:600;
-    color:#222;
-  }
-  dialog input{
-    padding:10px 12px;
-    border-radius:8px;
-    border:1px solid #ccc;
-    font:inherit;
-  }
-  dialog button[type="submit"]{
-    padding:10px 14px;
-    border-radius:10px;
-    border:2px solid #2e1df7;
-    background:#eae7ff;
-    color:#2e1df7;
-    font-weight:700;
-    cursor:pointer;
-  }
-  #authMessage{ margin-top:10px; color:#333; font-weight:600; }
+    .sheet {
+      margin-top: 18px;
+      background: #f6f6f8;
+      border: 1px solid #b6a8ff;
+      border-radius: 10px;
+      padding: 24px 22px;
+    }
+
+    .photos {
+      display: grid;
+      grid-template-columns: 240px 1fr 240px;
+      gap: 24px;
+      align-items: start;
+      margin-top: 6px
+    }
+
+    .ph {
+      position: relative;
+      height: 160px;
+      border-radius: 10px;
+      background: var(--vio);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #3b2f77;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .ph[data-has-img="true"] {
+      background-size: cover;
+      background-position: center;
+      color: transparent;
+    }
+
+    .ph input[type="file"] {
+      display: none;
+    }
+
+    .ph .overlay {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      display: flex;
+      gap: 6px;
+    }
+
+    .tinybtn {
+      font: inherit;
+      font-weight: 700;
+      padding: 6px 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 2px solid #cfd2ff;
+      background: #fff;
+      color: #1b1b2f;
+      font-size: 12px;
+    }
+
+    .tinybtn.primary {
+      border-color: #2e1df7;
+      background: #eae7ff;
+      color: #2e1df7
+    }
+
+    .name {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 160px;
+      padding-top: 0;
+    }
+
+    .name .big {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      color: #111;
+      text-align: center
+    }
+
+    .name .date {
+      font-size: 12.5px;
+      color: #333
+    }
+
+    .facts {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: baseline
+    }
+
+    .label {
+      color: #333;
+      font-weight: 600;
+      flex: 0 0 240px;
+    }
+
+    .value {
+      color: #111;
+      flex: 1
+    }
+
+    .muted {
+      color: var(--muted);
+      font-weight: 600
+    }
+
+    .spacer {
+      height: 10px
+    }
+
+    .photos-extra {
+      grid-column: 1 / -1;
+      margin: 16px 0;
+      display: flex;
+      gap: 20px;
+    }
+
+    .photo-row {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+    }
+
+    .custombar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-start;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+
+    .microbtn {
+      font: inherit;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 2px solid #cfd2ff;
+      background: #fff;
+      color: #1b1b2f;
+    }
+
+    .microbtn.primary {
+      border-color: #2e1df7;
+      background: #eae7ff;
+      color: #2e1df7
+    }
+
+    .customform {
+      display: none;
+      gap: 8px;
+      grid-template-columns: 240px 1fr auto;
+      align-items: center;
+      margin: 8px 0 2px
+    }
+
+    .customform input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-family: inherit;
+    }
+
+    .remove {
+      border: 0;
+      background: transparent;
+      color: #777;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 18px;
+      padding: 0;
+      margin: 0;
+      position: static;
+      flex: none;
+    }
+
+    /* Einheitlicher Stil für ALLE Foto-x-Buttons (Haupt + Extra) */
+    .remove[data-type="mainphoto"],
+    .remove[data-type="base"][data-id$="-photo"] {  /* Ziel: ids wie "fantasie-photo", "meme-photo" */
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        margin: 0;
+        border-radius: 0;
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.88);  /* Weiß, leicht transparent */
+        font-weight: 800;
+        font-size: 18px;
+        cursor: pointer;
+        z-index: 10;
+        transition: color 0.2s ease;
+    }
+
+    /* Hover: Rot für alle x-Buttons (einheitlich) */
+    .remove:hover {
+        color: #c00 !important;
+    }
+
+    .show {
+      display: grid !important;
+    }
+
+    .next {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      font-weight: 700;
+      border-radius: 12px;
+      border: 2px solid #2e1df7;
+      background: #eae7ff;
+      text-decoration: none;
+      color: #2e1df7;
+      position: absolute;
+      right: 18px;
+      bottom: 14px;
+    }
+
+    .next:hover {
+      background: #dcd6ff
+    }
+
+    footer.footerlinks {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 22px
+    }
+
+    footer.footerlinks a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600
+    }
+
+    footer.footerlinks a:hover {
+      text-decoration: underline
+    }
+
+    .sheet>h3.section {
+      color: #111 !important;
+      margin: 28px 0 12px;
+    }
+
+    /* ===== TOPNAV + LOGIN-DIALOG (wie Startseite/Abirechner) ===== */
+    .topnav {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 48px;
+      padding: 0 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: #fff;
+      font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    .topnav .logo-link {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      margin-right: 20px;
+      text-decoration: none;
+    }
+
+    .topnav .nav-logo {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .topnav .nav-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 28px;
+      flex: 1;
+    }
+
+    .topnav .nav-links a {
+      color: var(--link);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .topnav .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .topnav .authbox {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topnav .btn {
+      padding: 7px 10px;
+      border-radius: 10px;
+      border: 2px solid rgba(255, 255, 255, .9);
+      background: transparent;
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .topnav .btn:hover {
+      background: rgba(255, 255, 255, .15);
+    }
+
+    #userEmail {
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    [data-requires-auth] {
+      display: none;
+    }
+
+    [data-requires-anon] {
+      display: inline-flex;
+    }
+
+    dialog {
+      border: none;
+      border-radius: 16px;
+      padding: 0;
+      width: min(420px, 92vw);
+      background: #fff;
+      color: #111;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, .5);
+    }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, .45);
+      backdrop-filter: blur(3px);
+    }
+
+    dialog form {
+      padding: 26px 22px;
+      font-family: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    dialog label {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      color: #222;
+    }
+
+    dialog input {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font: inherit;
+    }
+
+    dialog button[type="submit"] {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 2px solid #2e1df7;
+      background: #eae7ff;
+      color: #2e1df7;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    #authMessage {
+      margin-top: 10px;
+      color: #333;
+      font-weight: 600;
+    }
   </style>
- </head>
- <body>
+</head>
+<body>
   <!-- HEADER MIT NAV + LOGIN -->
   <header>
-   <nav aria-label="Hauptnavigation" class="topnav">
-    <a aria-label="DigitABI Startseite" class="logo-link" href="index.html">
-     <img alt="" class="nav-logo" onerror="this.src='assets/logo-digitabi.png'; this.onerror=null;" src="assets/place-holder.png"/>
-    </a>
-    <div class="nav-links">
-     <a href="index.html">
-      Startseite
-     </a>
-     <a href="abirechner.html">
-      Abibuch-Creator
-     </a>
-     <a href="steckbrief.html">
-      Abibuch-Editor
-     </a>
-     <a href="index.html#mottos">
-      Motto-Ideen
-     </a>
-     <a href="ueber-uns.html">
-      Über Uns
-     </a>
-     <a data-requires-auth="" href="konto.html">
-      Mein Konto
-     </a>
-    </div>
-    <div class="authbox">
-     <span data-requires-auth="" id="userEmail">
-     </span>
-     <button class="btn" data-requires-auth="" id="logoutBtn">
-      Logout
-     </button>
-     <button class="btn" data-action="open-auth" data-requires-anon="">
-      Login / Registrieren
-     </button>
-    </div>
-   </nav>
-   <!-- Login / Registrieren Modal -->
-  <dialog id="authModal">
-  <form id="authForm" method="dialog">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-      <strong style="font-size:18px">Einloggen / Registrieren</strong>
-      <button type="button" id="closeAuth"
-              style="background:#eee;border:none;border-radius:8px;padding:6px 10px">✕</button>
-    </div>
-    <p style="margin:8px 0 12px;color:#333">
-      E-Mail und Username eingeben – wir senden dir einen Magic-Link.
-    </p>
-
-    <!-- E-Mail -->
-    <label>
-      E-Mail
-      <input name="email" type="email" required placeholder="du@example.com">
-    </label>
-
-    <!-- 👇 NEU: Username-Feld -->
-    <label>
-      Username
-      <input name="display_name" type="text" required placeholder="z.B. Mulan">
-    </label>
-
-    <button type="submit"
-            style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;">
-      Magic-Link senden
-    </button>
-    <div id="authMessage"></div>
-  </form>
-</dialog>
-
+    <nav aria-label="Hauptnavigation" class="topnav">
+      <a aria-label="DigitABI Startseite" class="logo-link" href="index.html">
+        <img alt="" class="nav-logo" onerror="this.src='assets/logo-digitabi.png'; this.onerror=null;" src="assets/place-holder.png"/>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Startseite</a>
+        <a href="abirechner.html">Abibuch-Creator</a>
+        <a href="steckbrief.html">Abibuch-Editor</a>
+        <a href="index.html#mottos">Motto-Ideen</a>
+        <a href="ueber-uns.html">Über Uns</a>
+        <a data-requires-auth="" href="konto.html">Mein Konto</a>
+      </div>
+      <div class="authbox">
+        <span data-requires-auth="" id="userEmail"></span>
+        <button class="btn" data-requires-auth="" id="logoutBtn">Logout</button>
+        <button class="btn" data-action="open-auth" data-requires-anon="">Login / Registrieren</button>
+      </div>
+    </nav>
+    <!-- Login / Registrieren Modal -->
+    <dialog id="authModal">
+      <form id="authForm" method="dialog">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <strong style="font-size:18px">Einloggen / Registrieren</strong>
+          <button type="button" id="closeAuth" style="background:#eee;border:none;border-radius:8px;padding:6px 10px">✕</button>
+        </div>
+        <p style="margin:8px 0 12px;color:#333">E-Mail und Username eingeben – wir senden dir einen Magic-Link.</p>
+        <!-- E-Mail -->
+        <label>
+          E-Mail
+          <input name="email" type="email" required placeholder="du@example.com">
+        </label>
+        <!-- 👇 NEU: Username-Feld -->
+        <label>
+          Username
+          <input name="display_name" type="text" required placeholder="z.B. Mulan">
+        </label>
+        <button type="submit" style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;">
+          Magic-Link senden
+        </button>
+        <div id="authMessage"></div>
+      </form>
+    </dialog>
   </header>
   <div class="container">
-   <div class="frame">
-    <h2 class="smallcaps">
-     Vorschau unseres Abibuch-Editors
-     <br/>
-     <span class="line2">
-      –
-      <br/>
-      so könnte dein Abibuch aussehen:
-     </span>
-    </h2>
-    <div class="sheet">
-     <div class="photos">
-      <!-- AKTUELLES FOTO -->
-      <div style="position:relative">
-       <button class="remove" data-id="current" data-type="mainphoto" style="position: absolute;
-    top: 4px;       /* besser in Ecke */
-    right: 4px;     /* rechts oben */
-    width: 24px;
-    height: 24px;
-    padding: 0;
-    margin: 0;
-    border-radius: 0; /* kein Kreis */
-    background: transparent;
-    border: none;
-    color: white;
-    font-weight: 800;
-    font-size: 18px;
-    cursor: pointer;
-    z-index: 10;
-    transition: color 0.2s ease;">
-        x
-       </button>
-       <label class="ph" data-has-img="false" id="photo-current">
-        <input accept="image/*" id="file-current" type="file"/>
-        <span>
-         AKTUELLES FOTO
-        </span>
-        <div class="overlay">
-         <button class="tinybtn primary" data-action="select" data-target="current" type="button">
-          Bild wählen
-         </button>
-        </div>
-       </label>
-      </div>
-      <div class="name">
-       <div class="big">
-        Mulan
+    <div class="frame">
+      <h2 class="smallcaps">
+        Vorschau unseres Abibuch-Editors
         <br/>
-        Mustermann
-       </div>
-       <div class="date">
-        31.02.2008
-       </div>
-      </div>
-      <!-- KINDERBILD -->
-      <div style="position:relative">
-       <button class="remove" data-id="child" data-type="mainphoto" style="position: absolute;
-    top: 4px;       /* besser in Ecke */
-    right: 4px;     /* rechts oben */
-    width: 24px;
-    height: 24px;
-    padding: 0;
-    margin: 0;
-    border-radius: 0; /* kein Kreis */
-    background: transparent;
-    border: none;
-    color: white;
-    font-weight: 800;
-    font-size: 18px;
-    cursor: pointer;
-    z-index: 10;
-    transition: color 0.2s ease;
-}">
-        x
-       </button>
-       <label class="ph" data-has-img="false" id="photo-child">
-        <input accept="image/*" id="file-child" type="file"/>
-        <span>
-         KINDERBILD
+        <span class="line2">
+          –
+          <br/>
+          so könnte dein Abibuch aussehen:
         </span>
-        <div class="overlay">
-         <button class="tinybtn primary" data-action="select" data-target="child" type="button">
-          Bild wählen
-         </button>
+      </h2>
+      <div class="sheet">
+        <div class="photos">
+          <!-- AKTUELLES FOTO -->
+          <div style="position:relative">
+            <button class="remove" data-id="current" data-type="mainphoto">x</button>
+            <label class="ph" data-has-img="false" id="photo-current">
+              <input accept="image/*" id="file-current" type="file"/>
+              <span>AKTUELLES FOTO</span>
+              <div class="overlay">
+                <button class="tinybtn primary" data-action="select" data-target="current" type="button">Bild wählen</button>
+              </div>
+            </label>
+          </div>
+          <div class="name">
+            <div class="big">Mulan<br/>Mustermann</div>
+            <div class="date">31.02.2008</div>
+          </div>
+          <!-- KINDERBILD -->
+          <div style="position:relative">
+            <button class="remove" data-id="child" data-type="mainphoto">x</button>
+            <label class="ph" data-has-img="false" id="photo-child">
+              <input accept="image/*" id="file-child" type="file"/>
+              <span>KINDERBILD</span>
+              <div class="overlay">
+                <button class="tinybtn primary" data-action="select" data-target="child" type="button">Bild wählen</button>
+              </div>
+            </label>
+          </div>
         </div>
-       </label>
+        <!-- Faktenliste -->
+        <div class="facts" id="facts">
+          <!-- per JS -->
+        </div>
+        <!-- Editorleiste für FAKTEN -->
+        <div class="custombar">
+          <button class="microbtn primary" id="toggleCustom">+ Eigenes Feld</button>
+          <div class="customform" id="customForm">
+            <input id="cfLabel" placeholder="Feldtitel (z. B. Lieblingsessen)" type="text"/>
+            <input id="cfValue" placeholder="Inhalt (z. B. Pizza)" type="text"/>
+            <button class="microbtn primary" id="cfAdd">Hinzufügen</button>
+          </div>
+        </div>
+        <h3 class="section"><br/>Mitschüler Kommentare</h3>
+        <div class="comments" id="comments">
+          <!-- per JS -->
+        </div>
+        <!-- Editorleiste für KOMMENTARE -->
+        <div class="custombar" id="custombar-comments">
+          <button class="microbtn primary" id="toggleCustomComments">+ Eigenes Feld</button>
+          <div class="customform" id="customFormComments">
+            <input id="cfLabelComments" placeholder="Feldtitel (z. B. Lieblingsessen)" type="text"/>
+            <input id="cfValueComments" placeholder="Inhalt (z. B. Pizza)" type="text"/>
+            <button class="microbtn primary" id="cfAddComments">Hinzufügen</button>
+          </div>
+        </div>
       </div>
-     </div>
-     <!-- Faktenliste -->
-     <div class="facts" id="facts">
-      <!-- per JS -->
-     </div>
-     <!-- Editorleiste für FAKTEN -->
-     <div class="custombar">
-      <button class="microbtn primary" id="toggleCustom">
-       + Eigenes Feld
-      </button>
-      <div class="customform" id="customForm">
-       <input id="cfLabel" placeholder="Feldtitel (z. B. Lieblingsessen)" type="text"/>
-       <input id="cfValue" placeholder="Inhalt (z. B. Pizza)" type="text"/>
-       <button class="microbtn primary" id="cfAdd">
-        Hinzufügen
-       </button>
-      </div>
-     </div>
-     <h3 class="section">
-      <br/>
-      Mitschüler Kommentare
-     </h3>
-     <div class="comments" id="comments">
-      <!-- per JS -->
-     </div>
-     <!-- Editorleiste für KOMMENTARE -->
-     <div class="custombar" id="custombar-comments">
-      <button class="microbtn primary" id="toggleCustomComments">
-       + Eigenes Feld
-      </button>
-      <div class="customform" id="customFormComments">
-       <input id="cfLabelComments" placeholder="Feldtitel (z. B. Lieblingsessen)" type="text"/>
-       <input id="cfValueComments" placeholder="Inhalt (z. B. Pizza)" type="text"/>
-       <button class="microbtn primary" id="cfAddComments">
-        Hinzufügen
-       </button>
-      </div>
-     </div>
     </div>
-   </div>
-   <footer class="footerlinks">
-    <a href="kontakt.html">
-     Kontakt
-    </a>
-    <a href="impressum.html">
-     Impressum
-    </a>
-    <a href="nutzungsbedingungen.html">
-     Nutzungsbedingungen
-    </a>
-    <a href="datenschutz.html">
-     Datenschutz
-    </a>
-    <a href="rechtliche-hinweise.html">
-     rechtliche Hinweise
-    </a>
-   </footer>
+    <footer class="footerlinks">
+      <a href="kontakt.html">Kontakt</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="rechtliche-hinweise.html">rechtliche Hinweise</a>
+    </footer>
   </div>
   <!-- SUPABASE AUTH (gleich wie auf index/abirechner) -->
   <script type="module">
-   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-    const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";   // <- deine URL
-    const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";                 // <- dein anon key
-
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+    const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co"; // <- deine URL
+    const SUPABASE_ANON_KEY = "YOUR-ANON-KEY"; // <- dein anon key
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const authModal = document.getElementById("authModal");
-
     async function loadProfileName(session){
       if(!session?.user) return "";
       const { data } = await supabase
@@ -485,30 +659,25 @@
         .maybeSingle();
       return data?.display_name || session.user.email;
     }
-
     async function updateAuthUI(session){
       const isLoggedIn = !!session?.user;
       document.querySelectorAll("[data-requires-auth]")
         .forEach(el => el.style.display = isLoggedIn ? "" : "none");
       document.querySelectorAll("[data-requires-anon]")
         .forEach(el => el.style.display = isLoggedIn ? "none" : "");
-
       const span = document.getElementById("userEmail");
       if(span) span.textContent = isLoggedIn ? await loadProfileName(session) : "";
     }
-
     // Initialstatus
     const { data: init } = await supabase.auth.getSession();
     await updateAuthUI(init.session);
     supabase.auth.onAuthStateChange((_e, session) => updateAuthUI(session));
-
     // Login
     async function signInWithEmail(e){
       e.preventDefault();
       const msg = document.getElementById("authMessage");
       const email = e.currentTarget.querySelector('input[name="email"]').value.trim();
       if(!email){ msg.textContent = "Bitte E-Mail eingeben."; return; }
-
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: { emailRedirectTo: window.location.origin }
@@ -516,7 +685,6 @@
       msg.textContent = error ? ("Fehler: " + error.message)
                               : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
     }
-
     document.getElementById("authForm")?.addEventListener("submit", signInWithEmail);
     document.getElementById("logoutBtn")?.addEventListener("click", () => supabase.auth.signOut());
     document.querySelectorAll("[data-action='open-auth']").forEach(btn =>
@@ -526,7 +694,7 @@
   </script>
   <!-- STECKBRIEF-LOGIK -->
   <script>
-   const BASE_FIELDS = [
+    const BASE_FIELDS = [
       { id: "leistungskurse", label: "Leistungskurse:", value: "Bio, Sport" },
       { id: "lieblingsfach", label: "Lieblingsfach:", value: "Bio, Sport" },
       { id: "hassfach", label: "Hassfach:", value: "alle anderen" },
@@ -553,23 +721,19 @@
       { id: "autobiografie", label: "Titel meiner Autobiografie:", value: "es kann nur besser werden!" },
       { id: "abschluss", label: "Das möchte ich abschließend noch sagen:", value: "vielen Dank für die schöne Zeit und auf nimmer Wiedersehen" }
     ];
-
     const COMMENT_FIELDS = [
       { id: "comment1", label: "Beschreibe die Person in einem Wort:", value: "witzig, nett, überdreht, faul, bildhübsch, verpeilt, frech" },
       { id: "comment2", label: "Da sehe ich die Person in 10 Jahren:", value: "glücklich, am Strand mit Villa, reich, mit dem heißesten Partner" },
       { id: "comment3", label: "Das will ich dir noch mit auf den Weg geben:", value: "viel Glück bei allem was du machst, ohne dich wäre die Schule nur halb so witzig gewesen, danke" }
     ];
-
     // Sitzungslokale Daten (keine Speicherung über reload)
     let customFields = [];
     let customComments = [];
     let deletedBase = new Set();
     let deletedComments = new Set();
-
     const IMG_KEY_CURRENT = "digitabiPhotoCurrentV1";
     const IMG_KEY_CHILD = "digitabiPhotoChildV1";
     function getImgKey(id) { return `digitabiPhoto_${id}V1`; }
-
     function setPhoto(el, dataUrl){
       if (!el) return;
       if (dataUrl){
@@ -580,7 +744,6 @@
         el.setAttribute("data-has-img", "false");
       }
     }
-
     function loadImages(){
       // explizit alles leeren
       setPhoto(document.getElementById('photo-current'), null);
@@ -592,7 +755,6 @@
         }
       });
     }
-
     function handleFile(inputEl, key, targetEl){
       const file = inputEl.files?.[0];
       if(!file) return;
@@ -603,19 +765,16 @@
       };
       reader.readAsDataURL(file);
     }
-
     const factsEl = document.getElementById("facts");
     const commentsEl = document.getElementById("comments");
-
     function rowBaseHTML(f){
       return `<div class="row"><button class="remove" data-type="base" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
     }
-
     function rowPhotoHTML(f) {
       const photoId = `photo-${f.id}`;
       const fileId = `file-${f.id}`;
       return `
-        <div class="photo-row">
+        <div class="photo-row" style="position: relative;">  <!-- Wrapper für absolute × -->
           <button class="remove" data-type="base" data-id="${f.id}">x</button>
           <label class="ph" id="${photoId}" data-has-img="false">
             <input type="file" id="${fileId}" accept="image/*">
@@ -626,11 +785,9 @@
           </label>
         </div>`;
     }
-
     function rowCustomHTML(f, i){
       return `<div class="row"><button class="remove" data-type="custom" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
     }
-
     function renderFacts(){
       let html = "", inPhotos = false;
       for (const f of BASE_FIELDS){
@@ -648,15 +805,12 @@
       customFields.forEach((f,i) => html += rowCustomHTML(f,i));
       factsEl.innerHTML = html;
     }
-
     function rowCommentHTML(f){
       return `<div class="comment"><div class="row"><button class="remove" data-type="comment" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
     }
-
     function rowCustomCommentHTML(f, i){
       return `<div class="comment"><div class="row"><button class="remove" data-type="custom-comment" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
     }
-
     function renderComments(){
       let html = "";
       for (const f of COMMENT_FIELDS){
@@ -666,24 +820,20 @@
       customComments.forEach((f,i) => html += rowCustomCommentHTML(f,i));
       commentsEl.innerHTML = html;
     }
-
     renderFacts();
     renderComments();
     loadImages();
-
     // FAKTEN: + Eigenes Feld
     const toggleBtn = document.getElementById("toggleCustom");
     const formBox = document.getElementById("customForm");
     const addBtn = document.getElementById("cfAdd");
     const inLabel = document.getElementById("cfLabel");
     const inValue = document.getElementById("cfValue");
-
     toggleBtn.addEventListener("click", () => {
       toggleBtn.style.display = 'none';
       formBox.classList.add("show");
       inLabel.focus();
     });
-
     addBtn.addEventListener("click", () => {
       const label = inLabel.value.trim();
       const value = inValue.value.trim();
@@ -694,20 +844,17 @@
       toggleBtn.style.display = 'block';
       renderFacts();
     });
-
     // KOMMENTARE: + Eigenes Feld
     const toggleBtnComments = document.getElementById("toggleCustomComments");
     const formBoxComments = document.getElementById("customFormComments");
     const addBtnComments = document.getElementById("cfAddComments");
     const inLabelComments = document.getElementById("cfLabelComments");
     const inValueComments = document.getElementById("cfValueComments");
-
     toggleBtnComments.addEventListener("click", () => {
       toggleBtnComments.style.display = 'none';
       formBoxComments.classList.add("show");
       inLabelComments.focus();
     });
-
     addBtnComments.addEventListener("click", () => {
       const label = inLabelComments.value.trim();
       const value = inValueComments.value.trim();
@@ -718,59 +865,63 @@
       toggleBtnComments.style.display = 'block';
       renderComments();
     });
-
-   // ============ EINZIGER CLICK-LISTENER FÜR ALLES (Remove + Fotos) ============
+    // ============ EINZIGER CLICK-LISTENER FÜR ALLES (Remove + Fotos) ============
     document.addEventListener("click", (e) => {
       // 1. REMOVE BUTTONS (alle Typen)
       const removeBtn = e.target.closest(".remove");
       if (removeBtn) {
         const type = removeBtn.dataset.type;
-
         if (type === "base") {
-          deletedBase.add(removeBtn.dataset.id);
-          renderFacts();
-        }
-        else if (type === "custom") {
+          const id = removeBtn.dataset.id;
+          if (id.endsWith("-photo")) {  // Extra-Fotos behandeln wie mainphoto
+            const label = document.getElementById(`photo-${id}`);
+            const input = document.getElementById(`file-${id}`);
+            if (label) {
+              label.style.display = "none";  // Foto verstecken
+              setPhoto(label, null);
+            }
+            if (input) input.value = "";
+            removeBtn.style.display = "none";  // × verstecken
+          } else {
+            deletedBase.add(id);  // Normale Textfelder
+            renderFacts();
+          }
+        } else if (type === "custom") {
           const i = parseInt(removeBtn.dataset.i, 10);
           if (!isNaN(i)) {
             customFields.splice(i, 1);
             renderFacts();
           }
-        }
-        else if (type === "comment") {
+        } else if (type === "comment") {
           deletedComments.add(removeBtn.dataset.id);
           renderComments();
-        }
-        else if (type === "custom-comment") {
+        } else if (type === "custom-comment") {
           const i = parseInt(removeBtn.dataset.i, 10);
           if (!isNaN(i)) {
             customComments.splice(i, 1);
             renderComments();
           }
-        }
-        else if (type === "mainphoto") {
+        } else if (type === "mainphoto") {
           const id = removeBtn.dataset.id; // "current" oder "child"
           const label = document.getElementById(`photo-${id}`);
           const input = document.getElementById(`file-${id}`);
           if (label) {
-            label.style.display = "none";        // Foto verstecken
+            label.style.display = "none"; // Foto verstecken
             setPhoto(label, null);
           }
           if (input) input.value = "";
-          removeBtn.style.display = "none";       // × verstecken
+          removeBtn.style.display = "none"; // × verstecken
         }
         return; // verhindert Weiterverarbeitung
       }
-
       // 2. TINYBTN → Bild auswählen
       const tiny = e.target.closest(".tinybtn");
-if (tiny?.dataset?.action === "select") {
-  const target = tiny.dataset.target;
-  if (!target) return;
-  const input = document.getElementById(`file-${target}`);
-  input?.click();  // nur klicken, wenn es existiert
-}
-
+      if (tiny?.dataset?.action === "select") {
+        const target = tiny.dataset.target;
+        if (!target) return;
+        const input = document.getElementById(`file-${target}`);
+        input?.click(); // nur klicken, wenn es existiert
+      }
       // 3. DIREKT AUF FOTO KLICKEN → Datei öffnen
       const ph = e.target.closest(".ph");
       if (ph && !e.target.closest(".tinybtn")) {
@@ -778,16 +929,13 @@ if (tiny?.dataset?.action === "select") {
         if (input) input.click();
       }
     });
-
     // ============ DATEI-UPLOADS (change-Events) ============
     const currentLabel = document.getElementById('photo-current');
     const childLabel = document.getElementById('photo-child');
     const inputCurrent = document.getElementById('file-current');
     const inputChild = document.getElementById('file-child');
-
     if (inputCurrent) inputCurrent.addEventListener('change', () => handleFile(inputCurrent, null, currentLabel));
     if (inputChild) inputChild.addEventListener('change', () => handleFile(inputChild, null, childLabel));
-
     // Extra-Fotos (aus BASE_FIELDS)
     BASE_FIELDS.forEach(f => {
       if (f.type === "photo") {
@@ -799,5 +947,5 @@ if (tiny?.dataset?.action === "select") {
       }
     });
   </script>
- </body>
+</body>
 </html>
