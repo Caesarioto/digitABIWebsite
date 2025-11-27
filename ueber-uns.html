@@ -6,180 +6,535 @@
   <title>Über uns – DigitABI</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
-    :root{ 
-      --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8; --ink:#151527; 
-      --paper:#f6f6f8; --card:#ffffff; --border:#6c50ff; --accent:#2e1df7; --accent-weak:#eae7ff; 
+    :root{
+      --grad-left:#FA565D; --grad-mid:#C45CAD; --grad-right:#9052F8; --ink:#151527;
+      --paper:#f6f6f8; --card:#ffffff; --border:#6c50ff; --accent:#2e1df7; --accent-weak:#eae7ff;
+      --link:rgba(255,255,255,.9);
     }
     *{box-sizing:border-box}
     /* ==================== FIX: FLÜSSIGER GRADIENT ==================== */
-    html { 
-      min-height: 100%; height: 100%; 
-      background: linear-gradient(100deg, var(--grad-left) 0%, var(--grad-mid) 50%, var(--grad-right) 100%) fixed no-repeat; 
-      background-size: cover; background-position: center; 
+    html {
+      min-height: 100%; height: 100%;
+      background: linear-gradient(100deg, var(--grad-left) 0%, var(--grad-mid) 50%, var(--grad-right) 100%) fixed no-repeat;
+      background-size: cover; background-position: center;
     }
-    body { 
-      margin: 0; font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif; color: #fff; 
-      background: transparent; /* WICHTIG: body ist jetzt transparent */ 
-      min-height: 100vh; display: flex; flex-direction: column; 
+    body {
+      margin: 0;
+      font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
+      color: #fff;
+      background: transparent;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     /* ==================== ENDE FIX ==================== */
-    .container { max-width: 1180px; /* ← das ist der entscheidende Wert */ margin: 0 auto; padding: 32px 24px; flex: 1; display: flex; flex-direction: column;}
-    h1{margin:0 0 14px;font-size:clamp(28px,3.8vw,40px);font-weight:800; text-align:center; letter-spacing:.06em;text-decoration:underline;text-underline-offset:6px;color:#fff}
-    .wrap{max-width:75ch;margin:0 auto 26px;line-height:1.8;color:#fff} 
-    .block{margin:10px 0 20px;line-height:1.9;font-size:clamp(16px,2.1vw,22px);color:#fff} 
-    .brand{font-weight:700} 
-    .contact-title{text-decoration:underline;text-underline-offset:4px;margin-top:10px} 
-    /* Sections */ 
-    .section{margin-top:22px} 
-    .section h2{margin:0 0 10px; font-size:clamp(18px,2.4vw,22px); font-weight:800; text-align:center; text-decoration:underline; text-underline-offset:6px} 
-    .kernsatz{font-size:clamp(18px,2.6vw,22px); font-weight:800; text-align:center; margin:6px 0 12px} 
-    .sub{ margin: 10px 0 20px; line-height: 1.9; font-size: clamp(16px, 2.1vw, 28px); /* ← das ist die entscheidende Zeile */ color: #fff;text-align:center;} 
-    .points{display:grid; gap:10px; max-width:900px; margin:14px auto 0} 
-    .point{ background:rgba(255,255,255,0.15); border-radius:12px; padding:14px 16px; line-height:1.6; color:#fff; backdrop-filter: blur(4px); } 
-    /* Team */ 
-    .team{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:12px} 
-    @media (max-width:820px){ .team{grid-template-columns:1fr} } 
-    .member{ background:rgba(255,255,255,0.15); border-radius:12px; padding:16px; display:grid; grid-template-columns:56px 1fr; gap:12px; align-items:start; color:#fff; backdrop-filter: blur(4px); } 
-    .avatar{ width:56px; height:56px; border-radius:50%; background:var(--accent-weak); border:2px solid var(--accent); display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--accent); } 
-    .name{font-weight:800} 
-    .role{color:#eee; font-size:14px; margin-top:2px} 
-    .desc{color:#fff; font-size:14.5px; line-height:1.55; margin-top:6px} 
-    /* Kontakt */ 
-    .contact{ margin-top:18px; text-align:center; background:rgba(255,255,255,0.15); border-radius:12px; padding:16px; color:#fff; backdrop-filter: blur(4px); } 
-    .pill{ display:inline-block; background:var(--accent-weak); color:var(--accent); border:2px solid var(--accent); padding:8px 12px; border-radius:999px; font-weight:800; text-decoration:none; } 
-    /* Footer */ 
-    .footerlinks{display:flex; gap:28px; justify-content:center; color:#fff; font-weight:600; letter-spacing:.06em; padding:26px 0 18px; flex-wrap:wrap} 
-    .footerlinks a{color:#fff; text-decoration:none} 
-    .footerlinks a:hover{text-decoration:underline}
-    .lead { 
-      margin: 12px 0; /* ← ANGEPASST: Symmetrischer Margin für gleiche Abstände oben/unten */ 
-      line-height: 1.9; 
-      font-size: clamp(16px, 2.1vw, 22px); /* ← das ist die entscheidende Zeile */ 
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    h1{
+      margin:0 0 14px;
+      font-size:clamp(28px,3.8vw,40px);
+      font-weight:800;
+      text-align:center;
+      letter-spacing:.06em;
+      text-decoration:underline;
+      text-underline-offset:6px;
+      color:#fff
+    }
+    .wrap{max-width:75ch;margin:0 auto 26px;line-height:1.8;color:#fff}
+    .block{margin:10px 0 20px;line-height:1.9;font-size:clamp(16px,2.1vw,22px);color:#fff}
+    .brand{font-weight:700}
+    .contact-title{text-decoration:underline;text-underline-offset:4px;margin-top:10px}
+    /* Sections */
+    .section{margin-top:22px}
+    .section h2{
+      margin:0 0 10px;
+      font-size:clamp(18px,2.4vw,22px);
+      font-weight:800;
+      text-align:center;
+      text-decoration:underline;
+      text-underline-offset:6px
+    }
+    .kernsatz{
+      font-size:clamp(18px,2.6vw,22px);
+      font-weight:800;
+      text-align:center;
+      margin:6px 0 12px
+    }
+    .sub{
+      margin: 0px 0 20px;
+      line-height: 1.9;
+      font-size: clamp(16px, 2.1vw, 28px);
       color: #fff;
-    } 
+      text-align:center;
+    }
+    .points{display:grid; gap:10px; max-width:900px; margin:14px auto 0}
+    .point{
+      background:rgba(255,255,255,0.15);
+      border-radius:12px;
+      padding:14px 16px;
+      line-height:1.6;
+      color:#fff;
+      backdrop-filter: blur(4px);
+    }
+    /* Team */
+    .team{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:12px}
+    @media (max-width:820px){ .team{grid-template-columns:1fr} }
+    .member{
+      background:rgba(255,255,255,0.15);
+      border-radius:12px;
+      padding:16px;
+      display:grid;
+      grid-template-columns:56px 1fr;
+      gap:12px;
+      align-items:start;
+      color:#fff;
+      backdrop-filter: blur(4px);
+    }
+    .avatar{
+      width:56px;
+      height:56px;
+      border-radius:50%;
+      background:var(--accent-weak);
+      border:2px solid var(--accent);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      color:var(--accent);
+    }
+    .name{font-weight:800}
+    .role{color:#eee; font-size:14px; margin-top:2px}
+    .desc{color:#fff; font-size:14.5px; line-height:1.55; margin-top:6px}
+    /* Kontakt */
+    .contact{
+      margin-top:18px;
+      text-align:center;
+      background:rgba(255,255,255,0.15);
+      border-radius:12px;
+      padding:16px;
+      color:#fff;
+      backdrop-filter: blur(4px);
+    }
+    .pill{
+      display:inline-block;
+      background:var(--accent-weak);
+      color:var(--accent);
+      border:2px solid var(--accent);
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:800;
+      text-decoration:none;
+    }
+    /* Footer */
+    .footerlinks{
+      display:flex;
+      gap:28px;
+      justify-content:center;
+      color:#fff;
+      font-weight:600;
+      letter-spacing:.06em;
+      padding:26px 0 18px;
+      flex-wrap:wrap
+    }
+    .footerlinks a{color:#fff; text-decoration:none}
+    .footerlinks a:hover{text-decoration:underline}
+    .lead {
+      margin: 12px 0;
+      line-height: 1.9;
+      font-size: clamp(16px, 2.1vw, 22px);
+      color: #fff;
+    }
     .section .lead { text-align: center !important;}
-    .center { text-align: center } 
-    .smallcaps { letter-spacing: .18em } 
-    .hr { width: 36px; height: 4px; background: #fff; border-radius: 999px; margin: 6px auto 18px; opacity: .9; } 
-    /* hero */ 
-    .hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: center; padding: 56px 0 24px; } 
-    .hero h1 { font-size: clamp(44px, 6vw, 72px); margin: 0 0 4px; font-weight: 800; letter-spacing: .02em; } 
-    .hero h2 { font-weight: 300; letter-spacing: .12em; font-size: clamp(18px, 2.5vw, 28px); margin: 0 0 24px; } 
-    .hero .sub { color: var(--muted); line-height: 1.7; max-width: 46ch; } 
-    .hero .cta { display: inline-block; padding: 14px 22px; background: #E6E8FF; color: #2d2d7a; border: 2px solid #2d2d7a; border-radius: 999px; font-weight: 700; letter-spacing: .06em; box-shadow: 0 6px 0 rgba(45, 45, 122, .25); text-decoration: none; } 
-    .hero .cta:hover { transform: translateY(-1px); } 
-    .illus { width: 100%; aspect-ratio: 4/3; background: transparent url('assets/hero-placeholder.png') center/contain no-repeat; border-radius: 12px; } 
-    /* responsive */ 
-    @media (max-width: 900px) { .hero { grid-template-columns: 1fr } } 
-    .hero .copy { text-align: center; margin: 0 auto; } 
-    .hero .sub { margin: 0 auto; } 
-    .hero .cta { margin: 0 auto; } 
-    .bullets.features { display: flex; justify-content: center; } 
-    .bullets.features > div { text-align: center; max-width: 58ch; } 
+    .center { text-align: center }
+    .smallcaps { letter-spacing: .18em }
+    .hr {
+      width: 36px; height: 4px;
+      background: #fff;
+      border-radius: 999px;
+      margin: 6px auto 18px;
+      opacity: .9;
+    }
+    /* hero – (hier nur Basisstyles, wird auf dieser Seite kaum genutzt) */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 32px;
+      align-items: center;
+      padding: 56px 0 24px;
+    }
+    .hero h1 {
+      font-size: clamp(44px, 6vw, 72px);
+      margin: 0 0 4px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .hero h2 {
+      font-weight: 300;
+      letter-spacing: .12em;
+      font-size: clamp(18px, 2.5vw, 28px);
+      margin: 0 0 24px;
+    }
+    .hero .sub { color: var(--muted); line-height: 1.7; max-width: 46ch; }
+    .hero .cta {
+      display: inline-block;
+      padding: 14px 22px;
+      background: #E6E8FF;
+      color: #2d2d7a;
+      border: 2px solid #2d2d7a;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      box-shadow: 0 6px 0 rgba(45, 45, 122, .25);
+      text-decoration: none;
+    }
+    .hero .cta:hover { transform: translateY(-1px); }
+    .illus {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: transparent url('assets/hero-placeholder.png') center/contain no-repeat;
+      border-radius: 12px;
+    }
+    @media (max-width: 900px) { .hero { grid-template-columns: 1fr } }
+    .hero .copy { text-align: center; margin: 0 auto; }
+    .hero .sub { margin: 0 auto; }
+    .hero .cta { margin: 0 auto; }
+    .bullets.features { display: flex; justify-content: center; }
+    .bullets.features > div { text-align: center; max-width: 58ch; }
     /* Mehr Abstand zwischen Überschrift und Team-Karten */
-    .section h2 + .team { margin-top: 28px !important; /* ← hier kannst du 24px – 36px nach Geschmack anpassen */}
-	.sub { 
-  margin: 0px 0 20px;   /* ← HIER GEÄNDERT */
-  line-height: 1.9; 
-  font-size: clamp(16px, 2.1vw, 28px); 
-  color: #fff;
-  text-align:center;
-}
+    .section h2 + .team { margin-top: 28px !important;}
+
+    /* ===== TOPNAV + LOGIN-DIALOG (wie auf den anderen Seiten) ===== */
+    .topnav{
+      position:relative;
+      display:flex;
+      align-items:center;
+      height:48px;
+      padding:0 12px;
+      font-weight:700;
+      letter-spacing:.04em;
+      color:#fff;
+      font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif;
+    }
+    .topnav .logo-link{
+      display:flex;
+      align-items:center;
+      height:100%;
+      margin-right:20px;
+      text-decoration:none;
+    }
+    .topnav .nav-logo{
+      height:36px;
+      width:auto;
+      object-fit:contain;
+    }
+    .topnav .nav-links{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:28px;
+      flex:1;
+    }
+    .topnav .nav-links a{
+      color:var(--link);
+      text-decoration:none;
+      white-space:nowrap;
+    }
+    .topnav .nav-links a:hover{ text-decoration:underline; }
+
+    .topnav .authbox{
+      position:absolute;
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .topnav .btn{
+      padding:7px 10px;
+      border-radius:10px;
+      border:2px solid rgba(255,255,255,.9);
+      background:transparent;
+      color:#fff;
+      font-weight:800;
+      cursor:pointer;
+      font-size:13px;
+    }
+    .topnav .btn:hover{ background:rgba(255,255,255,.15); }
+    #userEmail{ color:#fff; font-weight:700; font-size:14px; }
+
+    [data-requires-auth]{ display:none; }
+    [data-requires-anon]{ display:inline-flex; }
+
+    dialog{
+      border:none;
+      border-radius:16px;
+      padding:0;
+      width:min(420px,92vw);
+      background:#fff;
+      color:#111;
+      box-shadow:0 25px 80px rgba(0,0,0,.5);
+    }
+    dialog::backdrop{
+      background:rgba(0,0,0,.45);
+      backdrop-filter:blur(3px);
+    }
+    dialog form{
+      padding:26px 22px;
+      font-family:inherit;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    dialog label{
+      display:grid;
+      gap:6px;
+      margin-bottom:12px;
+      font-weight:600;
+      color:#222;
+    }
+    dialog input{
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid #ccc;
+      font:inherit;
+    }
+    dialog button[type="submit"]{
+      padding:10px 14px;
+      border-radius:10px;
+      border:2px solid #2e1df7;
+      background:#eae7ff;
+      color:#2e1df7;
+      font-weight:700;
+      cursor:pointer;
+    }
+    #authMessage{ margin-top:10px; color:#333; font-weight:600; }
   </style>
 </head>
-<body> 
-  <!-- Top-Leiste als IFRAME --> 
-  <iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
-  <!-- direkt UNTER dem <iframe src="topnav.html" ...> -->
-  <style> .topnav-embed.topnav-full{ position:fixed; inset:0; width:100vw; height:100vh; z-index:9999; background:transparent; border:0; }</style>
-  <script> 
-    (function(){ 
-      const iframe = document.querySelector('.topnav-embed'); 
-      window.addEventListener('message', (e)=>{ 
-        if (e.data?.type === 'TOPNAV_AUTH_OPEN') iframe.classList.add('topnav-full'); 
-        if (e.data?.type === 'TOPNAV_AUTH_CLOSE') iframe.classList.remove('topnav-full'); 
-      }); 
-    })();
-  </script> 
-  <div class="container"> 
-    <h1>Dafür steht DigitABI</h1> 
-    <div class="section"> 
-      <div class="sub"><strong>Dein Jahrgang. Deine Geschichten. Für immer.</strong></div> 
-      <!-- ANGEPASST: <br> entfernt, Text in zwei separate <p class="lead"> geteilt für gleiche Abstände -->
-      <p class="lead">Wir wollen verändern, wie Abschlussjahrgänge ihre Erinnerungen bewahren.</br>Eure Erlebnisse, digital und gedruckt – mit unserer Plattform für moderne Abibücher.</p>
-    
-      <!-- Deine Split-Blöcke (unverändert) --> 
-      <section class="features-split full-edge-split" style="margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 32px;"> 
-        <div style="flex: 1.2; min-width: 280px; text-align: center; align-self: center;"> 
-          <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 20px 24px; color: #fff;"> 
-            <h2 style="margin: 0; font-size: clamp(20px, 3.5vw, 28px); font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3);"> Was wir bieten: </h2> 
-            <h3 style="margin: 8px 0 0; font-size: clamp(18px, 3vw, 24px); font-weight: 700; color: #fff;"> Dein All-in-One für das perfekte Abibuch </h3> 
-          </div> 
-        </div> 
-        <div style="flex: 2.5; min-width: 320px;"> 
-          <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 24px 32px; color: #fff;"> 
-            <div class="smallcaps" style="display: grid; gap: 24px; font-size: clamp(15px, 2.2vw, 18px);"> 
-              <div>🖨️ <strong>Buch-Version:</strong> Professionell und schnell gedrucktes Buch, das du in der Hand halten kannst – frei gestaltbar und auf deinen Bedarf zugeschnitten.</div> 
-              <div>📱 <strong>Digitale Version:</strong> Als Einzige bieten wir eine interaktive Digitale-Version mit Multimedia-Elementen.</div> 
-              <div>🤝 <strong>Gemeinsames Erstellen:</strong> Alle füllen online ihre Steckbriefe aus, nehmen an Rankings teil oder laden Fotos und Videos hoch – einfache Zusammenarbeit ohne Chaos.</div> 
-              <div>🎨 <strong>Freie Gestaltung:</strong> Intuitives Tool, das sich an eure Wünsche anpasst – von Layout bis Inhalt habt ihr die richtige Mischung aus Unterstützung und Freiheit.</div> 
-            </div> 
-          </div> 
-        </div> 
-      </section> 
-      <section class="benefits-split" style="margin: 48px 0; display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: center; max-width: 1180px; margin-left: auto; margin-right: auto;"> 
-        <div style="flex: 2.5; min-width: 320px;"> 
-          <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 24px 28px; color: #fff;"> 
-            <div class="smallcaps" style="display: grid; gap: 16px; font-size: clamp(15px, 2.2vw, 18px);"> 
-              <div>🔗 <strong>Für immer verbunden:</strong> Bleibt mit Mitschülern in Kontakt – automatische Erinnerungen an Jubiläen und Klassentreffen.</div> 
-              <div>📈 <strong>Lebens-Updates:</strong> Teilt über die Jahre Neuigkeiten wie Studium, Job oder Familie – euer Abibuch wächst mit euch.</div> 
-              <div>🖼️ <strong>Mehr Inhalte:</strong> Unbegrenzt Bilder hochladen, ohne Platzprobleme.</div> 
-              <div>🎥 <strong>Videos integrieren:</strong> Fügt Highlights wie Abiball, Reden oder lustige Momente ein – lebendiger als je zuvor.</div> 
-              <div>🗣️ <strong>Sprachnachrichten:</strong> Persönliche Botschaften oder Sprachnotizen an Freunde – emotional und authentisch.</div> 
-              <div>🔒 <strong>Immer verfügbar:</strong> Kein Verlust mehr – sicherer Zugriff jederzeit, überall, DSGVO-konform und auf Servern in Deutschland.</div> 
-            </div> 
-          </div> 
-        </div> 
-        <div style="flex: 1.2; min-width: 280px; text-align: center; align-self: center;"> 
-          <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 20px 24px; color: #fff;"> 
-            <h2 style="margin: 0; font-size: clamp(20px, 3.5vw, 28px); font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3);"> Warum digital? </h2> 
-            <h3 style="margin: 8px 0 0; font-size: clamp(18px, 3vw, 24px); font-weight: 700; color: #fff;"> Mehr als nur ein Buch – eine lebendige Community </h3> 
-          </div> 
-        </div> 
-      </section> 
-      <div class="section"> 
-        <h2>Das sind eure Ansprechpartner</h2> 
-        <div class="team"> 
-          <div class="member"> 
-            <div class="avatar">J</div> 
-            <div> 
-              <div class="name"></br>Julius Wahl</div> 
-              <div class="role">Co-Founder &amp; Tech</div> 
-              <div class="desc"> Sorgt für die technische Umsetzung: Infrastruktur, benutzerfreundliche Anwendungen, Backups und DSGVO-konforme Datenhaltung. Macht die Technik zuverlässig — damit eure Erinnerungen sicher bleiben.</br></br>B.Sc. Wirtschaftsinformatik - tech. Uni Darmstadt </div> 
-            </div> 
-          </div> 
-          <div class="member"> 
-            <div class="avatar">M</div> 
-            <div> 
-              <div class="name"></br>Marco Ciocca</div> 
-              <div class="role">Co-Founder &amp; Product Management</div> 
-              <div class="desc"> Verantwortet das Produktmanagement — von der Feature-Priorisierung bis zum Editor. Macht das Erstellen eurer Erinnerung so einfach und qualitativ hochwertig, wie es euer Abibuch verdient hat.</br></br>B.Sc. Wirtschaftsingenieurwesen - tech. Uni Darmstadt </div> 
-            </div> 
-          </div> 
-        </div> 
-      </div> 
-      <div class="section contact"> 
-        <div style="font-weight:800; margin-bottom:8px">Kontakt</div> 
-        <a class="pill" href="mailto:team@digitabi.example">team@digitabi.example</a> 
-      </div> 
-      <footer class="footerlinks"> 
-        <a href="kontakt.html">Kontakt</a> 
-        <a href="impressum.html">Impressum</a> 
-        <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a> 
-        <a href="datenschutz.html">Datenschutz</a> 
-        <a href="rechtliche-hinweise.html">Rechtliche Hinweise</a> 
-      </footer> 
+<body>
+
+  <!-- HEADER MIT NAV + LOGIN -->
+  <header>
+    <nav class="topnav" aria-label="Hauptnavigation">
+      <a href="index.html" class="logo-link" aria-label="DigitABI Startseite">
+        <img src="assets/place-holder.png"
+             onerror="this.src='assets/logo-digitabi.png'; this.onerror=null;"
+             alt=""
+             class="nav-logo">
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html">Startseite</a>
+        <a href="abirechner.html">Abibuch-Creator</a>
+        <a href="steckbrief.html">Abibuch-Editor</a>
+        <a href="index.html#mottos">Motto-Ideen</a>
+        <a href="ueber-uns.html">Über Uns</a>
+        <a href="konto.html" data-requires-auth>Mein Konto</a>
+      </div>
+
+      <div class="authbox">
+        <span id="userEmail" data-requires-auth></span>
+        <button id="logoutBtn" class="btn" data-requires-auth>Logout</button>
+        <button class="btn" data-requires-anon data-action="open-auth">Login / Registrieren</button>
+      </div>
+    </nav>
+
+    <!-- Login / Registrieren Modal -->
+    <dialog id="authModal">
+      <form id="authForm" method="dialog">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <strong style="font-size:18px">Einloggen / Registrieren</strong>
+          <button type="button" id="closeAuth"
+                  style="background:#eee;border:none;border-radius:8px;padding:6px 10px">✕</button>
+        </div>
+        <p style="margin:8px 0 12px;color:#333">
+          E-Mail eingeben – wir senden dir einen Magic-Link.
+        </p>
+        <label>
+          E-Mail
+          <input name="email" type="email" required placeholder="du@example.com">
+        </label>
+        <button type="submit"
+                style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;">
+          Magic-Link senden
+        </button>
+        <div id="authMessage"></div>
+      </form>
+    </dialog>
+  </header>
+
+  <div class="container">
+    <h1>Dafür steht DigitABI</h1>
+
+    <div class="section">
+      <div class="sub"><strong>Dein Jahrgang. Deine Geschichten. Für immer.</strong></div>
+      <p class="lead">
+        Wir wollen verändern, wie Abschlussjahrgänge ihre Erinnerungen bewahren.
+        Eure Erlebnisse, digital und gedruckt – mit unserer Plattform für moderne Abibücher.
+      </p>
+
+      <!-- Split-Block 1 -->
+      <section class="features-split full-edge-split" style="margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 32px;">
+        <div style="flex: 1.2; min-width: 280px; text-align: center; align-self: center;">
+          <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 20px 24px; color: #fff;">
+            <h2 style="margin: 0; font-size: clamp(20px, 3.5vw, 28px); font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3);">
+              Was wir bieten:
+            </h2>
+            <h3 style="margin: 8px 0 0; font-size: clamp(18px, 3vw, 24px); font-weight: 700; color: #fff;">
+              Dein All-in-One für das perfekte Abibuch
+            </h3>
+          </div>
+        </div>
+        <div style="flex: 2.5; min-width: 320px;">
+          <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 24px 32px; color: #fff;">
+            <div class="smallcaps" style="display: grid; gap: 24px; font-size: clamp(15px, 2.2vw, 18px);">
+              <div>🖨️ <strong>Buch-Version:</strong> Professionell und schnell gedrucktes Buch, das du in der Hand halten kannst – frei gestaltbar und auf deinen Bedarf zugeschnitten.</div>
+              <div>📱 <strong>Digitale Version:</strong> Als Einzige bieten wir eine interaktive Digitale-Version mit Multimedia-Elementen.</div>
+              <div>🤝 <strong>Gemeinsames Erstellen:</strong> Alle füllen online ihre Steckbriefe aus, nehmen an Rankings teil oder laden Fotos und Videos hoch – einfache Zusammenarbeit ohne Chaos.</div>
+              <div>🎨 <strong>Freie Gestaltung:</strong> Intuitives Tool, das sich an eure Wünsche anpasst – von Layout bis Inhalt habt ihr die richtige Mischung aus Unterstützung und Freiheit.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Split-Block 2 -->
+      <section class="benefits-split" style="margin: 48px 0; display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: center; max-width: 1180px; margin-left: auto; margin-right: auto;">
+        <div style="flex: 2.5; min-width: 320px;">
+          <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 24px 28px; color: #fff;">
+            <div class="smallcaps" style="display: grid; gap: 16px; font-size: clamp(15px, 2.2vw, 18px);">
+              <div>🔗 <strong>Für immer verbunden:</strong> Bleibt mit Mitschülern in Kontakt – automatische Erinnerungen an Jubiläen und Klassentreffen.</div>
+              <div>📈 <strong>Lebens-Updates:</strong> Teilt über die Jahre Neuigkeiten wie Studium, Job oder Familie – euer Abibuch wächst mit euch.</div>
+              <div>🖼️ <strong>Mehr Inhalte:</strong> Unbegrenzt Bilder hochladen, ohne Platzprobleme.</div>
+              <div>🎥 <strong>Videos integrieren:</strong> Fügt Highlights wie Abiball, Reden oder lustige Momente ein – lebendiger als je zuvor.</div>
+              <div>🗣️ <strong>Sprachnachrichten:</strong> Persönliche Botschaften oder Sprachnotizen an Freunde – emotional und authentisch.</div>
+              <div>🔒 <strong>Immer verfügbar:</strong> Kein Verlust mehr – sicherer Zugriff jederzeit, überall, DSGVO-konform und auf Servern in Deutschland.</div>
+            </div>
+          </div>
+        </div>
+        <div style="flex: 1.2; min-width: 280px; text-align: center; align-self: center;">
+          <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border-radius: 16px; padding: 20px 24px; color: #fff;">
+            <h2 style="margin: 0; font-size: clamp(20px, 3.5vw, 28px); font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3);">
+              Warum digital?
+            </h2>
+            <h3 style="margin: 8px 0 0; font-size: clamp(18px, 3vw, 24px); font-weight: 700; color: #fff;">
+              Mehr als nur ein Buch – eine lebendige Community
+            </h3>
+          </div>
+        </div>
+      </section>
+
+      <!-- Team -->
+      <div class="section">
+        <h2>Das sind eure Ansprechpartner</h2>
+        <div class="team">
+          <div class="member">
+            <div class="avatar">J</div>
+            <div>
+              <div class="name"><br>Julius Wahl</div>
+              <div class="role">Co-Founder &amp; Tech</div>
+              <div class="desc">
+                Sorgt für die technische Umsetzung: Infrastruktur, benutzerfreundliche Anwendungen,
+                Backups und DSGVO-konforme Datenhaltung. Macht die Technik zuverlässig — damit eure
+                Erinnerungen sicher bleiben.<br><br>
+                B.Sc. Wirtschaftsinformatik – Technische Universität Darmstadt
+              </div>
+            </div>
+          </div>
+          <div class="member">
+            <div class="avatar">M</div>
+            <div>
+              <div class="name"><br>Marco Ciocca</div>
+              <div class="role">Co-Founder &amp; Product Management</div>
+              <div class="desc">
+                Verantwortet das Produktmanagement — von der Feature-Priorisierung bis zum Editor.
+                Macht das Erstellen eurer Erinnerungen so einfach und hochwertig, wie es euer Abibuch
+                verdient hat.<br><br>
+                B.Sc. Wirtschaftsingenieurwesen – Technische Universität Darmstadt
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kontakt -->
+      <div class="section contact">
+        <div style="font-weight:800; margin-bottom:8px">Kontakt</div>
+        <a class="pill" href="mailto:team@digitabi.example">team@digitabi.example</a>
+      </div>
+
+      <footer class="footerlinks">
+        <a href="kontakt.html">Kontakt</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="rechtliche-hinweise.html">Rechtliche Hinweise</a>
+      </footer>
     </div>
   </div>
+
+  <!-- SUPABASE AUTH -->
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";   // <- deine URL
+    const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";                 // <- dein anon key
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const authModal = document.getElementById("authModal");
+
+    async function loadProfileName(session){
+      if(!session?.user) return "";
+      const { data } = await supabase
+        .from("profiles")
+        .select("display_name")
+        .eq("id", session.user.id)
+        .maybeSingle();
+      return data?.display_name || session.user.email;
+    }
+
+    async function updateAuthUI(session){
+      const isLoggedIn = !!session?.user;
+      document.querySelectorAll("[data-requires-auth]")
+        .forEach(el => el.style.display = isLoggedIn ? "" : "none");
+      document.querySelectorAll("[data-requires-anon]")
+        .forEach(el => el.style.display = isLoggedIn ? "none" : "");
+
+      const span = document.getElementById("userEmail");
+      if(span) span.textContent = isLoggedIn ? await loadProfileName(session) : "";
+    }
+
+    // Initialstatus
+    const { data: init } = await supabase.auth.getSession();
+    await updateAuthUI(init.session);
+    supabase.auth.onAuthStateChange((_e, session) => updateAuthUI(session));
+
+    // Login
+    async function signInWithEmail(e){
+      e.preventDefault();
+      const msg = document.getElementById("authMessage");
+      const email = e.currentTarget.querySelector('input[name="email"]').value.trim();
+      if(!email){ msg.textContent = "Bitte E-Mail eingeben."; return; }
+
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.origin }
+      });
+      msg.textContent = error ? ("Fehler: " + error.message)
+                              : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
+    }
+
+    document.getElementById("authForm")?.addEventListener("submit", signInWithEmail);
+    document.getElementById("logoutBtn")?.addEventListener("click", () => supabase.auth.signOut());
+    document.querySelectorAll("[data-action='open-auth']").forEach(btn =>
+      btn.addEventListener("click", () => authModal.showModal())
+    );
+    document.getElementById("closeAuth")?.addEventListener("click", () => authModal.close());
+  </script>
 </body>
 </html>
