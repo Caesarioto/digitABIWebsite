@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -867,55 +866,50 @@
       toggleBtnComments.style.display = 'block';
       renderComments();
     });
-    // ============ EINZIGER CLICK-LISTENER FÜR ALLES (Remove + Fotos) ============
-    document.addEventListener("click", (e) => {
-      // 1. REMOVE BUTTONS (alle Typen)
-      const removeBtn = e.target.closest(".remove");
-      if (removeBtn) {
-        const type = removeBtn.dataset.type;
-        if (type === "base") {
-          const id = removeBtn.dataset.id;
-          if (id.endsWith("-photo")) {  // Extra-Fotos behandeln wie mainphoto
-            const label = document.getElementById(`photo-${id}`);
-            const input = document.getElementById(`file-${id}`);
-            if (label) {
-              label.style.display = "none";  // Foto verstecken
-              setPhoto(label, null);
-            }
-            if (input) input.value = "";
-            removeBtn.style.display = "none";  // × verstecken
-          } else {
-            deletedBase.add(id);  // Normale Textfelder
-            renderFacts();
-          }
-        } else if (type === "custom") {
-          const i = parseInt(removeBtn.dataset.i, 10);
-          if (!isNaN(i)) {
-            customFields.splice(i, 1);
-            renderFacts();
-          }
-        } else if (type === "comment") {
-          deletedComments.add(removeBtn.dataset.id);
-          renderComments();
-        } else if (type === "custom-comment") {
-          const i = parseInt(removeBtn.dataset.i, 10);
-          if (!isNaN(i)) {
-            customComments.splice(i, 1);
-            renderComments();
-          }
-        } else if (type === "mainphoto") {
-          const id = removeBtn.dataset.id; // "current" oder "child"
-          const label = document.getElementById(`photo-${id}`);
-          const input = document.getElementById(`file-${id}`);
-          if (label) {
-            label.style.display = "none"; // Foto verstecken
-            setPhoto(label, null);
-          }
-          if (input) input.value = "";
-          removeBtn.style.display = "none"; // × verstecken
-        }
-        return; // verhindert Weiterverarbeitung
+   // ============ EINZIGER CLICK-LISTENER FÜR ALLES (Remove + Fotos) ============
+document.addEventListener("click", (e) => {
+  const removeBtn = e.target.closest(".remove");
+  if (removeBtn) {
+    const type = removeBtn.dataset.type;
+
+    if (type === "base") {
+      const id = removeBtn.dataset.id;
+      deletedBase.add(id);   // ← Jetzt auch für fantasie-photo, meme-photo etc.
+      renderFacts();         // ← Neu rendern → gelöschte Felder bleiben weg
+    }
+    else if (type === "custom") {
+      const i = parseInt(removeBtn.dataset.i, 10);
+      if (!isNaN(i)) {
+        customFields.splice(i, 1);
+        renderFacts();
       }
+    }
+    else if (type === "comment") {
+      deletedComments.add(removeBtn.dataset.id);
+      renderComments();
+    }
+    else if (type === "custom-comment") {
+      const i = parseInt(removeBtn.dataset.i, 10);
+      if (!isNaN(i)) {
+        customComments.splice(i, 1);
+        renderComments();
+      }
+    }
+    else if (type === "mainphoto") {
+      // Nur die beiden Hauptfotos (current & child) bleiben per display:none
+      const id = removeBtn.dataset.id;
+      const label = document.getElementById(`photo-${id}`);
+      const input = document.getElementById(`file-${id}`);
+      if (label) {
+        label.style.display = "none";
+        setPhoto(label, null);
+      }
+      if (input) input.value = "";
+      removeBtn.style.display = "none";
+    }
+
+    return; // verhindert weitere Verarbeitung
+  }
       // 2. TINYBTN → Bild auswählen
       const tiny = e.target.closest(".tinybtn");
       if (tiny?.dataset?.action === "select") {
