@@ -696,100 +696,100 @@
     document.getElementById("closeAuth")?.addEventListener("click", () => authModal.close());
   </script>
   <!-- STECKBRIEF-LOGIK -->
-  <script>
-    const BASE_FIELDS = [
-      { id: "leistungskurse", label: "Leistungskurse:", value: "Bio, Sport" },
-      { id: "lieblingsfach", label: "Lieblingsfach:", value: "Bio, Sport" },
-      { id: "hassfach", label: "Hassfach:", value: "alle anderen" },
-      { id: "lieblingslehrer", label: "Lieblingslehrer:", value: "Frau Himmelmann" },
-      { id: "hasslehrer", label: "Hasslehrer:", value: "Herr Bock" },
-      { id: "sportart", label: "Meine Sportart:", value: "Pausenhofschlägerei" },
-      { id: "beschaeftigung", label: "Lieblingsbeschäftigung im Unterricht:", value: "Nase popeln" },
-      { id: "motivationslevel", label: "Motivationslevel in der Schule:", value: "unterirdisch, -2/10" },
-      { id: "drei-dinge", label: "3 Dinge, ohne die ich die Schule nicht überlebt hätte:", value: "Zigarettenpause, Handy, Freunde" },
-      { id: "als-lehrer", label: "Als Lehrer würde ich...", value: "den Beruf wechseln" },
-      { id: "rat-fuenft", label: "Fünft-Klässlern würde ich raten...", value: "lieber einen Hauptschulabschluss zu machen" },
-      { id: "bestes-erlebnis", label: "Bestes Schulerlebnis:", value: "eine Woche Hitzefrei in der zehnten Klasse" },
-      { id: "dreier-worte-head", label: "Die ersten 3 Worte die mir einfallen, wenn ich ... höre:", value: "" },
-      { id: "dreier-worte-schule", label: "Schule:", value: "boah ne ey" },
-      { id: "dreier-worte-freunde", label: "Freunde:", value: "Schabernack letzte Reihe" },
-      { id: "dreier-worte-alkohol", label: "Alkohol:", value: "gib die Flasche!" },
-      { type: "photo", id: "fantasie-photo", labelText: "SO SIEHT DIE SCHULE IN MEINER FANTASIE AUS" },
-      { type: "photo", id: "meme-photo", labelText: "DIESES MEME BESCHREIBT MEINE SCHULZEIT" },
-      { id: "mein-vorbild", label: "Mein Vorbild:", value: "Mia Khalifa" },
-      { id: "plan-nach-abi", label: "Plan nach dem Abi:", value: "erst mal chillen" },
-      { id: "mein-traumberuf", label: "Mein Traumberuf:", value: "OnlyFans-Model" },
-      { id: "in-zehn-jahren", label: "Da sehe ich mich in 10 Jahren:", value: "entspannt am Strand" },
-      { id: "lotto-gewinn", label: "Wenn ich im Lotto gewinne, würde ich:", value: "ein Haus auf Hawaii kaufen" },
-      { id: "autobiografie", label: "Titel meiner Autobiografie:", value: "es kann nur besser werden!" },
-      { id: "abschluss", label: "Das möchte ich abschließend noch sagen:", value: "vielen Dank für die schöne Zeit und auf nimmer Wiedersehen" }
-    ];
-    const COMMENT_FIELDS = [
-      { id: "comment1", label: "Beschreibe die Person in einem Wort:", value: "witzig, nett, überdreht, faul, bildhübsch, verpeilt, frech" },
-      { id: "comment2", label: "Da sehe ich die Person in 10 Jahren:", value: "glücklich, am Strand mit Villa, reich, mit dem heißesten Partner" },
-      { id: "comment3", label: "Das will ich dir noch mit auf den Weg geben:", value: "viel Glück bei allem was du machst, ohne dich wäre die Schule nur halb so witzig gewesen, danke" }
-    ];
-   // Sitzungslokale Daten (keine Speicherung über reload)
+<script>
+  const BASE_FIELDS = [
+    { id: "leistungskurse", label: "Leistungskurse:", value: "Bio, Sport" },
+    { id: "lieblingsfach", label: "Lieblingsfach:", value: "Bio, Sport" },
+    { id: "hassfach", label: "Hassfach:", value: "alle anderen" },
+    { id: "lieblingslehrer", label: "Lieblingslehrer:", value: "Frau Himmelmann" },
+    { id: "hasslehrer", label: "Hasslehrer:", value: "Herr Bock" },
+    { id: "sportart", label: "Meine Sportart:", value: "Pausenhofschlägerei" },
+    { id: "beschaeftigung", label: "Lieblingsbeschäftigung im Unterricht:", value: "Nase popeln" },
+    { id: "motivationslevel", label: "Motivationslevel in der Schule:", value: "unterirdisch, -2/10" },
+    { id: "drei-dinge", label: "3 Dinge, ohne die ich die Schule nicht überlebt hätte:", value: "Zigarettenpause, Handy, Freunde" },
+    { id: "als-lehrer", label: "Als Lehrer würde ich...", value: "den Beruf wechseln" },
+    { id: "rat-fuenft", label: "Fünft-Klässlern würde ich raten...", value: "lieber einen Hauptschulabschluss zu machen" },
+    { id: "bestes-erlebnis", label: "Bestes Schulerlebnis:", value: "eine Woche Hitzefrei in der zehnten Klasse" },
+    { id: "dreier-worte-head", label: "Die ersten 3 Worte die mir einfallen, wenn ich ... höre:", value: "" },
+    { id: "dreier-worte-schule", label: "Schule:", value: "boah ne ey" },
+    { id: "dreier-worte-freunde", label: "Freunde:", value: "Schabernack letzte Reihe" },
+    { id: "dreier-worte-alkohol", label: "Alkohol:", value: "gib die Flasche!" },
+    { type: "photo", id: "fantasie-photo", labelText: "SO SIEHT DIE SCHULE IN MEINER FANTASIE AUS" },
+    { type: "photo", id: "meme-photo", labelText: "DIESES MEME BESCHREIBT MEINE SCHULZEIT" },
+    { id: "mein-vorbild", label: "Mein Vorbild:", value: "Mia Khalifa" },
+    { id: "plan-nach-abi", label: "Plan nach dem Abi:", value: "erst mal chillen" },
+    { id: "mein-traumberuf", label: "Mein Traumberuf:", value: "OnlyFans-Model" },
+    { id: "in-zehn-jahren", label: "Da sehe ich mich in 10 Jahren:", value: "entspannt am Strand" },
+    { id: "lotto-gewinn", label: "Wenn ich im Lotto gewinne, würde ich:", value: "ein Haus auf Hawaii kaufen" },
+    { id: "autobiografie", label: "Titel meiner Autobiografie:", value: "es kann nur besser werden!" },
+    { id: "abschluss", label: "Das möchte ich abschließend noch sagen:", value: "vielen Dank für die schöne Zeit und auf nimmer Wiedersehen" }
+  ];
+
+  const COMMENT_FIELDS = [
+    { id: "comment1", label: "Beschreibe die Person in einem Wort:", value: "witzig, nett, überdreht, faul, bildhübsch, verpeilt, frech" },
+    { id: "comment2", label: "Da sehe ich die Person in 10 Jahren:", value: "glücklich, am Strand mit Villa, reich, mit dem heißesten Partner" },
+    { id: "comment3", label: "Das will ich dir noch mit auf den Weg geben:", value: "viel Glück bei allem was du machst, ohne dich wäre die Schule nur halb so witzig gewesen, danke" }
+  ];
+
+  // Zustände
   let customFields = [];
   let customComments = [];
   let deletedBase = new Set();
   let deletedComments = new Set();
-  const IMG_KEY_CURRENT = "digitabiPhotoCurrentV1";
-  const IMG_KEY_CHILD = "digitabiPhotoChildV1";
-  function getImgKey(id) { return `digitabiPhoto_${id}V1`; }
-  function setPhoto(el, dataUrl){
+
+  // WICHTIG: Hier speichern wir die Bilder der Extra-Fotos zwischen Renders
+  let photoData = {};   // z. B. { "fantasie-photo": "data:image/...", "meme-photo": "data:image/..." }
+
+  function setPhoto(el, dataUrl) {
     if (!el) return;
-    if (dataUrl){
+    if (dataUrl) {
       el.style.backgroundImage = `url('${dataUrl}')`;
       el.setAttribute("data-has-img", "true");
-    }else{
+    } else {
       el.style.backgroundImage = "none";
       el.setAttribute("data-has-img", "false");
     }
   }
-  function loadImages(){
-    // explizit alles leeren
-    setPhoto(document.getElementById('photo-current'), null);
-    setPhoto(document.getElementById('photo-child'), null);
-    BASE_FIELDS.forEach(f => {
-      if (f.type === "photo") {
-        const el = document.getElementById(`photo-${f.id}`);
-        if (el) setPhoto(el, null);
-      }
-    });
-  }
-  function handleFile(inputEl, key, targetEl){
+
+  function handleFile(inputEl, photoId, targetEl) {
     const file = inputEl.files?.[0];
-    if(!file) return;
+    if (!file) return;
     const reader = new FileReader();
     reader.onload = () => {
       const dataUrl = reader.result;
       setPhoto(targetEl, dataUrl);
+      photoData[photoId] = dataUrl;   // persistent merken
     };
     reader.readAsDataURL(file);
   }
-  // NEU: Funktion zum Anhängen der Upload-Listener (nach jedem Render aufrufen)
+
+  // Listener für die Extra-Foto-Inputs neu anbringen (nach jedem Render)
   function attachPhotoListeners() {
     BASE_FIELDS.forEach(f => {
       if (f.type === "photo") {
         const input = document.getElementById(`file-${f.id}`);
         const label = document.getElementById(`photo-${f.id}`);
         if (input && label) {
-          input.addEventListener('change', () => handleFile(input, null, label));
+          // alte Listener entfernen (verhindert Duplikate)
+          input.onchange = null;
+          input.addEventListener('change', () => handleFile(input, f.id, label));
         }
       }
     });
   }
+
   const factsEl = document.getElementById("facts");
   const commentsEl = document.getElementById("comments");
-  function rowBaseHTML(f){
+
+  function rowBaseHTML(f) {
     return `<div class="row"><button class="remove" data-type="base" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
   }
+
   function rowPhotoHTML(f) {
     const photoId = `photo-${f.id}`;
     const fileId = `file-${f.id}`;
     return `
-      <div class="photo-row" style="position: relative;"> <!-- Wrapper für absolute × -->
+      <div class="photo-row" style="position: relative;">
         <button class="remove" data-type="base" data-id="${f.id}">x</button>
         <label class="ph" id="${photoId}" data-has-img="false">
           <input type="file" id="${fileId}" accept="image/*">
@@ -800,13 +800,17 @@
         </label>
       </div>`;
   }
-  function rowCustomHTML(f, i){
+
+  function rowCustomHTML(f, i) {
     return `<div class="row"><button class="remove" data-type="custom" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
   }
-  function renderFacts(){
+
+  function renderFacts() {
     let html = "", inPhotos = false;
-    for (const f of BASE_FIELDS){
+
+    for (const f of BASE_FIELDS) {
       if (deletedBase.has(f.id)) continue;
+
       if (f.type === "photo") {
         if (!inPhotos) { html += '<div class="photos-extra">'; inPhotos = true; }
         html += rowPhotoHTML(f);
@@ -814,147 +818,156 @@
         if (inPhotos) { html += '</div>'; inPhotos = false; }
         html += rowBaseHTML(f);
       }
+
       if (f.id === "dreier-worte-head") html += `<div class="spacer"></div>`;
     }
     if (inPhotos) html += '</div>';
-    customFields.forEach((f,i) => html += rowCustomHTML(f,i));
+
+    customFields.forEach((f, i) => html += rowCustomHTML(f, i));
+
     factsEl.innerHTML = html;
-    attachPhotoListeners();  // ← NEU: Listener nach Render anhängen
+
+    // 1. Listener neu anbringen
+    attachPhotoListeners();
+
+    // 2. Gespeicherte Bilder wieder einsetzen
+    BASE_FIELDS.forEach(f => {
+      if (f.type === "photo" && !deletedBase.has(f.id) && photoData[f.id]) {
+        const label = document.getElementById(`photo-${f.id}`);
+        if (label) setPhoto(label, photoData[f.id]);
+      }
+    });
   }
-  function rowCommentHTML(f){
+
+  function rowCommentHTML(f) {
     return `<div class="comment"><div class="row"><button class="remove" data-type="comment" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
   }
-  function rowCustomCommentHTML(f, i){
+
+  function rowCustomCommentHTML(f, i) {
     return `<div class="comment"><div class="row"><button class="remove" data-type="custom-comment" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
   }
-  function renderComments(){
+
+  function renderComments() {
     let html = "";
-    for (const f of COMMENT_FIELDS){
+    for (const f of COMMENT_FIELDS) {
       if (deletedComments.has(f.id)) continue;
       html += rowCommentHTML(f);
     }
-    customComments.forEach((f,i) => html += rowCustomCommentHTML(f,i));
+    customComments.forEach((f, i) => html += rowCustomCommentHTML(f, i));
     commentsEl.innerHTML = html;
   }
+
+  // Initiales Rendern
   renderFacts();
   renderComments();
-  loadImages();
-  // FAKTEN: + Eigenes Feld
+
+  // + Eigenes Feld (Fakten)
   const toggleBtn = document.getElementById("toggleCustom");
   const formBox = document.getElementById("customForm");
   const addBtn = document.getElementById("cfAdd");
   const inLabel = document.getElementById("cfLabel");
   const inValue = document.getElementById("cfValue");
+
   toggleBtn.addEventListener("click", () => {
     toggleBtn.style.display = 'none';
     formBox.classList.add("show");
     inLabel.focus();
   });
+
   addBtn.addEventListener("click", () => {
     const label = inLabel.value.trim();
     const value = inValue.value.trim();
-    if (!label || !value){ alert("Bitte Feldtitel und Inhalt eingeben."); return; }
+    if (!label || !value) { alert("Bitte Feldtitel und Inhalt eingeben."); return; }
     customFields.push({ label, value });
     inLabel.value = ""; inValue.value = "";
     formBox.classList.remove("show");
     toggleBtn.style.display = 'block';
     renderFacts();
   });
-  // KOMMENTARE: + Eigenes Feld
+
+  // + Eigenes Feld (Kommentare)
   const toggleBtnComments = document.getElementById("toggleCustomComments");
   const formBoxComments = document.getElementById("customFormComments");
   const addBtnComments = document.getElementById("cfAddComments");
   const inLabelComments = document.getElementById("cfLabelComments");
   const inValueComments = document.getElementById("cfValueComments");
+
   toggleBtnComments.addEventListener("click", () => {
     toggleBtnComments.style.display = 'none';
     formBoxComments.classList.add("show");
     inLabelComments.focus();
   });
+
   addBtnComments.addEventListener("click", () => {
     const label = inLabelComments.value.trim();
     const value = inValueComments.value.trim();
-    if (!label || !value){ alert("Bitte Feldtitel und Inhalt eingeben."); return; }
+    if (!label || !value) { alert("Bitte Feldtitel und Inhalt eingeben."); return; }
     customComments.push({ label, value });
     inLabelComments.value = ""; inValueComments.value = "";
     formBoxComments.classList.remove("show");
     toggleBtnComments.style.display = 'block';
     renderComments();
   });
- // ============ EINZIGER CLICK-LISTENER FÜR ALLES (Remove + Fotos) ============
-document.addEventListener("click", (e) => {
-  const removeBtn = e.target.closest(".remove");
-  if (removeBtn) {
-    const type = removeBtn.dataset.type;
-    if (type === "base") {
-      const id = removeBtn.dataset.id;
-      deletedBase.add(id); // ← Jetzt auch für fantasie-photo, meme-photo etc.
-      renderFacts(); // ← Neu rendern → gelöschte Felder bleiben weg
-    }
-    else if (type === "custom") {
-      const i = parseInt(removeBtn.dataset.i, 10);
-      if (!isNaN(i)) {
-        customFields.splice(i, 1);
+
+  // EINZIGER CLICK-LISTENER (Entfernen + Foto-Buttons)
+  document.addEventListener("click", (e) => {
+    const removeBtn = e.target.closest(".remove");
+    if (removeBtn) {
+      const type = removeBtn.dataset.type;
+
+      if (type === "base") {
+        const id = removeBtn.dataset.id;
+        deletedBase.add(id);
+        delete photoData[id];        // Bild auch aus Speicher löschen
         renderFacts();
       }
-    }
-    else if (type === "comment") {
-      deletedComments.add(removeBtn.dataset.id);
-      renderComments();
-    }
-    else if (type === "custom-comment") {
-      const i = parseInt(removeBtn.dataset.i, 10);
-      if (!isNaN(i)) {
-        customComments.splice(i, 1);
+      else if (type === "custom") {
+        const i = parseInt(removeBtn.dataset.i, 10);
+        if (!isNaN(i)) { customFields.splice(i, 1); renderFacts(); }
+      }
+      else if (type === "comment") {
+        deletedComments.add(removeBtn.dataset.id);
         renderComments();
       }
+      else if (type === "custom-comment") {
+        const i = parseInt(removeBtn.dataset.i, 10);
+        if (!isNaN(i)) { customComments.splice(i, 1); renderComments(); }
+      }
+      else if (type === "mainphoto") {
+        const id = removeBtn.dataset.id;
+        const label = document.getElementById(`photo-${id}`);
+        const input = document.getElementById(`file-${id}`);
+        if (label) { label.style.display = "none"; setPhoto(label, null); }
+        if (input) input.value = "";
+        removeBtn.style.display = "none";
+      }
+      return;
     }
-    else if (type === "mainphoto") {
-      // Nur die beiden Hauptfotos (current & child) bleiben per display:none
-      const id = removeBtn.dataset.id;
-      const label = document.getElementById(`photo-${id}`);
-      const input = document.getElementById(`file-${id}`);
-      if (label) {
-        label.style.display = "none";
-        setPhoto(label, null);
-      }
-      if (input) input.value = "";
-      removeBtn.style.display = "none";
+
+    // Tiny-Button → Datei auswählen
+    const tiny = e.target.closest(".tinybtn");
+    if (tiny?.dataset?.action === "select") {
+      const target = tiny.dataset.target;
+      const input = document.getElementById(`file-${target}`);
+      input?.click();
     }
-    return; // verhindert weitere Verarbeitung
-  }
-      // 2. TINYBTN → Bild auswählen
-      const tiny = e.target.closest(".tinybtn");
-      if (tiny?.dataset?.action === "select") {
-        const target = tiny.dataset.target;
-        if (!target) return;
-        const input = document.getElementById(`file-${target}`);
-        input?.click(); // nur klicken, wenn es existiert
-      }
-      // 3. DIREKT AUF FOTO KLICKEN → Datei öffnen
-      const ph = e.target.closest(".ph");
-      if (ph && !e.target.closest(".tinybtn")) {
-        const input = ph.querySelector("input[type='file']");
-        if (input) input.click();
-      }
-    });
-    // ============ DATEI-UPLOADS (change-Events) ============
-    const currentLabel = document.getElementById('photo-current');
-    const childLabel = document.getElementById('photo-child');
-    const inputCurrent = document.getElementById('file-current');
-    const inputChild = document.getElementById('file-child');
-    if (inputCurrent) inputCurrent.addEventListener('change', () => handleFile(inputCurrent, null, currentLabel));
-    if (inputChild) inputChild.addEventListener('change', () => handleFile(inputChild, null, childLabel));
-    // Extra-Fotos (aus BASE_FIELDS)
-    BASE_FIELDS.forEach(f => {
-      if (f.type === "photo") {
-        const input = document.getElementById(`file-${f.id}`);
-        const label = document.getElementById(`photo-${f.id}`);
-        if (input && label) {
-          input.addEventListener('change', () => handleFile(input, null, label));
-        }
-      }
-    });
-  </script>
+
+    // Direkt auf Foto klicken
+    const ph = e.target.closest(".ph");
+    if (ph && !e.target.closest(".tinybtn")) {
+      const input = ph.querySelector("input[type='file']");
+      if (input) input.click();
+    }
+  });
+
+  // Hauptfotos (current & child) – bleiben statisch
+  const currentLabel = document.getElementById('photo-current');
+  const childLabel = document.getElementById('photo-child');
+  const inputCurrent = document.getElementById('file-current');
+  const inputChild = document.getElementById('file-child');
+
+  if (inputCurrent) inputCurrent.addEventListener('change', () => handleFile(inputCurrent, "current", currentLabel));
+  if (inputChild) inputChild.addEventListener('change', () => handleFile(inputChild, "child", childLabel));
+</script>
 </body>
 </html>
