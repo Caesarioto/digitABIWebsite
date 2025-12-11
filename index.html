@@ -337,6 +337,30 @@
       const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       const authModal = document.getElementById("authModal");
 
+const url = new URL(window.location.href);
+  const type = url.searchParams.get("type");
+  const code = url.searchParams.get("code");
+
+  if (type && code) {
+    try {
+      // Supabase tauscht Code gegen Session (user wird eingeloggt)
+      const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);
+
+      if (error) {
+        console.error("Auth-Callback Fehler", error);
+        alert("Login mit Magic-Link ist fehlgeschlagen.");
+      } else {
+        // URL aufräumen (Parameter entfernen)
+        window.history.replaceState({}, document.title, window.location.pathname);
+
+        // OPTIONAL: danach direkt auf Konto-Seite schicken
+        window.location.href = "konto.html";
+      }
+    } catch (err) {
+      console.error("Unerwarteter Fehler beim Auth-Callback", err);
+    }
+  }
+      
       async function loadProfileName(session){
         if(!session?.user) return "";
         const { data } = await supabase
