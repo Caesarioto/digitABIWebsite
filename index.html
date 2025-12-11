@@ -337,6 +337,40 @@
       const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       const authModal = document.getElementById("authModal");
 
+      // --- MAGIC LINK CALLBACK HANDLING ---
+const fragment = new URLSearchParams(window.location.hash.slice(1));
+const access_token = fragment.get("access_token");
+const refresh_token = fragment.get("refresh_token");
+
+// Prüfen ob wir von einem Magic-Link kommen
+if (access_token && refresh_token) {
+  try {
+    const { data, error } = await supabase.auth.setSession({
+      access_token,
+      refresh_token
+    });
+
+    if (error) {
+      console.error("Magic-Link Fehler:", error);
+      alert("Login fehlgeschlagen.");
+    } else {
+      console.log("User erfolgreich eingeloggt:", data);
+
+      // URL bereinigen (Token entfernen)
+      window.history.replaceState({}, document.title, window.location.pathname);
+
+      // UI aktualisieren
+      await updateAuthUI(data.session);
+
+      // OPTIONAL → Direkt zum Profil:
+      // window.location.href = "konto.html";
+    }
+  } catch (err) {
+    console.error("Unerwarteter Fehler beim Magic-Link Callback:", err);
+  }
+}
+
+
 const url = new URL(window.location.href);
   const type = url.searchParams.get("type");
   const code = url.searchParams.get("code");
