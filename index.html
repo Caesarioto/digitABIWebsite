@@ -396,7 +396,7 @@ const url = new URL(window.location.href);
 
         const { error } = await supabase.auth.signInWithOtp({
           email,
-          options: { emailRedirectTo: window.location.origin }
+          options: { emailRedirectTo: `${window.location.origin}/index.html` }
         });
         msg.textContent = error ? ("Fehler: " + error.message)
                                 : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
