@@ -432,16 +432,23 @@ try {
         return data?.display_name || session.user.email;
       }
 
-      async function updateAuthUI(session){
-        const isLoggedIn = !!session?.user;
-        document.querySelectorAll("[data-requires-auth]")
-          .forEach(el => el.style.display = isLoggedIn ? "" : "none");
-        document.querySelectorAll("[data-requires-anon]")
-          .forEach(el => el.style.display = isLoggedIn ? "none" : "");
+     async function updateAuthUI(session){
+  const isLoggedIn = !!session?.user;
 
-        const span = document.getElementById("userEmail");
-        if(span) span.textContent = isLoggedIn ? await loadProfileName(session) : "";
-      }
+  // ✅ sichtbar machen muss explizit sein, sonst gewinnt dein CSS "display:none"
+  document.querySelectorAll("[data-requires-auth]")
+    .forEach(el => el.style.display = isLoggedIn ? "inline-flex" : "none");
+
+  document.querySelectorAll("[data-requires-anon]")
+    .forEach(el => el.style.display = isLoggedIn ? "none" : "inline-flex");
+
+  const span = document.getElementById("userEmail");
+  if (span) {
+    span.style.display = isLoggedIn ? "inline" : "none";
+    span.textContent = isLoggedIn ? await loadProfileName(session) : "";
+  }
+}
+
 
       // Initialer Status
       const { data: init } = await supabase.auth.getSession();
