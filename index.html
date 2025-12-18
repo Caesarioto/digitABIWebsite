@@ -221,6 +221,30 @@
         font-size: 13px;
       }
       .topnav .btn:hover { background: rgba(255,255,255,.15); }
+
+      .profile-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  height:36px;
+  border-radius:999px;
+  border:2px solid rgba(255,255,255,.9);
+  color:#fff;
+  text-decoration:none;
+  background:rgba(255,255,255,.08);
+}
+
+.profile-icon:hover{
+  background:rgba(255,255,255,.18);
+}
+
+.profile-icon .pi{
+  font-size:18px;
+  line-height:1;
+}
+
+    
       #userEmail { color:#fff; font-weight:700; font-size:14px; }
 
       [data-requires-auth] { display:none; }
@@ -289,12 +313,18 @@
         <a href="konto.html" data-requires-auth>Mein Konto</a>
       </div>
 
-      <div class="authbox">
-        <span id="userEmail" data-requires-auth></span>
-        <button id="logoutBtn" class="btn" data-requires-auth>Logout</button>
-        <button class="btn" data-requires-anon data-action="open-auth">Login / Registrieren</button>
-      </div>
-    </nav>
+     <div class="authbox">
+  <!-- Profil-Icon (nur eingeloggt sichtbar) -->
+  <a href="konto.html" class="profile-icon" id="profileBtn" data-requires-auth title="Dein Profil" aria-label="Dein Profil">
+    <span class="pi">👤</span>
+  </a>
+
+  <button id="logoutBtn" class="btn" data-requires-auth>Logout</button>
+
+  <!-- Nur ausgeloggt sichtbar -->
+  <button class="btn" data-requires-anon data-action="open-auth">Login / Registrieren</button>
+</div>
+
 
     <!-- Login / Registrieren -->
   <dialog id="authModal">
