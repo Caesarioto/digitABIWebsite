@@ -9,6 +9,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&family=Montserrat&family=Comic+Neue&family=Times+New+Roman&display=swap');
     :root {
       --grad-left: #FA565D;
       --grad-mid: #C45CAD;
@@ -19,9 +20,7 @@
       --vio-dark: #9e90ff;
       --link: rgba(255, 255, 255, .9);
     }
-
     * { box-sizing: border-box }
-
     /* ==================== FIX: FLÜSSIGER GRADIENT ==================== */
     html {
       min-height: 100%;
@@ -30,7 +29,6 @@
       background-size: cover;
       background-position: center;
     }
-
     body {
       margin: 0;
       font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
@@ -40,7 +38,6 @@
       display: flex;
       flex-direction: column;
     }
-
     /* ==================== ENDE FIX ==================== */
     .container {
       max-width: 1180px;
@@ -50,54 +47,45 @@
       display: flex;
       flex-direction: column
     }
-
     .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 16px
     }
-
     .nav .left,
     .nav .right {
       display: flex;
       gap: 18px;
       align-items: center
     }
-
     .brand {
       font-weight: 800;
       letter-spacing: .02em;
       color: #fff
     }
-
     .smallcaps {
       text-transform: uppercase;
       letter-spacing: .08em;
       font-weight: 600
     }
-
     .nav a {
       color: rgba(255, 255, 255, .88);
       text-decoration: none;
       font-weight: 600
     }
-
     .nav a:hover {
       text-decoration: underline
     }
-
     h3.section {
       margin: 22px 0 8px;
       text-align: center;
       text-decoration: underline;
       font-weight: 700
     }
-
     .comment {
       margin-top: 14px
     }
-
     .frame {
       background: #f6f6f8;
       border: 3px solid #6c50ff;
@@ -108,18 +96,15 @@
       position: relative;
       box-shadow: 0 8px 30px rgba(17, 16, 50, .18);
     }
-
     .frame h2 {
       text-align: center;
       margin: 0;
       line-height: 1.35;
       color: #1f1f2f;
     }
-
     .frame h2 .line2 {
       font-weight: 800
     }
-
     .sheet {
       margin-top: 18px;
       background: #f6f6f8;
@@ -127,7 +112,6 @@
       border-radius: 10px;
       padding: 24px 22px;
     }
-
     .photos {
       display: grid;
       grid-template-columns: 240px 1fr 240px;
@@ -135,7 +119,6 @@
       align-items: start;
       margin-top: 6px
     }
-
     .ph {
       position: relative;
       height: 160px;
@@ -149,17 +132,14 @@
       overflow: hidden;
       width: 100%;
     }
-
     .ph[data-has-img="true"] {
       background-size: cover;
       background-position: center;
       color: transparent;
     }
-
     .ph input[type="file"] {
       display: none;
     }
-
     .ph .overlay {
       position: absolute;
       left: 8px;
@@ -167,7 +147,6 @@
       display: flex;
       gap: 6px;
     }
-
     .tinybtn {
       font: inherit;
       font-weight: 700;
@@ -179,13 +158,11 @@
       color: #1b1b2f;
       font-size: 12px;
     }
-
     .tinybtn.primary {
       border-color: #2e1df7;
       background: #eae7ff;
       color: #2e1df7
     }
-
     .name {
       display: flex;
       flex-direction: column;
@@ -194,7 +171,6 @@
       height: 160px;
       padding-top: 0;
     }
-
     .name .big {
       font-size: 20px;
       font-weight: 700;
@@ -202,45 +178,37 @@
       color: #111;
       text-align: center
     }
-
     .name .date {
       font-size: 12.5px;
       color: #333
     }
-
     .facts {
       margin-top: 18px;
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px
     }
-
     .row {
       display: flex;
       gap: 10px;
       align-items: baseline
     }
-
     .label {
       color: #333;
       font-weight: 600;
       flex: 0 0 240px;
     }
-
     .value {
       color: #111;
       flex: 1
     }
-
     .muted {
       color: var(--muted);
       font-weight: 600
     }
-
     .spacer {
       height: 10px
     }
-
     .photos-extra {
       grid-column: 1 / -1;
       margin: 16px 0;
@@ -249,7 +217,6 @@
       gap: 20px;
       flex-wrap: wrap; /* Optional: Erlaubt Wrap bei mehr Feldern später */
     }
-
     .photo-row {
       display: flex;
       align-items: center;
@@ -257,7 +224,6 @@
       margin: 0;
       width: calc(50% - 10px); /* Feste halbe Breite (behält Größe, minus half-gap) */
     }
-
     .custombar {
       display: flex;
       gap: 8px;
@@ -266,7 +232,6 @@
       margin-top: 8px;
       margin-bottom: 4px;
     }
-
     .microbtn {
       font: inherit;
       font-weight: 700;
@@ -277,13 +242,11 @@
       background: #fff;
       color: #1b1b2f;
     }
-
     .microbtn.primary {
       border-color: #2e1df7;
       background: #eae7ff;
       color: #2e1df7
     }
-
     .customform {
       display: none;
       gap: 8px;
@@ -291,7 +254,6 @@
       align-items: center;
       margin: 8px 0 2px
     }
-
     .customform input {
       width: 100%;
       padding: 8px 10px;
@@ -299,7 +261,6 @@
       border-radius: 10px;
       font-family: inherit;
     }
-
     .remove {
       border: 0;
       background: transparent;
@@ -312,7 +273,6 @@
       position: static;
       flex: none;
     }
-
     /* Einheitlicher Stil für ALLE Foto-x-Buttons (Haupt + Extra) */
     .remove[data-type="mainphoto"],
     .remove[data-type="base"][data-id$="-photo"] { /* Ziel: ids wie "fantasie-photo", "meme-photo" */
@@ -333,16 +293,13 @@
       z-index: 10;
       transition: color 0.2s ease;
     }
-
     /* Hover: Rot für alle x-Buttons (einheitlich) */
     .remove:hover {
       color: #c00 !important;
     }
-
     .show {
       display: grid !important;
     }
-
     .next {
       display: inline-flex;
       align-items: center;
@@ -358,33 +315,27 @@
       right: 18px;
       bottom: 14px;
     }
-
     .next:hover {
       background: #dcd6ff
     }
-
     footer.footerlinks {
       display: flex;
       gap: 16px;
       justify-content: center;
       margin-top: 22px
     }
-
     footer.footerlinks a {
       color: #fff;
       text-decoration: none;
       font-weight: 600
     }
-
     footer.footerlinks a:hover {
       text-decoration: underline
     }
-
     .sheet>h3.section {
       color: #111 !important;
       margin: 28px 0 12px;
     }
-
     /* ===== TOPNAV + LOGIN-DIALOG (wie Startseite/Abirechner) ===== */
     .topnav {
       position: relative;
@@ -397,7 +348,6 @@
       color: #fff;
       font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
     }
-
     .topnav .logo-link {
       display: flex;
       align-items: center;
@@ -405,13 +355,11 @@
       margin-right: 20px;
       text-decoration: none;
     }
-
     .topnav .nav-logo {
       height: 36px;
       width: auto;
       object-fit: contain;
     }
-
     .topnav .nav-links {
       display: flex;
       justify-content: center;
@@ -419,17 +367,14 @@
       gap: 28px;
       flex: 1;
     }
-
     .topnav .nav-links a {
       color: var(--link);
       text-decoration: none;
       white-space: nowrap;
     }
-
     .topnav .nav-links a:hover {
       text-decoration: underline;
     }
-
     .topnav .authbox {
       position: absolute;
       right: 12px;
@@ -439,7 +384,6 @@
       align-items: center;
       gap: 10px;
     }
-
     .topnav .btn {
       padding: 7px 10px;
       border-radius: 10px;
@@ -450,25 +394,20 @@
       cursor: pointer;
       font-size: 13px;
     }
-
     .topnav .btn:hover {
       background: rgba(255, 255, 255, .15);
     }
-
     #userEmail {
       color: #fff;
       font-weight: 700;
       font-size: 14px;
     }
-
     [data-requires-auth] {
       display: none;
     }
-
     [data-requires-anon] {
       display: inline-flex;
     }
-
     dialog {
       border: none;
       border-radius: 16px;
@@ -478,12 +417,10 @@
       color: #111;
       box-shadow: 0 25px 80px rgba(0, 0, 0, .5);
     }
-
     dialog::backdrop {
       background: rgba(0, 0, 0, .45);
       backdrop-filter: blur(3px);
     }
-
     dialog form {
       padding: 26px 22px;
       font-family: inherit;
@@ -491,7 +428,6 @@
       flex-direction: column;
       gap: 14px;
     }
-
     dialog label {
       display: grid;
       gap: 6px;
@@ -499,14 +435,12 @@
       font-weight: 600;
       color: #222;
     }
-
     dialog input {
       padding: 10px 12px;
       border-radius: 8px;
       border: 1px solid #ccc;
       font: inherit;
     }
-
     dialog button[type="submit"] {
       padding: 10px 14px;
       border-radius: 10px;
@@ -516,13 +450,11 @@
       font-weight: 700;
       cursor: pointer;
     }
-
     #authMessage {
       margin-top: 10px;
       color: #333;
       font-weight: 600;
     }
-
     /* NEU: PDF-Button-Stil */
     #pdfButton {
       display: block;
@@ -536,9 +468,49 @@
       cursor: pointer;
       font-size: 16px;
     }
-
     #pdfButton:hover {
       background: #4735ff;
+    }
+    /* NEU: Toolbar-Stil */
+    .toolbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin: 16px 0;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .icon-btn:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+    .icon-btn svg {
+      width: 24px;
+      height: 24px;
+      stroke: #111;
+      fill: none;
+    }
+    /* Für Dropdowns und Slider in Toolbar */
+    .toolbar select, .toolbar input[type="range"] {
+      padding: 6px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #111;
+      font-family: inherit;
+    }
+    .toolbar input[type="range"] {
+      width: 80px;
     }
   </style>
 </head>
@@ -576,7 +548,7 @@
           E-Mail
           <input name="email" type="email" required placeholder="du@example.com">
         </label>
-        <!-- 👇 NEU: Username-Feld -->
+        <!-- Username-Feld -->
         <label>
           Username
           <input name="display_name" type="text" required placeholder="z.B. Mulan">
@@ -599,6 +571,64 @@
           so könnte dein Abibuch aussehen:
         </span>
       </h2>
+      <!-- Toolbar mit neuen Tools -->
+      <div class="toolbar">
+        <!-- Hintergrundfarbe (Paint Bucket Icon) -->
+        <button type="button" class="icon-btn" id="bgColorBtn" title="Hintergrundfarbe anpassen">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke="#111" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 5l4-3 6 4 4-4"/>
+            <path d="M19 9v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V9"/>
+            <path d="M3 13h18"/>
+            <path d="M12 16l-2 4 3 3 3-3-2-4z"/>
+          </svg>
+        </button>
+        <input type="color" id="bgColor" value="#f6f6f8" style="display:none;">
+        <!-- Textfarbe (Text Color Icon) -->
+        <button type="button" class="icon-btn" id="textColorBtn" title="Schriftfarbe anpassen">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke="#111" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18"/>
+            <path d="M12.7 3h-1.4L3 17.2h1.9l2.3-5h8.6l2.3 5h1.9L12.7 3zM8.7 12l3.3-7.2 3.3 7.2"/>
+          </svg>
+        </button>
+        <input type="color" id="textColor" value="#111" style="display:none;">
+        <!-- Schriftart (Font Icon) -->
+        <select id="fontSelect" title="Schriftart wählen">
+          <option value="Poppins">Poppins (Standard)</option>
+          <option value="Roboto">Roboto</option>
+          <option value="Montserrat">Montserrat</option>
+          <option value="Comic Neue">Comic Neue</option>
+          <option value="Times New Roman">Times New Roman</option>
+        </select>
+        <!-- Rahmen anpassen (Border Icon) -->
+        <button type="button" class="icon-btn" id="borderColorBtn" title="Rahmenfarbe anpassen">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke="#111" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <path d="M3 12h18"/>
+          </svg>
+        </button>
+        <input type="color" id="borderColor" value="#b6a8ff" style="display:none;">
+        <select id="borderStyle" title="Rahmenstil">
+          <option value="solid">Solid</option>
+          <option value="dashed">Dashed</option>
+          <option value="dotted">Dotted</option>
+          <option value="none">Kein Rahmen</option>
+        </select>
+        <input type="range" id="borderWidth" min="0" max="10" value="1" title="Rahmendicke (0-10px)">
+        <!-- Undo (Undo Icon) -->
+        <button type="button" class="icon-btn" id="undoBtn" title="Rückgängig">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke="#111" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 14L4 9l5-5"/>
+            <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/>
+          </svg>
+        </button>
+        <!-- Redo (Redo Icon) -->
+        <button type="button" class="icon-btn" id="redoBtn" title="Wiederholen">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke="#111" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 14l5-5-5-5"/>
+            <path d="M20 9H9.5A5.5 5.5 0 0 0 4 14.5v0A5.5 5.5 0 0 0 9.5 20H13"/>
+          </svg>
+        </button>
+      </div>
       <div class="sheet" id="sheet">
         <div class="photos">
           <!-- AKTUELLES FOTO -->
@@ -746,22 +776,64 @@
       { id: "autobiografie", label: "Titel meiner Autobiografie:", value: "es kann nur besser werden!" },
       { id: "abschluss", label: "Das möchte ich abschließend noch sagen:", value: "vielen Dank für die schöne Zeit und auf nimmer Wiedersehen" }
     ];
-
     const COMMENT_FIELDS = [
       { id: "comment1", label: "Beschreibe die Person in einem Wort:", value: "witzig, nett, überdreht, faul, bildhübsch, verpeilt, frech" },
       { id: "comment2", label: "Da sehe ich die Person in 10 Jahren:", value: "glücklich, am Strand mit Villa, reich, mit dem heißesten Partner" },
       { id: "comment3", label: "Das will ich dir noch mit auf den Weg geben:", value: "viel Glück bei allem was du machst, ohne dich wäre die Schule nur halb so witzig gewesen, danke" }
     ];
-
     // Zustände
     let customFields = [];
     let customComments = [];
     let deletedBase = new Set();
     let deletedComments = new Set();
-
-    // WICHTIG: Hier speichern wir die Bilder der Extra-Fotos zwischen Renders
-    let photoData = {}; // z. B. { "fantasie-photo": "data:image/...", "meme-photo": "data:image/..." }
-
+    let photoData = {};
+    // History für Undo/Redo
+    let history = [];
+    let redoStack = [];
+    const MAX_HISTORY = 20;
+    const sheet = document.getElementById('sheet');
+    function getCurrentState() {
+      return {
+        customFields: [...customFields],
+        customComments: [...customComments],
+        deletedBase: Array.from(deletedBase),
+        deletedComments: Array.from(deletedComments),
+        photoData: {...photoData},
+        styles: {
+          bgColor: sheet.style.backgroundColor || '#f6f6f8',
+          textColor: sheet.style.color || '#111',
+          fontFamily: sheet.style.fontFamily || 'Poppins',
+          borderColor: sheet.style.borderColor || '#b6a8ff',
+          borderWidth: sheet.style.borderWidth || '1px',
+          borderStyle: sheet.style.borderStyle || 'solid'
+        }
+      };
+    }
+    function applyState(state) {
+      customFields = state.customFields;
+      customComments = state.customComments;
+      deletedBase = new Set(state.deletedBase);
+      deletedComments = new Set(state.deletedComments);
+      photoData = state.photoData;
+      applyStyles(state.styles);
+      renderFacts();
+      renderComments();
+    }
+    function applyStyles(styles) {
+      sheet.style.backgroundColor = styles.bgColor;
+      sheet.style.color = styles.textColor;
+      sheet.style.fontFamily = styles.fontFamily;
+      sheet.style.borderColor = styles.borderColor;
+      sheet.style.borderWidth = styles.borderWidth;
+      sheet.style.borderStyle = styles.borderStyle;
+    }
+    function pushHistory() {
+      const state = getCurrentState();
+      history.push(state);
+      if (history.length > MAX_HISTORY) history.shift();
+      redoStack = []; // Clear redo on new change
+    }
+    // Render Functions
     function setPhoto(el, dataUrl) {
       if (!el) return;
       if (dataUrl) {
@@ -772,7 +844,6 @@
         el.setAttribute("data-has-img", "false");
       }
     }
-
     function handleFile(inputEl, photoId, targetEl) {
       const file = inputEl.files?.[0];
       if (!file) return;
@@ -780,33 +851,28 @@
       reader.onload = () => {
         const dataUrl = reader.result;
         setPhoto(targetEl, dataUrl);
-        photoData[photoId] = dataUrl; // persistent merken
+        photoData[photoId] = dataUrl;
+        pushHistory();
       };
       reader.readAsDataURL(file);
     }
-
-    // Listener für die Extra-Foto-Inputs neu anbringen (nach jedem Render)
     function attachPhotoListeners() {
       BASE_FIELDS.forEach(f => {
         if (f.type === "photo") {
           const input = document.getElementById(`file-${f.id}`);
           const label = document.getElementById(`photo-${f.id}`);
           if (input && label) {
-            // alte Listener entfernen (verhindert Duplikate)
             input.onchange = null;
             input.addEventListener('change', () => handleFile(input, f.id, label));
           }
         }
       });
     }
-
     const factsEl = document.getElementById("facts");
     const commentsEl = document.getElementById("comments");
-
     function rowBaseHTML(f) {
       return `<div class="row"><button class="remove" data-type="base" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
     }
-
     function rowPhotoHTML(f) {
       const photoId = `photo-${f.id}`;
       const fileId = `file-${f.id}`;
@@ -822,17 +888,13 @@
           </label>
         </div>`;
     }
-
     function rowCustomHTML(f, i) {
       return `<div class="row"><button class="remove" data-type="custom" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
     }
-
     function renderFacts() {
       let html = "", inPhotos = false;
-
       for (const f of BASE_FIELDS) {
         if (deletedBase.has(f.id)) continue;
-
         if (f.type === "photo") {
           if (!inPhotos) { html += '<div class="photos-extra">'; inPhotos = true; }
           html += rowPhotoHTML(f);
@@ -840,19 +902,12 @@
           if (inPhotos) { html += '</div>'; inPhotos = false; }
           html += rowBaseHTML(f);
         }
-
         if (f.id === "dreier-worte-head") html += `<div class="spacer"></div>`;
       }
       if (inPhotos) html += '</div>';
-
       customFields.forEach((f, i) => html += rowCustomHTML(f, i));
-
       factsEl.innerHTML = html;
-
-      // 1. Listener neu anbringen
       attachPhotoListeners();
-
-      // 2. Gespeicherte Bilder wieder einsetzen
       BASE_FIELDS.forEach(f => {
         if (f.type === "photo" && !deletedBase.has(f.id) && photoData[f.id]) {
           const label = document.getElementById(`photo-${f.id}`);
@@ -860,15 +915,12 @@
         }
       });
     }
-
     function rowCommentHTML(f) {
       return `<div class="comment"><div class="row"><button class="remove" data-type="comment" data-id="${f.id}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
     }
-
     function rowCustomCommentHTML(f, i) {
       return `<div class="comment"><div class="row"><button class="remove" data-type="custom-comment" data-i="${i}">x</button><div class="label">${f.label}</div><div class="value">${f.value}</div></div></div>`;
     }
-
     function renderComments() {
       let html = "";
       for (const f of COMMENT_FIELDS) {
@@ -878,69 +930,63 @@
       customComments.forEach((f, i) => html += rowCustomCommentHTML(f, i));
       commentsEl.innerHTML = html;
     }
-
     // Initiales Rendern
     renderFacts();
     renderComments();
-
     // + Eigenes Feld (Fakten)
     const toggleBtn = document.getElementById("toggleCustom");
     const formBox = document.getElementById("customForm");
     const addBtn = document.getElementById("cfAdd");
     const inLabel = document.getElementById("cfLabel");
     const inValue = document.getElementById("cfValue");
-
     toggleBtn.addEventListener("click", () => {
       toggleBtn.style.display = 'none';
       formBox.classList.add("show");
       inLabel.focus();
     });
-
     addBtn.addEventListener("click", () => {
       const label = inLabel.value.trim();
       const value = inValue.value.trim();
       if (!label || !value) { alert("Bitte Feldtitel und Inhalt eingeben."); return; }
+      pushHistory();
       customFields.push({ label, value });
       inLabel.value = ""; inValue.value = "";
       formBox.classList.remove("show");
       toggleBtn.style.display = 'block';
       renderFacts();
     });
-
     // + Eigenes Feld (Kommentare)
     const toggleBtnComments = document.getElementById("toggleCustomComments");
     const formBoxComments = document.getElementById("customFormComments");
     const addBtnComments = document.getElementById("cfAddComments");
     const inLabelComments = document.getElementById("cfLabelComments");
     const inValueComments = document.getElementById("cfValueComments");
-
     toggleBtnComments.addEventListener("click", () => {
       toggleBtnComments.style.display = 'none';
       formBoxComments.classList.add("show");
       inLabelComments.focus();
     });
-
     addBtnComments.addEventListener("click", () => {
       const label = inLabelComments.value.trim();
       const value = inValueComments.value.trim();
       if (!label || !value) { alert("Bitte Feldtitel und Inhalt eingeben."); return; }
+      pushHistory();
       customComments.push({ label, value });
       inLabelComments.value = ""; inValueComments.value = "";
       formBoxComments.classList.remove("show");
       toggleBtnComments.style.display = 'block';
       renderComments();
     });
-
     // EINZIGER CLICK-LISTENER (Entfernen + Foto-Buttons)
     document.addEventListener("click", (e) => {
       const removeBtn = e.target.closest(".remove");
       if (removeBtn) {
+        pushHistory(); // Vor der Änderung speichern
         const type = removeBtn.dataset.type;
-
         if (type === "base") {
           const id = removeBtn.dataset.id;
           deletedBase.add(id);
-          delete photoData[id]; // Bild auch aus Speicher löschen
+          delete photoData[id];
           renderFacts();
         }
         else if (type === "custom") {
@@ -965,7 +1011,6 @@
         }
         return;
       }
-
       // Tiny-Button → Datei auswählen
       const tiny = e.target.closest(".tinybtn");
       if (tiny?.dataset?.action === "select") {
@@ -973,7 +1018,6 @@
         const input = document.getElementById(`file-${target}`);
         input?.click();
       }
-
       // Direkt auf Foto klicken
       const ph = e.target.closest(".ph");
       if (ph && !e.target.closest(".tinybtn")) {
@@ -981,70 +1025,99 @@
         if (input) input.click();
       }
     });
-
     // Hauptfotos (current & child) – bleiben statisch
     const currentLabel = document.getElementById('photo-current');
     const childLabel = document.getElementById('photo-child');
     const inputCurrent = document.getElementById('file-current');
     const inputChild = document.getElementById('file-child');
-
     if (inputCurrent) inputCurrent.addEventListener('change', () => handleFile(inputCurrent, "current", currentLabel));
     if (inputChild) inputChild.addEventListener('change', () => handleFile(inputChild, "child", childLabel));
 
     // NEU: PDF mit sichtbarem Rand (z. B. 10 mm)
-document.getElementById('pdfButton').addEventListener('click', async () => {
-  const sheet = document.getElementById('sheet');
-  const name = document.querySelector('.name .big').textContent.trim().replace(/\s+/g, '_') || 'Steckbrief';
-
-  const overlays = sheet.querySelectorAll('.overlay, .remove, .custombar');
-  overlays.forEach(el => el.style.display = 'none');
-
-  try {
-    const canvas = await html2canvas(sheet, {
-      scale: 3,
-      useCORS: true,
-      backgroundColor: '#f6f6f8'
+    document.getElementById('pdfButton').addEventListener('click', async () => {
+      const sheet = document.getElementById('sheet');
+      const name = document.querySelector('.name .big').textContent.trim().replace(/\s+/g, '_') || 'Steckbrief';
+      const overlays = sheet.querySelectorAll('.overlay, .remove, .custombar');
+      overlays.forEach(el => el.style.display = 'none');
+      try {
+        const canvas = await html2canvas(sheet, {
+          scale: 3,
+          useCORS: true,
+          backgroundColor: '#f6f6f8'
+        });
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = 210;
+        const pdfHeight = 297;
+        const margin = 10;
+        const contentWidth = pdfWidth - 2 * margin;
+	const contentHeight = pdfHeight - 2 * margin;
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
+        const ratio = contentWidth / imgWidth;
+        const scaledHeight = imgHeight * ratio;
+        const totalPages = Math.ceil(scaledHeight / pdfHeight);
+        for (let i = 0; i < totalPages; i++) {
+          if (i > 0) pdf.addPage();
+          const positionY = -i * pdfHeight;
+          pdf.addImage(
+            imgData,
+            'PNG',
+            margin,
+            positionY + margin,
+            contentWidth,
+            scaledHeight
+          );
+        }
+        pdf.save(`Steckbrief_${name}.pdf`);
+      } catch (error) {
+        alert('Fehler beim Generieren der PDF: ' + error.message);
+      } finally {
+        overlays.forEach(el => el.style.display = '');
+      }
     });
-
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const pdfWidth = 210;
-    const pdfHeight = 297;
-
-    const margin = 10;                              // ← dein gewünschter Rand
-    const contentWidth  = pdfWidth  - 2 * margin;
-    const contentHeight = pdfHeight - 2 * margin;
-
-    const imgData = canvas.toDataURL('image/png');
-    const imgWidth = canvas.width;
-    const imgHeight = canvas.height;
-
-    const ratio = contentWidth / imgWidth;          // ← jetzt mit Rand
-    const scaledHeight = imgHeight * ratio;
-    const totalPages = Math.ceil(scaledHeight / pdfHeight);
-
-    for (let i = 0; i < totalPages; i++) {
-      if (i > 0) pdf.addPage();
-
-      const positionY = -i * pdfHeight;
-
-      pdf.addImage(
-        imgData,
-        'PNG',
-        margin,                 // ← Rand links
-        positionY + margin,     // ← Rand oben
-        contentWidth,           // ← Breite mit Rand
-        scaledHeight
-      );
-    }
-
-    pdf.save(`Steckbrief_${name}.pdf`);
-  } catch (error) {
-    alert('Fehler beim Generieren der PDF: ' + error.message);
-  } finally {
-    overlays.forEach(el => el.style.display = '');
-  }
-});
+    // Toolbar-Listener (mit pushHistory)
+    document.getElementById('bgColorBtn').addEventListener('click', () => document.getElementById('bgColor').click());
+    document.getElementById('bgColor').addEventListener('input', (e) => {
+      pushHistory();
+      sheet.style.backgroundColor = e.target.value;
+    });
+    document.getElementById('textColorBtn').addEventListener('click', () => document.getElementById('textColor').click());
+    document.getElementById('textColor').addEventListener('input', (e) => {
+      pushHistory();
+      sheet.style.color = e.target.value;
+    });
+    document.getElementById('fontSelect').addEventListener('change', (e) => {
+      pushHistory();
+      sheet.style.fontFamily = e.target.value;
+    });
+    document.getElementById('borderColorBtn').addEventListener('click', () => document.getElementById('borderColor').click());
+    document.getElementById('borderColor').addEventListener('input', (e) => {
+      pushHistory();
+      sheet.style.borderColor = e.target.value;
+    });
+    document.getElementById('borderStyle').addEventListener('change', (e) => {
+      pushHistory();
+      sheet.style.borderStyle = e.target.value;
+    });
+    document.getElementById('borderWidth').addEventListener('input', (e) => {
+      pushHistory();
+      sheet.style.borderWidth = `${e.target.value}px`;
+    });
+    // Undo/Redo
+    document.getElementById('undoBtn').addEventListener('click', () => {
+      if (history.length > 0) {
+        redoStack.push(getCurrentState());
+        applyState(history.pop());
+      }
+    });
+    document.getElementById('redoBtn').addEventListener('click', () => {
+      if (redoStack.length > 0) {
+        history.push(getCurrentState());
+        applyState(redoStack.pop());
+      }
+    });
   </script>
 </body>
 </html>
