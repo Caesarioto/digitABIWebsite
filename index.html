@@ -401,29 +401,26 @@ if (access_token && refresh_token) {
 }
 
 
-const url = new URL(window.location.href);
-  const type = url.searchParams.get("type");
-  const code = url.searchParams.get("code");
+// ✅ Auth-Callback (magic link / confirm / oauth) robust abfangen
+try {
+  const hasCode = new URL(window.location.href).searchParams.get("code");
+  const hasTokenInHash = window.location.hash.includes("access_token=");
 
-  if (type && code) {
-    try {
-      // Supabase tauscht Code gegen Session (user wird eingeloggt)
-      const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);
-
-      if (error) {
-        console.error("Auth-Callback Fehler", error);
-        alert("Login mit Magic-Link ist fehlgeschlagen.");
-      } else {
-        // URL aufräumen (Parameter entfernen)
-        window.history.replaceState({}, document.title, window.location.pathname);
-
-        // OPTIONAL: danach direkt auf Konto-Seite schicken
-        window.location.href = "konto.html";
-      }
-    } catch (err) {
-      console.error("Unerwarteter Fehler beim Auth-Callback", err);
-    }
+  if (hasCode) {
+    const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);
+    if (error) console.error("exchangeCodeForSession error:", error);
+    // URL aufräumen
+    window.history.replaceState({}, document.title, window.location.pathname);
+  } else if (hasTokenInHash) {
+    const { data, error } = await supabase.auth.getSessionFromUrl({ storeSession: true });
+    if (error) console.error("getSessionFromUrl error:", error);
+    // URL aufräumen (Hash entfernen)
+    window.history.replaceState({}, document.title, window.location.pathname);
   }
+} catch (e) {
+  console.error("Auth callback exception:", e);
+}
+
       
       async function loadProfileName(session){
         if(!session?.user) return "";
@@ -460,7 +457,7 @@ const url = new URL(window.location.href);
 
         const { error } = await supabase.auth.signInWithOtp({
           email,
-          options: { emailRedirectTo: `${window.location.origin}/index.html` }
+        options: { emailRedirectTo: window.location.origin + "/index.html" }
         });
         msg.textContent = error ? ("Fehler: " + error.message)
                                 : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
