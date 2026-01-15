@@ -186,153 +186,7 @@
 </div>
 
 
-    <!-- Login / Registrieren -->
-  <dialog id="authModal">
-  <form id="authForm" method="dialog">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-      <strong style="font-size:18px">Einloggen / Registrieren</strong>
-      <button type="button" id="closeAuth"
-              style="background:#eee;border:none;border-radius:8px;padding:6px 10px">✕</button>
-    </div>
-    <p style="margin:8px 0 12px;color:#333">
-      E-Mail und Username eingeben – wir senden dir einen Magic-Link.
-    </p>
-
-    <!-- E-Mail -->
-    <label>
-      E-Mail
-      <input name="email" type="email" required placeholder="du@example.com">
-    </label>
-
-    <!-- 👇 NEU: Username-Feld -->
-    <label>
-      Username
-      <input name="display_name" type="text" required placeholder="z.B. Mulan">
-    </label>
-
-    <button type="submit"
-            style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;">
-      Magic-Link senden
-    </button>
-    <div id="authMessage"></div>
-  </form>
-</dialog>
-
-    <script type="module">
-      import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-      const SUPABASE_URL = "https://xiiqcjutmvhdmmnzvciu.supabase.co";
-      const SUPABASE_ANON_KEY = "sb_publishable_B1BShZ1r77ulTAcT8ayMdw_rON5I-O9";
-
-      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      const authModal = document.getElementById("authModal");
-
-      // --- MAGIC LINK CALLBACK HANDLING ---
-const fragment = new URLSearchParams(window.location.hash.slice(1));
-const access_token = fragment.get("access_token");
-const refresh_token = fragment.get("refresh_token");
-
-// Prüfen ob wir von einem Magic-Link kommen
-if (access_token && refresh_token) {
-  try {
-    const { data, error } = await supabase.auth.setSession({
-      access_token,
-      refresh_token
-    });
-
-    if (error) {
-      console.error("Magic-Link Fehler:", error);
-      alert("Login fehlgeschlagen.");
-    } else {
-      console.log("User erfolgreich eingeloggt:", data);
-
-      // URL bereinigen (Token entfernen)
-      window.history.replaceState({}, document.title, window.location.pathname);
-
-      // UI aktualisieren
-      await updateAuthUI(data.session);
-
-      // OPTIONAL → Direkt zum Profil:
-      // window.location.href = "konto.html";
-    }
-  } catch (err) {
-    console.error("Unerwarteter Fehler beim Magic-Link Callback:", err);
-  }
-}
-
-
-const url = new URL(window.location.href);
-  const type = url.searchParams.get("type");
-  const code = url.searchParams.get("code");
-
-  if (type && code) {
-    try {
-      // Supabase tauscht Code gegen Session (user wird eingeloggt)
-      const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);
-
-      if (error) {
-        console.error("Auth-Callback Fehler", error);
-        alert("Login mit Magic-Link ist fehlgeschlagen.");
-      } else {
-        // URL aufräumen (Parameter entfernen)
-        window.history.replaceState({}, document.title, window.location.pathname);
-
-        // OPTIONAL: danach direkt auf Konto-Seite schicken
-        window.location.href = "konto.html";
-      }
-    } catch (err) {
-      console.error("Unerwarteter Fehler beim Auth-Callback", err);
-    }
-  }
-      
-      async function loadProfileName(session){
-        if(!session?.user) return "";
-        const { data } = await supabase
-          .from("profiles")
-          .select("display_name")
-          .eq("id", session.user.id)
-          .maybeSingle();
-        return data?.display_name || session.user.email;
-      }
-
-      async function updateAuthUI(session){
-        const isLoggedIn = !!session?.user;
-        document.querySelectorAll("[data-requires-auth]")
-          .forEach(el => el.style.display = isLoggedIn ? "" : "none");
-        document.querySelectorAll("[data-requires-anon]")
-          .forEach(el => el.style.display = isLoggedIn ? "none" : "");
-
-        const span = document.getElementById("userEmail");
-        if(span) span.textContent = isLoggedIn ? await loadProfileName(session) : "";
-      }
-
-      // Initialer Status
-      const { data: init } = await supabase.auth.getSession();
-      await updateAuthUI(init.session);
-      supabase.auth.onAuthStateChange((_e, session) => updateAuthUI(session));
-
-      // Login
-      async function signInWithEmail(e){
-        e.preventDefault();
-        const msg = document.getElementById("authMessage");
-        const email = e.currentTarget.querySelector('input[name="email"]').value.trim();
-        if(!email){ msg.textContent = "Bitte E-Mail eingeben."; return; }
-
-        const { error } = await supabase.auth.signInWithOtp({
-          email,
-          options: { emailRedirectTo: `${window.location.origin}/index.html` }
-        });
-        msg.textContent = error ? ("Fehler: " + error.message)
-                                : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
-      }
-
-      document.getElementById("authForm")?.addEventListener("submit", signInWithEmail);
-      document.getElementById("logoutBtn")?.addEventListener("click", () => supabase.auth.signOut());
-      document.querySelectorAll("[data-action='open-auth']").forEach(btn =>
-        btn.addEventListener("click", () => authModal.showModal())
-      );
-      document.getElementById("closeAuth")?.addEventListener("click", () => authModal.close());
-    </script>
+  
   </header>
 
 <!-- Topnav -->
@@ -369,152 +223,80 @@ const url = new URL(window.location.href);
 </div>
 
  <script type="module">
-      import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-      const SUPABASE_URL = "https://xiiqcjutmvhdmmnzvciu.supabase.co";
-      const SUPABASE_ANON_KEY = "sb_publishable_B1BShZ1r77ulTAcT8ayMdw_rON5I-O9";
+  const SUPABASE_URL = "https://xiiqcjutmvhdmmnzvciu.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_B1BShZ1r77ulTAcT8ayMdw_rON5I-O9";
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      // 🔐 Konto-Seite schützen
-const { data: init } = await supabase.auth.getSession();
+  // Session holen + Seite schützen
+  const { data: init, error: initErr } = await supabase.auth.getSession();
+  const session = init?.session;
 
-if (!init.session?.user) {
-  // Nicht eingeloggt → zurück zur Startseite
-  window.location.href = "index.html";
-}
-   document.getElementById("kontoEmail").textContent =
-  init.session.user.email;
-
-   // Zurück-Button
-document.getElementById('backBtn')?.addEventListener('click', ()=>{
-  history.back();
-});
-
-// Passwort setzen
-document.getElementById('setPwBtn')?.addEventListener('click', async ()=>{
-  const pw = document.getElementById('newPassword').value.trim();
-  if(pw.length < 8){
-    document.getElementById('msg').textContent = 'Passwort muss mindestens 8 Zeichen haben.';
-    return;
+  if (initErr || !session?.user) {
+    window.location.href = "index.html";
+    throw new Error("Not logged in");
   }
 
-  const { error } = await supabase.auth.updateUser({ password: pw });
-  document.getElementById('msg').textContent = error
-    ? ('Fehler: ' + error.message)
-    : 'Passwort gesetzt. Du kannst dich ab jetzt mit E-Mail + Passwort anmelden.';
-  document.getElementById('newPassword').value = '';
-});
+  const user = session.user;
 
+  // Email anzeigen
+  document.getElementById("kontoEmail").textContent = user.email;
 
-      const authModal = document.getElementById("authModal");
+  // Zurück-Button
+  document.getElementById("backBtn")?.addEventListener("click", () => history.back());
 
-      // --- MAGIC LINK CALLBACK HANDLING ---
-const fragment = new URLSearchParams(window.location.hash.slice(1));
-const access_token = fragment.get("access_token");
-const refresh_token = fragment.get("refresh_token");
+  // Profil laden
+  const { data: prof } = await supabase
+    .from("profiles")
+    .select("display_name, class_id")
+    .eq("id", user.id)
+    .maybeSingle();
 
-// Prüfen ob wir von einem Magic-Link kommen
-if (access_token && refresh_token) {
-  try {
-    const { data, error } = await supabase.auth.setSession({
-      access_token,
-      refresh_token
-    });
+  if (prof) {
+    document.getElementById("displayName").value = prof.display_name || "";
+    document.getElementById("classId").value = prof.class_id || "";
+  }
 
-    if (error) {
-      console.error("Magic-Link Fehler:", error);
-      alert("Login fehlgeschlagen.");
-    } else {
-      console.log("User erfolgreich eingeloggt:", data);
+  // Profil speichern
+  document.getElementById("saveBtn")?.addEventListener("click", async () => {
+    const display_name = document.getElementById("displayName").value.trim();
+    const class_id = document.getElementById("classId").value.trim();
 
-      // URL bereinigen (Token entfernen)
-      window.history.replaceState({}, document.title, window.location.pathname);
+    const { error } = await supabase
+      .from("profiles")
+      .upsert({ id: user.id, display_name, class_id }, { onConflict: "id" });
 
-      // UI aktualisieren
-      await updateAuthUI(data.session);
+    document.getElementById("msg").textContent = error
+      ? ("Fehler: " + error.message)
+      : "Gespeichert ✅";
+  });
 
-      // OPTIONAL → Direkt zum Profil:
-      // window.location.href = "konto.html";
+  // Passwort setzen
+  document.getElementById("setPwBtn")?.addEventListener("click", async () => {
+    const pw = document.getElementById("newPassword").value.trim();
+
+    if (pw.length < 8) {
+      document.getElementById("msg").textContent = "Passwort muss mindestens 8 Zeichen haben.";
+      return;
     }
-  } catch (err) {
-    console.error("Unerwarteter Fehler beim Magic-Link Callback:", err);
-  }
-}
 
+    const { error } = await supabase.auth.updateUser({ password: pw });
 
-const url = new URL(window.location.href);
-  const type = url.searchParams.get("type");
-  const code = url.searchParams.get("code");
+    document.getElementById("msg").textContent = error
+      ? ("Fehler beim Passwort setzen: " + error.message)
+      : "Passwort gesetzt ✅ Ab jetzt Login mit E-Mail + Passwort.";
 
-  if (type && code) {
-    try {
-      // Supabase tauscht Code gegen Session (user wird eingeloggt)
-      const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);
+    document.getElementById("newPassword").value = "";
+  });
 
-      if (error) {
-        console.error("Auth-Callback Fehler", error);
-        alert("Login mit Magic-Link ist fehlgeschlagen.");
-      } else {
-        // URL aufräumen (Parameter entfernen)
-        window.history.replaceState({}, document.title, window.location.pathname);
+  // Logout
+  document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    window.location.href = "index.html";
+  });
+</script>
 
-        // OPTIONAL: danach direkt auf Konto-Seite schicken
-        window.location.href = "konto.html";
-      }
-    } catch (err) {
-      console.error("Unerwarteter Fehler beim Auth-Callback", err);
-    }
-  }
-      
-      async function loadProfileName(session){
-        if(!session?.user) return "";
-        const { data } = await supabase
-          .from("profiles")
-          .select("display_name")
-          .eq("id", session.user.id)
-          .maybeSingle();
-        return data?.display_name || session.user.email;
-      }
-
-      async function updateAuthUI(session){
-        const isLoggedIn = !!session?.user;
-        document.querySelectorAll("[data-requires-auth]")
-          .forEach(el => el.style.display = isLoggedIn ? "" : "none");
-        document.querySelectorAll("[data-requires-anon]")
-          .forEach(el => el.style.display = isLoggedIn ? "none" : "");
-
-        const span = document.getElementById("userEmail");
-        if(span) span.textContent = isLoggedIn ? await loadProfileName(session) : "";
-      }
-
-      // Initialer Status
-     // Initialer Status (nutzt die Session von oben)
-      await updateAuthUI(init.session);
-
-      supabase.auth.onAuthStateChange((_e, session) => updateAuthUI(session));
-
-      // Login
-      async function signInWithEmail(e){
-        e.preventDefault();
-        const msg = document.getElementById("authMessage");
-        const email = e.currentTarget.querySelector('input[name="email"]').value.trim();
-        if(!email){ msg.textContent = "Bitte E-Mail eingeben."; return; }
-
-        const { error } = await supabase.auth.signInWithOtp({
-          email,
-          options: { emailRedirectTo: `${window.location.origin}/index.html` }
-        });
-        msg.textContent = error ? ("Fehler: " + error.message)
-                                : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
-      }
-
-      document.getElementById("authForm")?.addEventListener("submit", signInWithEmail);
-      document.getElementById("logoutBtn")?.addEventListener("click", () => supabase.auth.signOut());
-      document.querySelectorAll("[data-action='open-auth']").forEach(btn =>
-        btn.addEventListener("click", () => authModal.showModal())
-      );
-      document.getElementById("closeAuth")?.addEventListener("click", () => authModal.close());
- </script>
   
 </body>
 </html>
