@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Abstimmungen – DigitABI</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&family=Montserrat&family=Comic+Neue&family=Times+New+Roman&display=swap');
+    :root {
+      --grad-left: #FA565D;
+      --grad-mid: #C45CAD;
+      --grad-right: #9052F8;
+      --ink: #151527;
+      --muted: rgba(0, 0, 0, .62);
+      --vio: #BEB3FF;
+      --vio-dark: #9e90ff;
+      --link: rgba(255, 255, 255, .9);
+      --paper: #f6f6f8;
+      --border: #6c50ff;
+      --accent: #2e1df7;
+      --accent-weak: #eae7ff;
+    }
+    * { box-sizing: border-box }
+    html {
+      min-height: 100%;
+      height: 100%;
+      background: linear-gradient(100deg, var(--grad-left) 0%, var(--grad-mid) 50%, var(--grad-right) 100%) fixed no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
+      color: #fff;
+      background: transparent;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .nav .left,
+    .nav .right {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+    .brand {
+      font-weight: 800;
+      letter-spacing: .02em;
+      color: #fff;
+    }
+    .smallcaps {
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 600;
+    }
+    .nav a {
+      color: rgba(255, 255, 255, .88);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+    h3.section {
+      margin: 22px 0 8px;
+      text-align: center;
+      text-decoration: underline;
+      font-weight: 700;
+      color: #fff;
+    }
+    .frame {
+      background: var(--paper);
+      border: 3px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 24px;
+      max-width: 860px;
+      margin: 16px auto;
+      position: relative;
+      box-shadow: 0 8px 30px rgba(17, 16, 50, .18);
+      color: var(--ink);
+    }
+    .frame h2 {
+      text-align: center;
+      margin: 0 0 16px;
+      line-height: 1.35;
+      color: var(--ink);
+      font-weight: 800;
+    }
+    .sheet {
+      margin-top: 18px;
+      background: var(--paper);
+      border: 1px solid #b6a8ff;
+      border-radius: 10px;
+      padding: 24px 22px;
+    }
+    .poll-list {
+      display: grid;
+      gap: 24px;
+    }
+    .poll-item {
+      background: #fff;
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .poll-item h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .poll-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .poll-option {
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 600;
+    }
+    .poll-option.selected {
+      border-color: var(--accent);
+      background: var(--accent-weak);
+    }
+    .results {
+      margin-top: 16px;
+    }
+    .result-bar {
+      background: #eee;
+      border-radius: 4px;
+      height: 20px;
+      margin: 8px 0;
+      position: relative;
+    }
+    .result-fill {
+      background: var(--accent);
+      height: 100%;
+      border-radius: 4px;
+    }
+    .result-label {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .create-poll {
+      margin-top: 24px;
+      padding: 16px;
+      background: #fff;
+      border-radius: 10px;
+    }
+    .create-poll input,
+    .create-poll textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    .btn {
+      padding: 10px 16px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .btn:hover {
+      background: #4735ff;
+    }
+    .btn.secondary {
+      background: #eee;
+      color: var(--ink);
+    }
+    .footerlinks {
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: .06em;
+      padding: 26px 0 18px;
+      flex-wrap: wrap;
+    }
+    .footerlinks a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .footerlinks a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top-Leiste als IFRAME einbinden -->
+  <iframe src="topnav.html" title="Navigation" class="topnav-embed"></iframe>
+  <style>
+    .topnav-embed {
+      width: 100%;
+      height: 48px;
+      border: 0;
+      display: block;
+      overflow: hidden;
+      background: transparent;
+    }
+  </style>
+
+  <div class="container">
+    <h3 class="section">Abstimmungen für dein Abibuch</h3>
+    <div class="frame">
+      <h2>Abstimmungen</h2>
+      <p class="sub" style="text-align: center; color: var(--ink); margin-bottom: 24px;">Nimm teil an Abstimmungen und sieh die Top-Ergebnisse für dein Abibuch!</p>
+      
+      <div id="poll-list" class="poll-list"></div>
+      
+      <div class="create-poll" id="create-poll-form" style="display: none;">
+        <h3>Neue Abstimmung erstellen</h3>
+        <input type="text" id="new-title" placeholder="Titel (z.B. Wer ist der Klassenclown?)">
+        <textarea id="new-desc" placeholder="Beschreibung (optional)"></textarea>
+        <button class="btn" id="create-poll-btn">Erstellen</button>
+      </div>
+      <button class="btn secondary" id="toggle-create-form" style="margin-top: 16px;">Neue Abstimmung erstellen</button>
+    </div>
+    
+    <footer class="footerlinks">
+      <a href="kontakt.html">Kontakt</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="rechtliche-hinweise.html">rechtliche Hinweise</a>
+    </footer>
+  </div>
+
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    // TODO: Deine Supabase-Keys eintragen
+    const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
+    const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Annahme: Projekt-ID ist hartcodiert oder aus URL/Storage – passe an!
+    const PROJECT_ID = 'dein-projekt-id-hier'; // TODO: Dynamisch laden, z.B. aus LocalStorage oder URL-Param
+
+    // Erweiterte Voreingestellte Abstimmungen (Presets)
+    const PRESETS = [
+      { title: 'Wer ist der größte Klassenclown?', description: 'Der ultimative Unterhalter, der immer für Lacher sorgt.' },
+      { title: 'Wer schleimt am meisten bei Lehrern?', description: 'Der Meister der Schmeichelei und der Extra-Punkte.' },
+      { title: 'Welcher Lehrer hat die lustigsten Sprüche?', description: 'Der Wortwitz-Champion im Unterricht.' },
+      { title: 'Welcher Lehrer ist immer zu spät?', description: 'Der Experte für dramatische Auftritte.' },
+      { title: 'Welcher Schüler schwänzt am meisten?', description: 'Der Freizeit-Optimierer mit den besten Ausreden.' },
+      { title: 'Wer ist der absolute Frauenschwarm/Herzensbrecher?', description: 'Der Charmeur, der alle umhaut.' },
+      { title: 'Wer wird am ehesten Millionär?', description: 'Der zukünftige CEO oder Erfinder.' },
+      { title: 'Welcher Lehrer erklärt am besten?', description: 'Der Pädagogik-Profi, der alles verständlich macht.' },
+      { title: 'Wer hat die verrücktesten Hobbys?', description: 'Der Abenteurer mit den ungewöhnlichsten Leidenschaften.' },
+      { title: 'Welcher Schüler ist der größte Sport-Ass?', description: 'Der Athlet, der alle Rekorde bricht.' },
+      { title: 'Welcher Lehrer ist der strengste?', description: 'Der Disziplin-Meister, der uns alle formt.' },
+      { title: 'Wer vergisst immer seine Hausaufgaben?', description: 'Der Zerstreute, der uns zum Schmunzeln bringt.' },
+      { title: 'Welcher Schüler hat den besten Musikgeschmack?', description: 'Der DJ der Klasse.' },
+      { title: 'Welcher Lehrer motiviert am meisten?', description: 'Der Inspirator für unsere Ziele.' },
+      { title: 'Wer ist der größte Partylöwe?', description: 'Der Organisator epischer Feiern.' }
+    ];
+
+    // Hilfsfunktionen
+    async function getSession() {
+      const { data } = await supabase.auth.getSession();
+      return data.session;
+    }
+
+    async function fetchPersons() {
+      const { data, error } = await supabase
+        .from('persons')
+        .select('*')
+        .eq('project_id', PROJECT_ID);
+      if (error) console.error(error);
+      return data || [];
+    }
+
+    async function fetchPolls() {
+      const { data, error } = await supabase
+        .from('poll_questions')
+        .select('*')
+        .eq('project_id', PROJECT_ID)
+        .eq('is_active', true);
+      if (error) console.error(error);
+      return data || [];
+    }
+
+    async function fetchMyVote(pollId) {
+      const session = await getSession();
+      if (!session) return null;
+      const { data, error } = await supabase
+        .from('poll_votes')
+        .select('chosen_person_id')
+        .eq('question_id', pollId)
+        .eq('voter_id', session.user.id)
+        .single();
+      if (error && error.code !== 'PGRST116') console.error(error);
+      return data ? data.chosen_person_id : null;
+    }
+
+    async function fetchResults(pollId) {
+      const { data, error } = await supabase
+        .from('poll_votes')
+        .select('chosen_person_id, count(*)')
+        .eq('question_id', pollId)
+        .group('chosen_person_id')
+        .order('count', { ascending: false });
+      if (error) console.error(error);
+      return data || [];
+    }
+
+    async function submitVote(pollId, personId) {
+      const session = await getSession();
+      if (!session) {
+        alert('Bitte einloggen, um abzustimmen.');
+        return;
+      }
+      const { error } = await supabase
+        .from('poll_votes')
+        .insert({ question_id: pollId, voter_id: session.user.id, chosen_person_id: personId });
+      if (error) console.error(error);
+    }
+
+    async function createPoll(title, desc) {
+      const session = await getSession();
+      if (!session) {
+        alert('Bitte einloggen, um Abstimmungen zu erstellen.');
+        return;
+      }
+      const { error } = await supabase
+        .from('poll_questions')
+        .insert({ project_id: PROJECT_ID, title, description: desc, created_by: session.user.id, is_preset: true });
+      if (error) console.error(error);
+    }
+
+    // UI-Rendering
+    async function renderPolls() {
+      const pollList = document.getElementById('poll-list');
+      pollList.innerHTML = '';
+      const polls = await fetchPolls();
+      const persons = await fetchPersons();
+
+      for (const poll of polls) {
+        const myVote = await fetchMyVote(poll.id);
+        const pollItem = document.createElement('div');
+        pollItem.classList.add('poll-item');
+        pollItem.innerHTML = `<h3>${poll.title}</h3><p>${poll.description || ''}</p>`;
+
+        if (myVote) {
+          // Ergebnisse anzeigen
+          const results = await fetchResults(poll.id);
+          const totalVotes = results.reduce((sum, r) => sum + r.count, 0);
+          const resultsDiv = document.createElement('div');
+          resultsDiv.classList.add('results');
+          resultsDiv.innerHTML = '<h4>Ergebnisse (Top 3):</h4>';
+          results.slice(0, 3).forEach(r => {
+            const person = persons.find(p => p.id === r.chosen_person_id);
+            const name = person ? person.full_name : 'Unbekannt';
+            const percent = ((r.count / totalVotes) * 100).toFixed(1);
+            resultsDiv.innerHTML += `
+              <div class="result-label">${name} (${r.count} Stimmen, ${percent}%)</div>
+              <div class="result-bar"><div class="result-fill" style="width: ${percent}%"></div></div>
+            `;
+          });
+          pollItem.appendChild(resultsDiv);
+        } else {
+          // Voting-UI
+          const optionsDiv = document.createElement('div');
+          optionsDiv.classList.add('poll-options');
+          persons.forEach(person => {
+            const opt = document.createElement('div');
+            opt.classList.add('poll-option');
+            opt.textContent = person.full_name;
+            opt.dataset.personId = person.id;
+            opt.addEventListener('click', async () => {
+              optionsDiv.querySelectorAll('.poll-option').forEach(o => o.classList.remove('selected'));
+              opt.classList.add('selected');
+              await submitVote(poll.id, person.id);
+              renderPolls(); // Neu laden
+            });
+            optionsDiv.appendChild(opt);
+          });
+          pollItem.appendChild(optionsDiv);
+        }
+        pollList.appendChild(pollItem);
+      }
+    }
+
+    // Initiale Presets erstellen, falls nicht vorhanden
+    async function initPresets() {
+      const existing = await fetchPolls();
+      const missing = PRESETS.filter(p => !existing.some(e => e.title === p.title));
+      for (const preset of missing) {
+        await createPoll(preset.title, preset.description);
+      }
+    }
+
+    // Event-Listener
+    document.getElementById('toggle-create-form').addEventListener('click', () => {
+      const form = document.getElementById('create-poll-form');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.getElementById('create-poll-btn').addEventListener('click', async () => {
+      const title = document.getElementById('new-title').value.trim();
+      const desc = document.getElementById('new-desc').value.trim();
+      if (!title) return alert('Titel erforderlich.');
+      await createPoll(title, desc);
+      document.getElementById('new-title').value = '';
+      document.getElementById('new-desc').value = '';
+      document.getElementById('create-poll-form').style.display = 'none';
+      renderPolls();
+    });
+
+    // Start
+    async function init() {
+      const session = await getSession();
+      if (!session) {
+        alert('Bitte einloggen, um Abstimmungen zu sehen.');
+        return;
+      }
+      await initPresets();
+      renderPolls();
+    }
+    init();
+  </script>
+</body>
+</html>
