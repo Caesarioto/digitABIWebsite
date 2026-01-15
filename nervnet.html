@@ -254,9 +254,16 @@
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
     // TODO: Deine Supabase-Keys eintragen
-    const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
-    const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
+    const SUPABASE_URL = "https://xiiqcjutmvhdmmnzvciu.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_B1BShZ1r77ulTAcT8ayMdw_rON5I-O9";
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // 🔒 Seite schützen: nur eingeloggte Nutzer
+const { data: init } = await supabase.auth.getSession();
+if (!init.session?.user) {
+  // nicht eingeloggt -> zurück zur Startseite
+  window.location.href = "index.html";
+}
+
 
     // Annahme: Projekt-ID ist hartcodiert oder aus URL/Storage – passe an!
     const PROJECT_ID = 'dein-projekt-id-hier'; // TODO: Dynamisch laden, z.B. aus LocalStorage oder URL-Param
@@ -445,4 +452,5 @@
     init();
   </script>
 </body>
+
 </html>
