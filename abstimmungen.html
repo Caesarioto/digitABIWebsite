@@ -223,15 +223,14 @@
       background: transparent;
     }
   </style>
-
   <div class="container">
     <h3 class="section">Abstimmungen für dein Abibuch</h3>
     <div class="frame">
       <h2>Abstimmungen</h2>
       <p class="sub" style="text-align: center; color: var(--ink); margin-bottom: 24px;">Nimm teil an Abstimmungen und sieh die Top-Ergebnisse für dein Abibuch!</p>
-      
+     
       <div id="poll-list" class="poll-list"></div>
-      
+     
       <div class="create-poll" id="create-poll-form" style="display: none;">
         <h3>Neue Abstimmung erstellen</h3>
         <input type="text" id="new-title" placeholder="Titel (z.B. Wer ist der Klassenclown?)">
@@ -240,7 +239,7 @@
       </div>
       <button class="btn secondary" id="toggle-create-form" style="margin-top: 16px;">Neue Abstimmung erstellen</button>
     </div>
-    
+   
     <footer class="footerlinks">
       <a href="kontakt.html">Kontakt</a>
       <a href="impressum.html">Impressum</a>
@@ -249,10 +248,8 @@
       <a href="rechtliche-hinweise.html">rechtliche Hinweise</a>
     </footer>
   </div>
-
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
     // TODO: Deine Supabase-Keys eintragen
     const SUPABASE_URL = "https://xiiqcjutmvhdmmnzvciu.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_B1BShZ1r77ulTAcT8ayMdw_rON5I-O9";
@@ -263,11 +260,8 @@ if (!init.session?.user) {
   // nicht eingeloggt -> zurück zur Startseite
   window.location.href = "index.html";
 }
-
-
     // Annahme: Projekt-ID ist hartcodiert oder aus URL/Storage – passe an!
     const PROJECT_ID = 'dein-projekt-id-hier'; // TODO: Dynamisch laden, z.B. aus LocalStorage oder URL-Param
-
     // Erweiterte Voreingestellte Abstimmungen (Presets)
     const PRESETS = [
       { title: 'Wer ist der größte Klassenclown?', description: 'Der ultimative Unterhalter, der immer für Lacher sorgt.' },
@@ -286,13 +280,11 @@ if (!init.session?.user) {
       { title: 'Welcher Lehrer motiviert am meisten?', description: 'Der Inspirator für unsere Ziele.' },
       { title: 'Wer ist der größte Partylöwe?', description: 'Der Organisator epischer Feiern.' }
     ];
-
     // Hilfsfunktionen
     async function getSession() {
       const { data } = await supabase.auth.getSession();
       return data.session;
     }
-
     async function fetchPersons() {
       const { data, error } = await supabase
         .from('persons')
@@ -301,7 +293,6 @@ if (!init.session?.user) {
       if (error) console.error(error);
       return data || [];
     }
-
     async function fetchPolls() {
       const { data, error } = await supabase
         .from('poll_questions')
@@ -311,7 +302,6 @@ if (!init.session?.user) {
       if (error) console.error(error);
       return data || [];
     }
-
     async function fetchMyVote(pollId) {
       const session = await getSession();
       if (!session) return null;
@@ -324,7 +314,6 @@ if (!init.session?.user) {
       if (error && error.code !== 'PGRST116') console.error(error);
       return data ? data.chosen_person_id : null;
     }
-
     async function fetchResults(pollId) {
       const { data, error } = await supabase
         .from('poll_votes')
@@ -335,7 +324,6 @@ if (!init.session?.user) {
       if (error) console.error(error);
       return data || [];
     }
-
     async function submitVote(pollId, personId) {
       const session = await getSession();
       if (!session) {
@@ -347,7 +335,6 @@ if (!init.session?.user) {
         .insert({ question_id: pollId, voter_id: session.user.id, chosen_person_id: personId });
       if (error) console.error(error);
     }
-
     async function createPoll(title, desc) {
       const session = await getSession();
       if (!session) {
@@ -359,20 +346,17 @@ if (!init.session?.user) {
         .insert({ project_id: PROJECT_ID, title, description: desc, created_by: session.user.id, is_preset: true });
       if (error) console.error(error);
     }
-
     // UI-Rendering
     async function renderPolls() {
       const pollList = document.getElementById('poll-list');
       pollList.innerHTML = '';
       const polls = await fetchPolls();
       const persons = await fetchPersons();
-
       for (const poll of polls) {
         const myVote = await fetchMyVote(poll.id);
         const pollItem = document.createElement('div');
         pollItem.classList.add('poll-item');
         pollItem.innerHTML = `<h3>${poll.title}</h3><p>${poll.description || ''}</p>`;
-
         if (myVote) {
           // Ergebnisse anzeigen
           const results = await fetchResults(poll.id);
@@ -412,7 +396,6 @@ if (!init.session?.user) {
         pollList.appendChild(pollItem);
       }
     }
-
     // Initiale Presets erstellen, falls nicht vorhanden
     async function initPresets() {
       const existing = await fetchPolls();
@@ -421,13 +404,11 @@ if (!init.session?.user) {
         await createPoll(preset.title, preset.description);
       }
     }
-
     // Event-Listener
     document.getElementById('toggle-create-form').addEventListener('click', () => {
       const form = document.getElementById('create-poll-form');
       form.style.display = form.style.display === 'none' ? 'block' : 'none';
     });
-
     document.getElementById('create-poll-btn').addEventListener('click', async () => {
       const title = document.getElementById('new-title').value.trim();
       const desc = document.getElementById('new-desc').value.trim();
@@ -438,7 +419,6 @@ if (!init.session?.user) {
       document.getElementById('create-poll-form').style.display = 'none';
       renderPolls();
     });
-
     // Start
     async function init() {
       const session = await getSession();
@@ -452,5 +432,4 @@ if (!init.session?.user) {
     init();
   </script>
 </body>
-
 </html>
