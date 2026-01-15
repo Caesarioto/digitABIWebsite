@@ -222,80 +222,115 @@
   </div>
 </div>
 
- <script type="module">
+<script type="module">
   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
   const SUPABASE_URL = "https://xiiqcjutmvhdmmnzvciu.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_B1BShZ1r77ulTAcT8ayMdw_rON5I-O9";
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // Session holen + Seite schützen
-  const { data: init, error: initErr } = await supabase.auth.getSession();
-  const session = init?.session;
+  const msgEl = document.getElementById("msg");
 
-  if (initErr || !session?.user) {
-    window.location.href = "index.html";
-    throw new Error("Not logged in");
+  // 1) Auth Callback (kommt bei Password-Reset / Confirm / MagicLink / OAuth)
+  //    -> Session sauber aus URL übernehmen und URL aufräumen
+  try {
+    const url = new URL(window.location.href);
+    const hasCode = url.searchParams.get("code");
+    const hasTokenInHash = window.location.hash.includes("access_token=");
+
+    if (hasCode) {
+      const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);
+      if (error) console.error("exchangeCodeForSession error:", error);
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (hasTokenInHash) {
+      const { error } = await supabase.auth.getSessionFromUrl({ storeSession: true });
+      if (error) console.error("getSessionFromUrl error:", error);
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  } catch (e) {
+    console.error("Auth callback exception:", e);
   }
 
-  const user = session.user;
+  // 2) Session holen & Seite schützen
+  const { data: init } = await supabase.auth.getSession();
+  const session = init.session;
 
-  // Email anzeigen
-  document.getElementById("kontoEmail").textContent = user.email;
+  if (!session?.user) {
+    // Nicht eingeloggt → zurück zur Startseite
+    window.location.href = "index.html";
+  }
+
+  // 3) Konto UI füllen
+  document.getElementById("kontoEmail").textContent = session.user.email;
 
   // Zurück-Button
   document.getElementById("backBtn")?.addEventListener("click", () => history.back());
 
-  // Profil laden
-  const { data: prof } = await supabase
+  // 4) Profil laden
+  const { data: profile } = await supabase
     .from("profiles")
     .select("display_name, class_id")
-    .eq("id", user.id)
+    .eq("id", session.user.id)
     .maybeSingle();
 
-  if (prof) {
-    document.getElementById("displayName").value = prof.display_name || "";
-    document.getElementById("classId").value = prof.class_id || "";
+  if (profile) {
+    document.getElementById("displayName").value = profile.display_name || "";
+    document.getElementById("classId").value = profile.class_id || "";
   }
 
-  // Profil speichern
+  // 5) Falls wir aus dem Registrierungs-Modal kommen (index.html):
+  //    display_name einmalig aus localStorage übernehmen, wenn im Profil noch leer
+  const pendingName = localStorage.getItem("pending_display_name");
+  if (pendingName && (!profile?.display_name || profile.display_name.trim() === "")) {
+    const { error } = await supabase
+      .from("profiles")
+      .upsert({ id: session.user.id, display_name: pendingName }, { onConflict: "id" });
+
+    if (!error) {
+      document.getElementById("displayName").value = pendingName;
+      localStorage.removeItem("pending_display_name");
+    }
+  } else if (pendingName) {
+    // falls schon gesetzt -> aufräumen
+    localStorage.removeItem("pending_display_name");
+  }
+
+  // 6) Profil speichern
   document.getElementById("saveBtn")?.addEventListener("click", async () => {
     const display_name = document.getElementById("displayName").value.trim();
     const class_id = document.getElementById("classId").value.trim();
 
     const { error } = await supabase
       .from("profiles")
-      .upsert({ id: user.id, display_name, class_id }, { onConflict: "id" });
+      .upsert({ id: session.user.id, display_name, class_id }, { onConflict: "id" });
 
-    document.getElementById("msg").textContent = error
-      ? ("Fehler: " + error.message)
-      : "Gespeichert ✅";
+    msgEl.textContent = error ? ("Fehler: " + error.message) : "Gespeichert ✅";
   });
 
-  // Passwort setzen
+  // 7) Passwort setzen / Passwort nach Reset neu setzen
   document.getElementById("setPwBtn")?.addEventListener("click", async () => {
     const pw = document.getElementById("newPassword").value.trim();
-
     if (pw.length < 8) {
-      document.getElementById("msg").textContent = "Passwort muss mindestens 8 Zeichen haben.";
+      msgEl.textContent = "Passwort muss mindestens 8 Zeichen haben.";
       return;
     }
 
     const { error } = await supabase.auth.updateUser({ password: pw });
 
-    document.getElementById("msg").textContent = error
-      ? ("Fehler beim Passwort setzen: " + error.message)
-      : "Passwort gesetzt ✅ Ab jetzt Login mit E-Mail + Passwort.";
+    msgEl.textContent = error
+      ? ("Fehler: " + error.message)
+      : "Passwort gespeichert ✅ Du kannst dich ab jetzt mit E-Mail + Passwort einloggen.";
 
     document.getElementById("newPassword").value = "";
   });
 
-  // Logout
+  // 8) Logout
   document.getElementById("logoutBtn")?.addEventListener("click", async () => {
     await supabase.auth.signOut();
     window.location.href = "index.html";
   });
 </script>
+
 
   
 </body>
