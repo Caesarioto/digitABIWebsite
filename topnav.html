@@ -206,8 +206,9 @@
   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
   // TODO: deine echten Keys eintragen
-  const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
-  const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
+const SUPABASE_URL = "https://xiiqcjutmvhdmmnzvciu.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_B1BShZ1r77ulTAcT8ayMdw_rON5I-O9";
+
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   const authModal = document.getElementById("authModal");
@@ -223,22 +224,30 @@
     return data?.display_name || session.user.email;
   }
 
-  async function updateAuthUI(session){
-    const isLoggedIn = !!session?.user;
-    document.querySelectorAll("[data-requires-auth]")
-      .forEach(el => el.style.display = isLoggedIn ? "" : "none");
-    document.querySelectorAll("[data-requires-anon]")
-      .forEach(el => el.style.display = isLoggedIn ? "none" : "");
+ async function updateAuthUI(session){
+  const isLoggedIn = !!session?.user;
 
-    const span = document.getElementById("userEmail");
-    if(span) span.textContent = isLoggedIn ? await loadProfileName(session) : "";
+  // ✅ explizit setzen, sonst bleibt display:none aus CSS aktiv
+  document.querySelectorAll("[data-requires-auth]").forEach(el => {
+    // Links sind inline, Buttons inline-flex
+    const tag = el.tagName.toLowerCase();
+    el.style.display = isLoggedIn ? (tag === "a" || tag === "span" ? "inline" : "inline-flex") : "none";
+  });
 
-    // Parent informieren, damit er evtl. gated Content freischaltet
-    window.parent.postMessage(
-      { type:"auth-state", loggedIn:isLoggedIn },
-      "*"
-    );
+  document.querySelectorAll("[data-requires-anon]").forEach(el => {
+    const tag = el.tagName.toLowerCase();
+    el.style.display = isLoggedIn ? "none" : (tag === "a" || tag === "span" ? "inline" : "inline-flex");
+  });
+
+  const span = document.getElementById("userEmail");
+  if(span) {
+    span.style.display = isLoggedIn ? "inline" : "none";
+    span.textContent = isLoggedIn ? await loadProfileName(session) : "";
   }
+
+  window.parent.postMessage({ type:"auth-state", loggedIn:isLoggedIn }, "*");
+}
+
 
   // Initialer Status
   const { data: init } = await supabase.auth.getSession();
@@ -260,7 +269,8 @@
     }
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options:{ emailRedirectTo: window.location.origin }
+     options:{ emailRedirectTo: window.location.origin + "/index.html" }
+
     });
     msg.textContent = error ? ("Fehler: " + error.message)
                             : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
