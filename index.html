@@ -328,34 +328,64 @@
 
     <!-- Login / Registrieren -->
   <dialog id="authModal">
-  <form id="authForm" method="dialog">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-      <strong style="font-size:18px">Einloggen / Registrieren</strong>
-      <button type="button" id="closeAuth"
-              style="background:#eee;border:none;border-radius:8px;padding:6px 10px">✕</button>
-    </div>
-    <p style="margin:8px 0 12px;color:#333">
-      E-Mail und Username eingeben – wir senden dir einen Magic-Link.
-    </p>
+<form id="authForm" method="dialog">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+    <strong style="font-size:18px">Login / Registrieren</strong>
+    <button type="button" id="closeAuth"
+            style="background:#eee;border:none;border-radius:8px;padding:6px 10px">✕</button>
+  </div>
 
-    <!-- E-Mail -->
-    <label>
-      E-Mail
-      <input name="email" type="email" required placeholder="du@example.com">
-    </label>
-
-    <!-- 👇 NEU: Username-Feld -->
-    <label>
-      Username
-      <input name="display_name" type="text" required placeholder="z.B. Mulan">
-    </label>
-
-    <button type="submit"
-            style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;">
-      Magic-Link senden
+  <!-- Umschalter -->
+  <div style="display:flex;gap:10px">
+    <button type="button" id="tabLogin"
+      style="flex:1;padding:10px;border-radius:10px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;cursor:pointer">
+      Einloggen
     </button>
-    <div id="authMessage"></div>
-  </form>
+    <button type="button" id="tabRegister"
+      style="flex:1;padding:10px;border-radius:10px;border:2px solid #2e1df7;background:transparent;color:#2e1df7;font-weight:800;cursor:pointer">
+      Registrieren
+    </button>
+  </div>
+
+  <div style="height:6px"></div>
+
+  <!-- E-Mail -->
+  <label>
+    E-Mail
+    <input name="email" type="email" required placeholder="du@example.com">
+  </label>
+
+  <!-- Passwort (nur Login) -->
+  <div id="pwWrap">
+    <label>
+      Passwort
+      <input name="password" type="password" placeholder="Dein Passwort">
+    </label>
+
+    <button type="button" id="forgotBtn"
+      style="width:100%;padding:10px 14px;border-radius:12px;border:2px solid #2e1df7;background:transparent;color:#2e1df7;font-weight:800;cursor:pointer">
+      Passwort vergessen
+    </button>
+  </div>
+
+  <!-- Anzeigename (nur Registrierung, optional) -->
+  <div id="nameWrap" style="display:none">
+    <label>
+      Anzeigename (optional)
+      <input name="display_name" type="text" placeholder="z.B. Mulan">
+    </label>
+  </div>
+
+  <!-- Action Button -->
+  <button type="submit" id="submitBtn"
+          style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #2e1df7;background:#eae7ff;color:#2e1df7;font-weight:800;">
+    Einloggen
+  </button>
+
+  <div id="authMessage"></div>
+</form>
+
+
 </dialog>
 
     <script type="module">
@@ -366,6 +396,37 @@
 
       const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       const authModal = document.getElementById("authModal");
+      let authMode = "login"; // "login" | "register"
+
+const tabLogin = document.getElementById("tabLogin");
+const tabRegister = document.getElementById("tabRegister");
+const pwWrap = document.getElementById("pwWrap");
+const nameWrap = document.getElementById("nameWrap");
+const submitBtn = document.getElementById("submitBtn");
+const msg = document.getElementById("authMessage");
+
+function setMode(mode){
+  authMode = mode;
+
+  const isLogin = mode === "login";
+  pwWrap.style.display = isLogin ? "" : "none";
+  nameWrap.style.display = isLogin ? "none" : "";
+
+  // Button Styles
+  tabLogin.style.background = isLogin ? "#eae7ff" : "transparent";
+  tabLogin.style.color = "#2e1df7";
+  tabRegister.style.background = isLogin ? "transparent" : "#eae7ff";
+  tabRegister.style.color = "#2e1df7";
+
+  submitBtn.textContent = isLogin ? "Einloggen" : "Registrierungs-Link senden";
+  msg.textContent = "";
+}
+
+tabLogin?.addEventListener("click", ()=>setMode("login"));
+tabRegister?.addEventListener("click", ()=>setMode("register"));
+
+// Default
+setMode("login");
 
       // --- MAGIC LINK CALLBACK HANDLING ---
 const fragment = new URLSearchParams(window.location.hash.slice(1));
@@ -456,22 +517,69 @@ try {
       supabase.auth.onAuthStateChange((_e, session) => updateAuthUI(session));
 
       // Login
-      async function signInWithEmail(e){
-        e.preventDefault();
-        const msg = document.getElementById("authMessage");
-        const email = e.currentTarget.querySelector('input[name="email"]').value.trim();
-        if(!email){ msg.textContent = "Bitte E-Mail eingeben."; return; }
+      async function onAuthSubmit(e){
+  e.preventDefault();
 
-        const { error } = await supabase.auth.signInWithOtp({
-          email,
-        options: { emailRedirectTo: window.location.origin + "/index.html" }
-        });
-        msg.textContent = error ? ("Fehler: " + error.message)
-                                : "Magic-Link gesendet. Bitte Postfach prüfen ✉️";
-      }
+  const email = e.currentTarget.querySelector('input[name="email"]').value.trim();
+  const password = e.currentTarget.querySelector('input[name="password"]')?.value?.trim();
+  const displayName = e.currentTarget.querySelector('input[name="display_name"]')?.value?.trim();
 
-      document.getElementById("authForm")?.addEventListener("submit", signInWithEmail);
+  if(!email){
+    msg.textContent = "Bitte E-Mail eingeben.";
+    return;
+  }
+
+  // LOGIN: E-Mail + Passwort
+  if(authMode === "login"){
+    if(!password){
+      msg.textContent = "Bitte Passwort eingeben.";
+      return;
+    }
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    msg.textContent = error ? ("Fehler: " + error.message) : "Eingeloggt ✅";
+    if(!error){
+      authModal.close();
+      await updateAuthUI(data.session);
+    }
+    return;
+  }
+
+  // REGISTER: Magic-Link (einmalig)
+  const { error } = await supabase.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: window.location.origin + "/index.html" }
+  });
+
+  msg.textContent = error
+    ? ("Fehler: " + error.message)
+    : "Registrierungs-Link gesendet ✉️ Bitte E-Mail bestätigen.";
+
+  // Optional: Name lokal merken (wird später auf konto.html gespeichert)
+  if(displayName){
+    localStorage.setItem("pending_display_name", displayName);
+  }
+}
+
+
+      document.getElementById("authForm")?.addEventListener("submit", onAuthSubmit);
       document.getElementById("logoutBtn")?.addEventListener("click", () => supabase.auth.signOut());
+      document.getElementById("forgotBtn")?.addEventListener("click", async ()=>{
+  const email = document.querySelector('#authForm input[name="email"]').value.trim();
+  if(!email){
+    msg.textContent = "Bitte E-Mail eingeben (für Reset).";
+    return;
+  }
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + "/konto.html"
+  });
+
+  msg.textContent = error
+    ? ("Fehler: " + error.message)
+    : "Reset-Link gesendet ✉️ Bitte Postfach prüfen.";
+});
+
       document.querySelectorAll("[data-action='open-auth']").forEach(btn =>
         btn.addEventListener("click", () => authModal.showModal())
       );
